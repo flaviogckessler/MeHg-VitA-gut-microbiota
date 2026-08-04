@@ -6,6 +6,7 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $sourceRoot = (Resolve-Path (Join-Path $repoRoot '..')).Path
 $sourceData = Join-Path $sourceRoot 'Data_metadata'
+$sourceImages = Join-Path $sourceRoot 'Alberto\images'
 
 $batch01 = 'batch01_iontorrent_dams-f0_f1-pnd21'
 $batch02 = 'batch02_illumina-miseq_f1-f2_pnd365'
@@ -23,6 +24,8 @@ $directories = @(
     (Join-Path $processedRoot $batch02),
     (Join-Path $resultsRoot "functional_prediction\$batch01"),
     (Join-Path $resultsRoot "functional_prediction\$batch02"),
+    (Join-Path $resultsRoot 'alpha_diversity'),
+    (Join-Path $resultsRoot 'taxon_relative_abundance'),
     (Join-Path $resultsRoot 'legacy_summary_tables')
 )
 
@@ -83,14 +86,29 @@ foreach ($copy in $functionalCopies) {
 }
 
 $summaryCopies = @(
-    @{ Source = 'AbundanciasTaxons_Todos.csv'; Destination = 'all_batches_taxon_abundance.csv' },
-    @{ Source = 'alpha_diversity.csv'; Destination = 'all_batches_alpha_diversity.csv' },
-    @{ Source = 'Alpha_filtered_Metadata_F0F1.csv'; Destination = 'batch01_alpha_diversity_with_metadata.csv' },
     @{ Source = 'ZScore_Todos.csv'; Destination = 'all_batches_z_scores.csv' }
 )
 
 foreach ($copy in $summaryCopies) {
     Copy-DataFile -Source (Join-Path $sourceData $copy.Source) -Destination (Join-Path $resultsRoot "legacy_summary_tables\$($copy.Destination)")
+}
+
+$alphaDiversityCopies = @(
+    @{ Source = 'Alpha_filtered_Metadata_F0F1.csv'; Destination = 'batch01_iontorrent_dams-f0_f1-pnd21_alpha_diversity_with_metadata.csv' },
+    @{ Source = 'alpha_diversity.csv'; Destination = 'batch02_illumina-miseq_f1-f2_pnd365_alpha_diversity_with_metadata.csv' }
+)
+
+foreach ($copy in $alphaDiversityCopies) {
+    Copy-DataFile -Source (Join-Path $sourceData $copy.Source) -Destination (Join-Path $resultsRoot "alpha_diversity\$($copy.Destination)")
+}
+
+$taxonAbundanceCopies = @(
+    @{ Source = 'AbundanciasTaxons_Todos.csv'; Destination = 'batch01_iontorrent_dams-f0_f1-pnd21_taxon_relative_abundance.csv' },
+    @{ Source = 'AbundanciasTaxons_1year.csv'; Destination = 'batch02_illumina-miseq_f1-f2_pnd365_taxon_relative_abundance.csv' }
+)
+
+foreach ($copy in $taxonAbundanceCopies) {
+    Copy-DataFile -Source (Join-Path $sourceImages $copy.Source) -Destination (Join-Path $resultsRoot "taxon_relative_abundance\$($copy.Destination)")
 }
 
 $expectedBatch01 = @(

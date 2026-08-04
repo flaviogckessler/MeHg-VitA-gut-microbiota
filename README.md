@@ -24,7 +24,7 @@ Sex, generation, treatment, sequencing batch, analysis inclusion, and data-depos
 
 This repository is under active reproducibility curation.
 
-- Figure 3 panels A–C have a portable, validated workflow.
+- Figure 3 panels A-K have portable, validated workflows.
 - Additional main and supplementary figure workflows will be migrated and validated progressively.
 - Scripts retained directly under `scripts/` are legacy source scripts. Some still contain historical paths, exploratory code, or obsolete comments and should not be considered portable until they are migrated into the corresponding analysis or figure directory.
 
@@ -37,7 +37,7 @@ This repository is under active reproducibility curation.
 | [`data/metadata/`](data/metadata/) | Canonical sample manifests, preserved source metadata, SRA information, and validation summaries. |
 | [`data/processed/`](data/processed/) | Processed ASV tables, taxonomy, representative sequences, BIOM files, relative abundances, and read tracking. |
 | [`figures/`](figures/) | Main-figure workflows, validation scripts, and lightweight generated PNG outputs. |
-| [`results/`](results/) | Functional-prediction exports and legacy summary tables. |
+| [`results/`](results/) | Alpha-diversity and taxon-abundance tables, functional-prediction exports, and legacy summary tables. |
 | [`scripts/`](scripts/) | Analysis scripts, including legacy scripts awaiting reproducibility migration. |
 | [`supplementary_figures/`](supplementary_figures/) | Reserved for supplementary-figure workflows and outputs. |
 | [`docs/`](docs/) | Reserved for extended project documentation. |
@@ -46,14 +46,18 @@ Canonical data and metadata are stored once under `data/`. Figure scripts should
 
 ## Quick start
 
-The currently validated Figure 3 workflow requires R and the `tidyverse` package. Start R from the repository root and run:
+The validated Figure 3 workflows require R and the `tidyverse`, `rstatix`, and `ggpubr` packages. Start R from the repository root and run:
 
 ```r
 source("figures/Figure_3/validate_figure_3_abc.R")
 source("figures/Figure_3/generate_figure_3_abc.R")
+source("figures/Figure_3/validate_figure_3_dg.R")
+source("figures/Figure_3/generate_figure_3_dg.R")
+source("figures/Figure_3/validate_figure_3_hk.R")
+source("figures/Figure_3/generate_figure_3_hk.R")
 ```
 
-The validation script checks sample inclusion, abundance totals, plot construction, and output generation. The generation script writes readable PNG panels to [`figures/Figure_3/output/`](figures/Figure_3/output/).
+The validation scripts check sample inclusion, abundance values, statistical methods, plot construction, and output generation. The generation scripts write readable PNG panels to [`figures/Figure_3/output/`](figures/Figure_3/output/).
 
 See [`figures/Figure_3/README.md`](figures/Figure_3/README.md) for the canonical inputs used by this workflow.
 
