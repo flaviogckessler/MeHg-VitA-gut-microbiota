@@ -1,0 +1,46 @@
+# R session and user files
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+.Renviron
+.Renviron.*
+!.Renviron.example
+
+# R package and report caches
+renv/library/
+renv/staging/
+renv/local/
+*_cache/
+*_files/
+.quarto/
+
+# Raw sequencing reads
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+
+# External reference data
+data/external/*
+!data/external/.gitkeep
+
+# Generated TIFF files are not permitted
+figures/**/output/*_generated.tif
+figures/**/output/*_generated.tiff
+supplementary_figures/**/output/*_generated.tif
+supplementary_figures/**/output/*_generated.tiff
+
+# Temporary and log files
+*.tmp
+*.temp
+*.bak
+*.log
+*~
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini

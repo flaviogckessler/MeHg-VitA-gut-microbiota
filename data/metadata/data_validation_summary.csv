@@ -1,0 +1,3 @@
+﻿"batch_id","expected_samples","metadata_samples","processed_table_samples","primary_analysis_samples","excluded_samples","missing_from_processed_table","unexpected_in_processed_table","sra_bioproject","biosample_accession_range","sra_release_status"
+"batch01_iontorrent_dams-f0_f1-pnd21","54","54","54","52","10F;22F","","","PRJNA1489663","SAMN61406324-SAMN61406377","on hold; public upon publication of the manuscript"
+"batch02_illumina-miseq_f1-f2_pnd365","48","48","49","48","","","t3","PRJNA1489663","SAMN61407672-SAMN61407719","on hold; public upon publication of the manuscript"
