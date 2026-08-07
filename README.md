@@ -59,7 +59,7 @@ source("figures/Figure_3/generate_figure_3_hk.R")
 
 The validation scripts check sample inclusion, abundance values, statistical methods, plot construction, and output generation. The generation scripts write readable PNG panels to [`figures/Figure_3/output/`](figures/Figure_3/output/).
 
-See [`figures/Figure_3/README.md`](figures/Figure_3/README.md) for the canonical inputs used by this workflow.
+See [`figures/README.md`](figures/README.md) for figure sources and generation details.
 
 ## Data organization and analysis rules
 
