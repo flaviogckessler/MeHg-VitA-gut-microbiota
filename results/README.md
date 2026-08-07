@@ -1,9 +1,9 @@
 # Results
 
 - `alpha_diversity/` contains batch-specific alpha-diversity estimates and their source-associated metadata. Figure workflows join these estimates to the canonical manifests in `data/metadata/`.
-- `taxon_relative_abundance/` contains batch-specific processed taxon relative-abundance matrices used by Figure 3 panels H-K.
+- `taxon_relative_abundance/` contains batch-specific processed taxon relative-abundance matrices used by Figure 3 panels H-K and Figure 4 panels A-D.
 - `functional_prediction/` contains legacy PICRUSt exports, separated by sequencing batch and renamed by content.
-- `legacy_summary_tables/` contains the cross-batch Z-score table found in the original `Data_metadata` folder.
+- `legacy_summary_tables/` contains retained summary artifacts, including the cross-batch Z-score table and the Figure 4 `Signif_*.csv` validation checkpoints under [`legacy_summary_tables/figure_4/`](legacy_summary_tables/figure_4/).
 
 The `kegg_ortholog_abundance_legacy_ko2.tsv` filenames deliberately retain the `KO2` distinction because the precise transformation represented by `KO2` is not documented in the source files.
 

@@ -24,9 +24,9 @@ Sex, generation, treatment, sequencing batch, analysis inclusion, and data-depos
 
 This repository is under active reproducibility curation.
 
-- Figure 3 panels A-K have portable, validated workflows.
+- Figure 3 panels A-K and Figure 4 panels A-D have portable, validated workflows.
 - Additional main and supplementary figure workflows will be migrated and validated progressively.
-- Scripts retained directly under `scripts/` are legacy source scripts. Some still contain historical paths, exploratory code, or obsolete comments and should not be considered portable until they are migrated into the corresponding analysis or figure directory.
+- Legacy scripts already used as provenance for portable workflows are isolated under [`scripts/legacy_scripts/`](scripts/legacy_scripts/). Unused legacy scripts remain directly under `scripts/` until their corresponding analyses are curated.
 
 ## Repository structure
 
@@ -38,7 +38,8 @@ This repository is under active reproducibility curation.
 | [`data/processed/`](data/processed/) | Processed ASV tables, taxonomy, representative sequences, BIOM files, relative abundances, and read tracking. |
 | [`figures/`](figures/) | Main-figure workflows, validation scripts, and lightweight generated PNG outputs. |
 | [`results/`](results/) | Alpha-diversity and taxon-abundance tables, functional-prediction exports, and legacy summary tables. |
-| [`scripts/`](scripts/) | Analysis scripts, including legacy scripts awaiting reproducibility migration. |
+| [`scripts/`](scripts/) | Analysis and curation scripts, including unused legacy scripts awaiting migration. |
+| [`scripts/legacy_scripts/`](scripts/legacy_scripts/) | Unchanged legacy references already mapped to portable Figure 3 and Figure 4 workflows. |
 | [`supplementary_figures/`](supplementary_figures/) | Reserved for supplementary-figure workflows and outputs. |
 | [`docs/`](docs/) | Reserved for extended project documentation. |
 
@@ -46,18 +47,30 @@ Canonical data and metadata are stored once under `data/`. Figure scripts should
 
 ## Quick start
 
-The validated Figure 3 workflows require R and the `tidyverse`, `rstatix`, and `ggpubr` packages. Start R from the repository root and run:
+The validated Figure 3 workflows require R and the `tidyverse`, `rstatix`, and `ggpubr` packages. The Figure 4 workflows use base R only. Start R from the repository root and run:
 
 ```r
 source("figures/Figure_3/validate_figure_3_abc.R")
 source("figures/Figure_3/generate_figure_3_abc.R")
+generate_figure_3_abc()
 source("figures/Figure_3/validate_figure_3_dg.R")
 source("figures/Figure_3/generate_figure_3_dg.R")
+generate_figure_3_dg()
 source("figures/Figure_3/validate_figure_3_hk.R")
 source("figures/Figure_3/generate_figure_3_hk.R")
+generate_figure_3_hk()
+source("figures/Figure_4/validate_figure_4.R")
+source("figures/Figure_4/generate_figure_4_a.R")
+generate_figure_4_a()
+source("figures/Figure_4/generate_figure_4_b.R")
+generate_figure_4_b()
+source("figures/Figure_4/generate_figure_4_c.R")
+generate_figure_4_c()
+source("figures/Figure_4/generate_figure_4_d.R")
+generate_figure_4_d()
 ```
 
-The validation scripts check sample inclusion, abundance values, statistical methods, plot construction, and output generation. The generation scripts write readable PNG panels to [`figures/Figure_3/output/`](figures/Figure_3/output/).
+The validation scripts check sample inclusion, abundance values, statistical methods, legacy checkpoints where retained, plot construction, and output generation. Generated panels are written to [`figures/Figure_3/output/`](figures/Figure_3/output/) and [`figures/Figure_4/output/`](figures/Figure_4/output/).
 
 See [`figures/README.md`](figures/README.md) for figure sources and generation details.
 

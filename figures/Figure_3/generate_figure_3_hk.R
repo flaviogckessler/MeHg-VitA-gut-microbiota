@@ -1,3 +1,6 @@
+# Reproducible refactor of scripts/legacy_scripts/Abundancia_boxplots.R.
+# The legacy file is retained for provenance and is not a runtime dependency.
+
 # - Packages
 library(tidyverse)
 library(rstatix)

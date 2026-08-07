@@ -13,7 +13,7 @@ The microbiome data are organized by sequencing batch and processing level.
 
 - `metadata/` contains preserved source metadata, standardized per-batch sample manifests, a combined sample manifest, SRA deposition information, and validation results.
 - `processed/` contains ASV count tables, taxonomy, representative sequences, BIOM files, relative abundance data, and read tracking.
-- `external/` is reserved for external reference databases. The SILVA R object remains outside `New_repo` for now and is not duplicated here.
+- `external/` is reserved for external reference databases. No external reference database is currently stored in the repository.
 
 Raw FASTQ files are deliberately not stored in `New_repo`, and there is no local `data/raw/` directory.
 
@@ -29,8 +29,4 @@ The accession ranges are also recorded in `metadata/sra_data_availability.csv`. 
 
 For sequence reprocessing after public release, download the FASTQ files outside the repository and set the `RAW_FASTQ_DIR` environment variable before running `scripts/dada2.R`. The script no longer assumes or creates a repository-local raw-data directory.
 
-Run the following command from the project root to rebuild this layout from the source folders one level above `New_repo`:
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\00_setup\organize_data.ps1
-```
+The historical [`scripts/00_setup/organize_data.ps1`](../scripts/00_setup/organize_data.ps1) utility documents the initial curation process. Portable analyses should use the canonical files already organized under `data/` and `results/` rather than rebuilding them through the historical import workflow.

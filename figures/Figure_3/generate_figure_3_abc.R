@@ -1,3 +1,7 @@
+# Reproducible refactor of
+# scripts/legacy_scripts/Abundancias_Barras_Mestrado.R.
+# The legacy file is retained for provenance and is not a runtime dependency.
+
 # - Packages
 library(tidyverse)
 
