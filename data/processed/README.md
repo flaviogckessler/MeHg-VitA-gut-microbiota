@@ -9,8 +9,19 @@ Processed sequence products are separated by sequencing batch. Filenames describ
 - `representative_sequences.fasta`: representative ASV sequences.
 - `feature_table.biom`: BIOM-format feature table.
 - `read_tracking.csv`: read counts across filtering/denoising stages, when available.
+- `picrust2_input_asv_counts.tsv`: exact ASV count table supplied to the retained PICRUSt2 run.
+- `picrust2_input_representative_sequences.fasta`: exact representative sequences supplied to the retained PICRUSt2 run.
 
 The data are archived without removing excluded or unexpected sample columns. Use the canonical sample manifest in `data/metadata/` to select analysis samples.
+
+## PICRUSt2-specific inputs
+
+The `picrust2_input_*` files are preserved separately because they record the exact pipeline inputs and must not be reconstructed by silently substituting the broader canonical files:
+
+- Batch 01 used 1,684 ASVs. Its input is not an exact subset of the 1,701-ASV canonical table: 22 sequence identifiers are absent from the canonical file and 1,065 shared rows have different count vectors.
+- Batch 02 used a filtered set of 2,739 of the 11,704 canonical sequences. Its `SV00001`-style FASTA identifiers link one-to-one to the count-table identifiers; resolving those identifiers through the FASTA confirms that all 2,739 sequences and count vectors match the canonical table.
+
+Both PICRUSt2 count tables retain all columns used in the historical runs. This includes excluded batch 01 samples `10F` and `22F` and the undocumented batch 02 column `t3`; downstream analyses must apply the canonical manifest. The intermediate HDF5 BIOM tables are reproducibly generated from these TSV files and are not duplicated in the repository. See [`scripts/04_functional_prediction/picrust2_workflow.md`](../../scripts/04_functional_prediction/picrust2_workflow.md).
 
 ## Raw-sequence availability
 

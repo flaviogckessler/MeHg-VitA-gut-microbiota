@@ -25,6 +25,7 @@ Sex, generation, treatment, sequencing batch, analysis inclusion, and data-depos
 This repository is under active reproducibility curation.
 
 - Figure 3 panels A-K and Figure 4 panels A-D have portable, validated workflows.
+- The PICRUSt2 terminal workflow, exact batch-specific inputs, analysis-ready outputs, and weighted-NSTI quality metrics have been harmonized and validated against the supplied pipeline products; Figure 6 generation remains pending.
 - Additional main and supplementary figure workflows will be migrated and validated progressively.
 - Legacy scripts already used as provenance for portable workflows are isolated under [`scripts/legacy_scripts/`](scripts/legacy_scripts/). Unused legacy scripts remain directly under `scripts/` until their corresponding analyses are curated.
 
@@ -39,7 +40,7 @@ This repository is under active reproducibility curation.
 | [`figures/`](figures/) | Main-figure workflows, validation scripts, and lightweight generated PNG outputs. |
 | [`results/`](results/) | Alpha-diversity and taxon-abundance tables, functional-prediction exports, and legacy summary tables. |
 | [`scripts/`](scripts/) | Analysis and curation scripts, including unused legacy scripts awaiting migration. |
-| [`scripts/legacy_scripts/`](scripts/legacy_scripts/) | Unchanged legacy references already mapped to portable Figure 3 and Figure 4 workflows. |
+| [`scripts/legacy_scripts/`](scripts/legacy_scripts/) | Unchanged legacy references already mapped to portable figure and PICRUSt2 workflows. |
 | [`supplementary_figures/`](supplementary_figures/) | Reserved for supplementary-figure workflows and outputs. |
 | [`docs/`](docs/) | Reserved for extended project documentation. |
 
@@ -73,6 +74,8 @@ generate_figure_4_d()
 The validation scripts check sample inclusion, abundance values, statistical methods, legacy checkpoints where retained, plot construction, and output generation. Generated panels are written to [`figures/Figure_3/output/`](figures/Figure_3/output/) and [`figures/Figure_4/output/`](figures/Figure_4/output/).
 
 See [`figures/README.md`](figures/README.md) for figure sources and generation details.
+
+The reconstructed Linux-terminal PICRUSt2 workflow is documented in [`scripts/04_functional_prediction/picrust2_workflow.md`](scripts/04_functional_prediction/picrust2_workflow.md). A full rerun is optional and time-consuming; the retained EC, KO, and MetaCyc matrices were validated line-by-line against the supplied original pipeline outputs.
 
 ## Data organization and analysis rules
 

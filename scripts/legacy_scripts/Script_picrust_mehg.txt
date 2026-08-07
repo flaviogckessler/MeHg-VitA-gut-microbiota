@@ -1,0 +1,59 @@
+#TUTORIAL: https://github.com/picrust/picrust2/wiki/Installation
+#secondary tutorial: https://github.com/picrust/picrust2/wiki/Installation
+#Open terminal in the data directory
+
+conda activate picrust2
+
+#Analysis for "mestrado" data
+
+#Convert total abundancies table (seqtab_mestrado.txt) to binary .biom format (hdf5 biom)
+biom convert -i seqtab_mestrado.txt -o otu_biom_mestradohdf5.biom --to-hdf5 --table-type="OTU table"
+
+#Example command from tutorial:
+#picrust2_pipeline.py -s seqs_arc.fna -i table.biom -o picrust2_out_pipeline -p 1 --verbose
+
+picrust2_pipeline.py -s rep-seqs_mestrado.fna -i otu_biom_mestradohdf5.biom -o picrust2_mestrado_out_pipeline -p 1 --verbose
+
+#Mestrado data: dams + PND21 males and females microbiota
+#54 samples
+#1684 ASVs
+#Completed PICRUSt2 pipeline in 6581.13 seconds. (1h49min41s)
+----------------------------------------------------------------------------------------------------------
+#Analysis for "year" data
+
+#Convert total abundancies table (seqtab_mestrado.txt) to binary .biom format (hdf5 biom)
+biom convert -i seqtab1year.txt -o otu_biom_1yearhdf5.biom --to-hdf5 --table-type="OTU table"
+
+picrust2_pipeline.py -s rep-seqs1year.fna -i otu_biom_1yearhdf5.biom -o picrust2_mestrado_out_pipeline -p 1 --verbose
+
+#1Year animals data: F1 + F2 males and females microbiota
+#48 samples
+#11704 ASVs
+#Completed PICRUSt2 pipeline in 0000.00 seconds. (0h00min00s)
+----------------------------------------------------------------------------------------------------------
+#Analysis for "year" data
+# Running picrust steps individually
+
+#Place sequences into bacterial reference phylogeny:
+place_seqs.py -s rep-seqs1year.fna -o picrust2_mestrado_out_pipeline/intermediate/bac_placed_seqs.tre -p 1 -r bacteria --intermediate placement_working_bac
+
+ERROR:
+"Warning - 3413 input sequences aligned poorly to reference sequences (--min_align option specified a minimum proportion of 0.8 aligning to reference sequences). These input sequences will not be placed and will be excluded from downstream steps.
+
+This is the set of poorly aligned input sequences to be excluded: ACACCGGGAATTCCGCTAACCTCTACTTCACTCAAGAACAGCAGTTTTAAGTGCAGTCTATGGGTTAAGCCCATAC......"
+#Place sequences into archael reference phylogeny:
+place_seqs.py -s study_seqs.fna -o picrust2_mestrado_out_pipeline/intermediate/arc_placed_seqs.tre -p 1 -r archaea --intermediate placement_working_arc
+----------------------------------------------------------------------------------------------------------
+#Analysis for "year" data
+#Arquivos menores da pasta "outfiles" do drive: https://drive.google.com/drive/folders/1HPGeY91zR0dIj7BJZV1AJwq_Y0RnxGr_
+
+#Convert total abundancies table (exprabund_1year_outfiles.txt) to binary .biom format (hdf5 biom)
+biom convert -i exprabund_1year_outfiles.txt -o otu_biom_1yearhdf5_outfiles.biom --to-hdf5 --table-type="OTU table"
+
+picrust2_pipeline.py -s exprasv_outfiles.fna -i otu_biom_1yearhdf5_outfiles.biom -o picrust2_mestrado_out_pipeline -p 1 --verbose
+
+#1Year animals data: F1 + F2 males and females microbiota
+#48 samples
+#2739 ASVs / 58 deleted (poorly aligned)
+#Completed PICRUSt2 pipeline in 7987.52 seconds. (0h00min00s)
+----------------------------------------------------------------------------------------------------------
