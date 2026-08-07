@@ -8,6 +8,8 @@ Each batch directory contains:
 - a standardized `sample_manifest.csv`;
 - any additional legacy metadata available for that batch.
 
+The batch 01 directory also contains [`metadata_thg_hplc.csv`](batch01_iontorrent_dams-f0_f1-pnd21/metadata_thg_hplc.csv), the provided F1 fecal total-mercury (THg) and HPLC amino-acid measurements. Figure 5D joins its `SampleID` and `Hg` fields to the canonical manifest and taxon-relative-abundance table. Samples `10F` and `22F` remain in this source file for traceability but are excluded through the manifest's `include_primary_analysis` field.
+
 `data_validation_summary.csv` compares the expected sample lists, metadata rows, and processed ASV-table columns. Empty missing/unexpected fields mean that the identifiers agree.
 
 The `legacy_observation` column preserves the unexplained `obs` field from the batch 02 source metadata without assigning it a new interpretation.
