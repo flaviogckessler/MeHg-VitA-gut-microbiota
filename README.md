@@ -24,8 +24,8 @@ Sex, generation, treatment, sequencing batch, analysis inclusion, and data-depos
 
 This repository is under active reproducibility curation.
 
-- Figure 3 panels A-K and Figure 4 panels A-D have portable, validated workflows.
-- The PICRUSt2 terminal workflow, exact batch-specific inputs, analysis-ready outputs, and weighted-NSTI quality metrics have been harmonized and validated against the supplied pipeline products; Figure 6 generation remains pending.
+- Figure 3 panels A-K, Figure 4 panels A-D, Figure 5 panel D, and Figure 6 panels A-C have portable, tested workflows.
+- The PICRUSt2 terminal workflow, exact batch-specific inputs, analysis-ready outputs, and weighted-NSTI quality metrics have been harmonized and validated against the supplied pipeline products. Figure 6 uses only the canonical KO predictions and canonical sample manifest.
 - Additional main and supplementary figure workflows will be migrated and validated progressively.
 - Legacy scripts already used as provenance for portable workflows are isolated under [`scripts/legacy_scripts/`](scripts/legacy_scripts/). Unused legacy scripts remain directly under `scripts/` until their corresponding analyses are curated.
 
@@ -69,9 +69,15 @@ source("figures/Figure_4/generate_figure_4_c.R")
 generate_figure_4_c()
 source("figures/Figure_4/generate_figure_4_d.R")
 generate_figure_4_d()
+source("figures/Figure_6/generate_figure_6_a.R")
+generate_figure_6_a()
+source("figures/Figure_6/generate_figure_6_b.R")
+generate_figure_6_b()
+source("figures/Figure_6/generate_figure_6_c.R")
+generate_figure_6_c()
 ```
 
-The validation scripts check sample inclusion, abundance values, statistical methods, legacy checkpoints where retained, plot construction, and output generation. Generated panels are written to [`figures/Figure_3/output/`](figures/Figure_3/output/) and [`figures/Figure_4/output/`](figures/Figure_4/output/).
+The Figure 6 generators additionally require `ggpicrust2`, `ALDEx2`, `ggplot2`, `patchwork`, and `scales`; its seeded ALDEx2 step can take several minutes per panel. Generated outputs are written to each figure's `output/` directory.
 
 See [`figures/README.md`](figures/README.md) for figure sources and generation details.
 

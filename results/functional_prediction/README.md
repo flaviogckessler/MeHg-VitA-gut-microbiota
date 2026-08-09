@@ -22,3 +22,7 @@ The EC, KO, and MetaCyc files previously curated from `Data_metadata/picrust/` w
 The batch 02 PICRUSt2 output contains `t3`, although the canonical metadata describe only 48 samples. The column is preserved for provenance but must not be analyzed without valid metadata. Downstream scripts should join the matrix columns to [`data/metadata/sample_manifest_all_batches.csv`](../../data/metadata/sample_manifest_all_batches.csv) and retain only documented primary-analysis samples.
 
 The exact input tables and representative sequences are stored with descriptive `picrust2_input_*` names under [`data/processed/`](../../data/processed/). See the portable [`picrust2_workflow.md`](../../scripts/04_functional_prediction/picrust2_workflow.md) and its unchanged [`legacy command log`](../../scripts/legacy_scripts/Script_picrust_mehg.txt) for command and provenance details.
+
+## Figure 6 use
+
+Figure 6 panels A-C read only the two canonical `kegg_ortholog_abundance.tsv` files. The scripts normalize the pipeline's `ko:K#####` identifiers to the `K#####` form expected by `ggpicrust2::ko2kegg_abundance()` in memory; the source files remain unchanged. The EC, MetaCyc, weighted-NSTI, and `_legacy_ko2.tsv` files are not used for Figure 6. See [`figures/README.md`](../../figures/README.md) for the panel-to-source and panel-to-script mapping.
