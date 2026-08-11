@@ -50,6 +50,12 @@
 - The portable workflow is derived from the unchanged [`Picrust_mestrado_Alberto.R`](../scripts/legacy_scripts/Picrust_mestrado_Alberto.R). Its multi-group plotting function could misalign filtered DAA rows, pathway order, p-values, and group summaries. The replacement aligns by explicit feature/group keys and does not calculate a two-group fold change for the four-group design.
 - The upstream Linux-terminal reconstruction remains documented in [`picrust2_workflow.md`](../scripts/04_functional_prediction/picrust2_workflow.md), derived from the unchanged [`Script_picrust_mehg.txt`](../scripts/legacy_scripts/Script_picrust_mehg.txt) command log.
 
+### Figures 7 and 8
+
+- The KO-level heatmap source tables are generated under the corresponding batch directories in [`results/functional_prediction/`](../results/functional_prediction/) by [`generate_kegg_pathway_ko_z_scores.R`](../scripts/04_functional_prediction/generate_kegg_pathway_ko_z_scores.R).
+- The generator uses canonical PICRUSt2 KO abundance matrices, selects cohorts and treatments from the canonical manifest, and does not read legacy source tables. [`validate_kegg_pathway_ko_z_scores.R`](../scripts/04_functional_prediction/validate_kegg_pathway_ko_z_scores.R) independently checks all 19 clean outputs against their unchanged legacy CSV checkpoints.
+- The heatmap rendering workflows for Figures 7 and 8 have not yet been migrated.
+
 ### Figure 9
 
 - Source: [`Figure_9/Figure_9_SourceData.pzfx`](Figure_9/Figure_9_SourceData.pzfx).

@@ -24,7 +24,7 @@ Sex, generation, treatment, sequencing batch, analysis inclusion, and data-depos
 
 This repository is under active reproducibility curation.
 
-- Figure 3 panels A-K, Figure 4 panels A-D, Figure 5 panel D, and Figure 6 panels A-C have portable, tested workflows.
+- Figure 3 panels A-K, Figure 4 panels A-D, Figure 5 panel D, and Figure 6 panels A-C have portable, tested workflows. The KO-level z-score source tables for Figures 7, 8, and S8-S16 also have a portable, regression-tested generator; their figure-rendering workflows remain to be migrated.
 - The PICRUSt2 terminal workflow, exact batch-specific inputs, analysis-ready outputs, and weighted-NSTI quality metrics have been harmonized and validated against the supplied pipeline products. Figure 6 uses only the canonical KO predictions and canonical sample manifest.
 - Additional main and supplementary figure workflows will be migrated and validated progressively.
 - Legacy scripts already used as provenance for portable workflows are isolated under [`scripts/legacy_scripts/`](scripts/legacy_scripts/). Unused legacy scripts remain directly under `scripts/` until their corresponding analyses are curated.
@@ -37,6 +37,7 @@ This repository is under active reproducibility curation.
 | [`data/`](data/) | Data organization and provenance documentation. |
 | [`data/metadata/`](data/metadata/) | Canonical sample manifests, preserved source metadata, SRA information, and validation summaries. |
 | [`data/processed/`](data/processed/) | Processed ASV tables, taxonomy, representative sequences, BIOM files, relative abundances, and read tracking. |
+| [`data/reference/`](data/reference/) | Small, versioned reference objects required by portable analysis workflows. |
 | [`figures/`](figures/) | Main-figure workflows, validation scripts, and lightweight generated PNG outputs. |
 | [`results/`](results/) | Alpha-diversity and taxon-abundance tables, functional-prediction exports, and legacy summary tables. |
 | [`scripts/`](scripts/) | Analysis and curation scripts, including unused legacy scripts awaiting migration. |
@@ -75,9 +76,13 @@ source("figures/Figure_6/generate_figure_6_b.R")
 generate_figure_6_b()
 source("figures/Figure_6/generate_figure_6_c.R")
 generate_figure_6_c()
+source("scripts/04_functional_prediction/generate_kegg_pathway_ko_z_scores.R")
+generate_kegg_pathway_ko_z_scores()
+source("scripts/04_functional_prediction/validate_kegg_pathway_ko_z_scores.R")
+validate_kegg_pathway_ko_z_scores()
 ```
 
-The Figure 6 generators additionally require `ggpicrust2`, `ALDEx2`, `ggplot2`, `patchwork`, and `scales`; its seeded ALDEx2 step can take several minutes per panel. Generated outputs are written to each figure's `output/` directory.
+The Figure 6 generators additionally require `ggpicrust2`, `ALDEx2`, `ggplot2`, `patchwork`, and `scales`; its seeded ALDEx2 step can take several minutes per panel. The KO z-score source-data workflow uses base R plus the versioned KEGG reference stored under `data/reference/`; it does not require an installed `ggpicrust2` package. Generated figure outputs are written to each figure's `output/` directory, while generated source tables stay with their batch under `results/functional_prediction/`.
 
 See [`figures/README.md`](figures/README.md) for figure sources and generation details.
 

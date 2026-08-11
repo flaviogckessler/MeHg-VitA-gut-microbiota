@@ -13,7 +13,8 @@ The microbiome data are organized by sequencing batch and processing level.
 
 - `metadata/` contains preserved source metadata, standardized per-batch sample manifests, a combined sample manifest, SRA deposition information, and validation results.
 - `processed/` contains ASV count tables, taxonomy, representative sequences, BIOM files, relative abundance data, and read tracking.
-- `external/` is reserved for external reference databases. No external reference database is currently stored in the repository.
+- `reference/` contains small, versioned reference objects required to run portable analyses, including the repository-local ggpicrust2 KEGG-to-KO mapping used by the KO z-score generator.
+- `external/` is reserved for large external reference databases that should not be committed. No large external reference database is currently stored in the repository.
 
 Raw FASTQ files are deliberately not stored in `New_repo`, and there is no local `data/raw/` directory.
 
