@@ -24,7 +24,7 @@ Sex, generation, treatment, sequencing batch, analysis inclusion, and data-depos
 
 This repository is under active reproducibility curation.
 
-- Figure 3 panels A-K, Figure 4 panels A-D, Figure 5 panel D, and Figure 6 panels A-C have portable, tested workflows. The KO-level z-score source tables for Figures 7, 8, and S8-S16 also have a portable, regression-tested generator; their figure-rendering workflows remain to be migrated.
+- Figure 3 panels A-K, Figure 4 panels A-D, Figure 5 panel D, Figure 6 panels A-C, and panels E of Figures 7 and 8 have portable, tested workflows. The KO-level z-score source tables for Figures 7, 8, and S8-S16 also have a portable, regression-tested generator; the remaining supplementary heatmap-rendering workflows have not yet been migrated.
 - The PICRUSt2 terminal workflow, exact batch-specific inputs, analysis-ready outputs, and weighted-NSTI quality metrics have been harmonized and validated against the supplied pipeline products. Figure 6 uses only the canonical KO predictions and canonical sample manifest.
 - Additional main and supplementary figure workflows will be migrated and validated progressively.
 - Legacy scripts already used as provenance for portable workflows are isolated under [`scripts/legacy_scripts/`](scripts/legacy_scripts/). Unused legacy scripts remain directly under `scripts/` until their corresponding analyses are curated.
