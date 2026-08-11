@@ -24,3 +24,6 @@ to floating-point summation order.
 The legacy filename suffix `1year` corresponds to PND365. The double underscore
 in filenames such as `ko00190__F1_PND21.csv` is retained here because these files
 are unchanged provenance artifacts.
+
+The Figure S16 checkpoint is `ko00311__F2_1year.csv`, corresponding to the
+F2-PND365 cohort used for that figure.

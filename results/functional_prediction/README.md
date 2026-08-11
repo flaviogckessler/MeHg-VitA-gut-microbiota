@@ -50,6 +50,16 @@ The 19 clean CSV files are stored in each batch's
 Rows with four identical treatment means retain `NA` z-scores, matching the
 legacy source data and making the undefined standardization explicit.
 
+The two source locations are
+[`batch01_iontorrent_dams-f0_f1-pnd21/kegg_pathway_ko_z_scores/`](batch01_iontorrent_dams-f0_f1-pnd21/kegg_pathway_ko_z_scores/)
+and
+[`batch02_illumina-miseq_f1-f2_pnd365/kegg_pathway_ko_z_scores/`](batch02_illumina-miseq_f1-f2_pnd365/kegg_pathway_ko_z_scores/).
+In addition to supplying the heatmap values, these CSV files were used as the
+numerical coloring reference when the KEGG pathway panels—often panels A-D of
+Figures 7, 8, and S8-S16—were prepared manually at
+[`https://www.kegg.jp/pathway/mapxxxxx`](https://www.kegg.jp/pathway/mapxxxxx).
+Here, `xxxxx` represents the five-digit pathway code in the individual figure.
+
 The generator has no dependency on the copied legacy CSVs or the retained
 `legacy_ko2` matrices. In both batches, the canonical KO matrices were verified
 to be exactly identical to the legacy KO2 matrices after normalizing the
@@ -78,6 +88,18 @@ The validator regenerates every table in a temporary directory, compares it
 with the committed clean output and the unchanged legacy checkpoint under
 [`results/legacy_summary_tables/figure_7_8_s8_s16/`](../legacy_summary_tables/figure_7_8_s8_s16/),
 and checks each finite row for mean zero and unit sample standard deviation.
+
+The portable supplementary heatmap renderer and its figure-specific entry
+points are documented in
+[`supplementary_figures/README.md`](../../supplementary_figures/README.md).
+[`validate_figure_s8_s16.R`](../../supplementary_figures/validate_figure_s8_s16.R)
+checks the exact finite KO sets used in the ten S8-S16 heatmaps, including the
+ten undefined constant-profile rows omitted by the historical `na.omit()`
+rendering step.
+
+Figure S16 uses the F2-PND365
+`f2_pnd365_ko00311_ko_z_scores.csv` source and matching
+`ko00311__F2_1year.csv` legacy checkpoint.
 
 ## Figure 6 use
 

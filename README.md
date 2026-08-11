@@ -24,7 +24,7 @@ Sex, generation, treatment, sequencing batch, analysis inclusion, and data-depos
 
 This repository is under active reproducibility curation.
 
-- Figure 3 panels A-K, Figure 4 panels A-D, Figure 5 panel D, Figure 6 panels A-C, and panels E of Figures 7 and 8 have portable, tested workflows. The KO-level z-score source tables for Figures 7, 8, and S8-S16 also have a portable, regression-tested generator; the remaining supplementary heatmap-rendering workflows have not yet been migrated.
+- Figure 3 panels A-K, Figure 4 panels A-D, Figure 5 panel D, Figure 6 panels A-C, panels E of Figures 7 and 8, and all ten KO z-score heatmaps in Figures S8-S16 have portable, tested workflows. The 19 KO-level source tables shared by Figures 7, 8, and S8-S16 also have a portable, regression-tested generator. Their KEGG pathway panels remain retained manual exports prepared with the generated z-score tables as the coloring reference; supplied final composites are retained for visual validation.
 - The PICRUSt2 terminal workflow, exact batch-specific inputs, analysis-ready outputs, and weighted-NSTI quality metrics have been harmonized and validated against the supplied pipeline products. Figure 6 uses only the canonical KO predictions and canonical sample manifest.
 - Additional main and supplementary figure workflows will be migrated and validated progressively.
 - Legacy scripts already used as provenance for portable workflows are isolated under [`scripts/legacy_scripts/`](scripts/legacy_scripts/). Unused legacy scripts remain directly under `scripts/` until their corresponding analyses are curated.
@@ -112,6 +112,14 @@ The records are currently on hold and are intended for public release with the m
 ## Figure-output policy
 
 Generated figures are stored as compact PNG files suitable for inspection and reproducibility checks. Manually supplied publication/reference artifacts may be retained in their original format, but figure-generation scripts must not create new TIFF files. See [`figures/README.md`](figures/README.md).
+
+Main figures use `figures/Figure_<number>/output/`; supplementary figures with
+portable panel workflows use `supplementary_figures/Figure_S<number>/output/`.
+Supplied assembled composites use `Figure_<id>_FinalFigure.png`, while portable
+panel outputs use `Figure<id><panel>_generated.png`. Descriptive incoming
+filenames should be normalized to this convention once the figure number and
+panel mapping are confirmed. Scientific cohort conflicts must be documented
+and resolved rather than hidden by renaming an artifact.
 
 ## Citation and license
 
