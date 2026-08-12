@@ -1,5 +1,51 @@
 # Supplementary figures
 
+## Figure S1
+
+Figure S1 complements the Shannon-diversity results in main Figure 3 panels
+D-G by showing Observed richness and InvSimpson diversity for the same four
+canonical cohorts. The portable workflow reads the batch-specific
+[`alpha-diversity tables`](../results/alpha_diversity/) and joins them to the
+corresponding canonical [`sample manifests`](../data/metadata/). It honors
+`include_primary_analysis`, excluding low-quality samples `10F` and `22F`, and
+does not analyze undocumented batch 02 sample `t3`.
+
+| Panel | Metric | Cohort | Samples | Statistical workflow |
+|---|---|---|---:|---|
+| A | Observed | Dams (F0) | 18 | Within-sex one-way ANOVA and Tukey HSD |
+| B | Observed | F1-PND21 | 34 | Between-sex Wilcoxon test; within-sex Dunn tests with FDR adjustment |
+| C | Observed | F1-PND365 | 24 | Between-sex Wilcoxon test; within-sex Dunn tests with FDR adjustment |
+| D | Observed | F2-PND365 | 24 | Between-sex Welch t-test; within-sex one-way ANOVA and Tukey HSD |
+| E | InvSimpson | Dams (F0) | 18 | Within-sex one-way ANOVA and Tukey HSD |
+| F | InvSimpson | F1-PND21 | 34 | Between-sex Welch t-test; within-sex one-way ANOVA and Tukey HSD |
+| G | InvSimpson | F1-PND365 | 24 | Between-sex Welch t-test; within-sex one-way ANOVA and Tukey HSD |
+| H | InvSimpson | F2-PND365 | 24 | Between-sex Welch t-test; within-sex one-way ANOVA and Tukey HSD |
+
+[`generate_figure_s1_ah.R`](Figure_S1/generate_figure_s1_ah.R) implements the
+same treatment order, colors, sex facets, test labels, and PNG dimensions used
+for Figure 3 panels D-G. It generates
+`FigureS1A_generated.png`-`FigureS1H_generated.png` in
+[`Figure_S1/output/`](Figure_S1/output/). The matching
+[`validate_figure_s1_ah.R`](Figure_S1/validate_figure_s1_ah.R) checks the
+canonical sources, manifest join, exact cohort and exclusion sets, panel
+mapping, statistical-test coverage, PNG names and dimensions, committed panel
+outputs, and supplied composite.
+
+The supplied [`Figure_S1_FinalFigure.png`](Figure_S1/output/Figure_S1_FinalFigure.png)
+was assembled manually in Adobe Photoshop from the individual panels and is
+retained as a visual reference; the R workflow does not recreate that
+composite. The reference labels F1-PND365 as `n = 25`, reflecting the original
+inclusion of `t3`. The portable panels deliberately report `n = 24` because
+`t3` has no canonical metadata row; this follows the repository-wide cohort
+rule and makes the difference auditable.
+
+Generate and validate the panels from the repository root:
+
+``` powershell
+Rscript supplementary_figures/Figure_S1/generate_figure_s1_ah.R
+Rscript supplementary_figures/Figure_S1/validate_figure_s1_ah.R
+```
+
 ## Figures S8-S16
 
 Figures S8-S16 follow the same reproducibility boundary as main Figures 7 and 8. The KEGG pathway views were prepared manually, while their KO z-score heatmaps now have portable base-R renderers. The supplied final composites are retained as visual references under each figure's `output/` directory.

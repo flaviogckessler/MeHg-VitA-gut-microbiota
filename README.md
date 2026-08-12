@@ -24,7 +24,7 @@ Sex, generation, treatment, sequencing batch, analysis inclusion, and data-depos
 
 This repository is under active reproducibility curation.
 
-- Figure 3 panels A-K, Figure 4 panels A-D, Figure 5 panel D, Figure 6 panels A-C, panels E of Figures 7 and 8, and all ten KO z-score heatmaps in Figures S8-S16 have portable, tested workflows. The 19 KO-level source tables shared by Figures 7, 8, and S8-S16 also have a portable, regression-tested generator. Their KEGG pathway panels remain retained manual exports prepared with the generated z-score tables as the coloring reference; supplied final composites are retained for visual validation.
+- Figure 3 panels A-K, Figure 4 panels A-D, Figure 5 panel D, Figure 6 panels A-C, Figure S1 panels A-H, panels E of Figures 7 and 8, and all ten KO z-score heatmaps in Figures S8-S16 have portable, tested workflows. The 19 KO-level source tables shared by Figures 7, 8, and S8-S16 also have a portable, regression-tested generator. Their KEGG pathway panels remain retained manual exports prepared with the generated z-score tables as the coloring reference; supplied final composites are retained for visual validation.
 - The PICRUSt2 terminal workflow, exact batch-specific inputs, analysis-ready outputs, and weighted-NSTI quality metrics have been harmonized and validated against the supplied pipeline products. Figure 6 uses only the canonical KO predictions and canonical sample manifest.
 - Additional main and supplementary figure workflows will be migrated and validated progressively.
 - Legacy scripts already used as provenance for portable workflows are isolated under [`scripts/legacy_scripts/`](scripts/legacy_scripts/). Unused legacy scripts remain directly under `scripts/` until their corresponding analyses are curated.
@@ -42,14 +42,14 @@ This repository is under active reproducibility curation.
 | [`results/`](results/) | Alpha-diversity and taxon-abundance tables, functional-prediction exports, and legacy summary tables. |
 | [`scripts/`](scripts/) | Analysis and curation scripts, including unused legacy scripts awaiting migration. |
 | [`scripts/legacy_scripts/`](scripts/legacy_scripts/) | Unchanged legacy references already mapped to portable figure and PICRUSt2 workflows. |
-| [`supplementary_figures/`](supplementary_figures/) | Reserved for supplementary-figure workflows and outputs. |
+| [`supplementary_figures/`](supplementary_figures/) | Supplementary-figure workflows, validation scripts, retained composites, and generated panel outputs. |
 | [`docs/`](docs/) | Reserved for extended project documentation. |
 
 Canonical data and metadata are stored once under `data/`. Figure scripts should read these files directly rather than duplicate them within figure directories.
 
 ## Quick start
 
-The validated Figure 3 workflows require R and the `tidyverse`, `rstatix`, and `ggpubr` packages. The Figure 4 workflows use base R only. Start R from the repository root and run:
+The validated Figure 3 and Figure S1 alpha-diversity workflows require R and the `tidyverse`, `rstatix`, and `ggpubr` packages. The Figure 4 workflows use base R only. Start R from the repository root and run:
 
 ```r
 source("figures/Figure_3/validate_figure_3_abc.R")
@@ -58,6 +58,9 @@ generate_figure_3_abc()
 source("figures/Figure_3/validate_figure_3_dg.R")
 source("figures/Figure_3/generate_figure_3_dg.R")
 generate_figure_3_dg()
+source("supplementary_figures/Figure_S1/validate_figure_s1_ah.R")
+source("supplementary_figures/Figure_S1/generate_figure_s1_ah.R")
+generate_figure_s1_ah()
 source("figures/Figure_3/validate_figure_3_hk.R")
 source("figures/Figure_3/generate_figure_3_hk.R")
 generate_figure_3_hk()
@@ -84,7 +87,11 @@ validate_kegg_pathway_ko_z_scores()
 
 The Figure 6 generators additionally require `ggpicrust2`, `ALDEx2`, `ggplot2`, `patchwork`, and `scales`; its seeded ALDEx2 step can take several minutes per panel. The KO z-score source-data workflow uses base R plus the versioned KEGG reference stored under `data/reference/`; it does not require an installed `ggpicrust2` package. Generated figure outputs are written to each figure's `output/` directory, while generated source tables stay with their batch under `results/functional_prediction/`.
 
-See [`figures/README.md`](figures/README.md) for figure sources and generation details.
+See the [main-figure guide](figures/README.md) and
+[supplementary-figure guide](supplementary_figures/README.md) for figure sources
+and generation details. Figure S1's supplied final composite was assembled
+manually in Adobe Photoshop and is retained as a visual reference rather than
+an R-generated output.
 
 The reconstructed Linux-terminal PICRUSt2 workflow is documented in [`scripts/04_functional_prediction/picrust2_workflow.md`](scripts/04_functional_prediction/picrust2_workflow.md). A full rerun is optional and time-consuming; the retained EC, KO, and MetaCyc matrices were validated line-by-line against the supplied original pipeline outputs.
 
