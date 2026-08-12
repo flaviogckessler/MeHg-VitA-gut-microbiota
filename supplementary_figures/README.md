@@ -56,3 +56,61 @@ The validator regenerates every panel in a temporary directory and checks all pe
 
 -   Source: [`Figure_S17_SourceData.pzfx`](Figure_S17_SourceData.pzfx).
 -   Generation: the full figure was generated in GraphPad Prism and exported as [`Figure_S17.png`](Figure_S17.png).
+
+## Figure S18
+
+Figure S18 is the repository-generated 4 x 4 comparison of four
+mercuric-related KEGG Orthologs across F0 dams, F1-PND21, F1-PND365, and
+F2-PND365. KEGG Orthologs are rows and cohort datasets are columns; no panel
+letters are assigned. The
+official portable workflow is
+[`generate_figure_s18.R`](Figure_S18/generate_figure_s18.R).
+
+| KO row | Annotation |
+|---|---|
+| `K00520` (`merA`) | mercuric reductase [EC:1.16.1.1] |
+| `K08363` (`merT`) | mercuric ion transport protein |
+| `K08364` (`merP`) | periplasmic mercuric ion binding protein |
+| `K08365` (`merR`) | MerR family transcriptional regulator, mercuric resistance operon regulatory protein |
+
+| Column | Cohort | Batch | Included samples |
+|---|---|---|---:|
+| 1 | F0-Dams | `batch01_iontorrent_dams-f0_f1-pnd21` | 18 |
+| 2 | F1-PND21 | `batch01_iontorrent_dams-f0_f1-pnd21` | 34 |
+| 3 | F1-PND365 | `batch02_illumina-miseq_f1-f2_pnd365` | 24 |
+| 4 | F2-PND365 | `batch02_illumina-miseq_f1-f2_pnd365` | 24 |
+
+The numerical sources are the canonical PICRUSt2
+[`kegg_ortholog_abundance.tsv`](../results/functional_prediction/batch01_iontorrent_dams-f0_f1-pnd21/kegg_ortholog_abundance.tsv)
+matrix for batch 01 and the corresponding
+[`kegg_ortholog_abundance.tsv`](../results/functional_prediction/batch02_illumina-miseq_f1-f2_pnd365/kegg_ortholog_abundance.tsv)
+matrix for batch 02. Cohorts are selected through the batch-specific
+[`sample_manifest.csv`](../data/metadata/batch01_iontorrent_dams-f0_f1-pnd21/sample_manifest.csv)
+and
+[`sample_manifest.csv`](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv)
+files. The generator honors `include_primary_analysis`, so low-quality samples
+`10F` and `22F` are excluded. KO selection and annotation labels come from the
+preserved manual KEGG REST result
+[`kegg_api_find_ko_mercuric_orthologs.tsv`](../data/reference/kegg/kegg_api_find_ko_mercuric_orthologs.tsv).
+
+Within each dataset-by-KO cell, the boxplots compare the four exposure groups
+after pooling sexes; sex remains visible through point shape. The script fits a
+one-way treatment ANOVA and performs all six Tukey HSD pairwise exposure
+comparisons per cell. Only adjusted comparisons below 0.05 receive brackets and
+asterisks (`*` p < 0.05, `**` p < 0.01, `***` p < 0.001, and `****` p <
+0.0001). The current data contain no Tukey-adjusted comparison below 0.05 among
+the 96 evaluated comparisons.
+
+The official 2700 x 2400 PNG is
+[`FigureS18_generated.png`](Figure_S18/output/FigureS18_generated.png).
+Generate it from the repository root with:
+
+``` powershell
+Rscript supplementary_figures/Figure_S18/generate_figure_s18.R
+```
+
+The script validates source schemas, matrix dimensions, cohort membership,
+sample counts, required sex-by-treatment replication, KO presence in both
+matrices, finite non-negative abundances, the expected 96 post-hoc comparisons,
+and output dimensions. It reports the 16 omnibus ANOVA values and any adjusted
+significant comparisons when run directly.
