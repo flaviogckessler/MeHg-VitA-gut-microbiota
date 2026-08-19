@@ -97,7 +97,7 @@ source("scripts/04_functional_prediction/validate_kegg_pathway_ko_z_scores.R")
 validate_kegg_pathway_ko_z_scores()
 ```
 
-The Figure 6 generators additionally require `ggpicrust2`, `ALDEx2`, `ggplot2`, `patchwork`, and `scales`; its seeded ALDEx2 step can take several minutes per panel. The KO z-score source-data workflow uses base R plus the versioned KEGG reference stored under `data/reference/`; it does not require an installed `ggpicrust2` package. Generated figure outputs are written to each figure's `output/` directory, while generated source tables stay with their batch under `results/functional_prediction/`.
+The Figure 6 generators additionally require `ggpicrust2`, `ALDEx2`, `ggplot2`, `patchwork`, and `scales`; its seeded ALDEx2 step can take several minutes per panel. The KO z-score source-data workflow uses base R plus the versioned KEGG reference stored under `data/reference/`; it does not require an installed `ggpicrust2` package. Generated figure outputs are written to each figure's `output/` directory; Figures S3-S5 further separate individual panels into `output/females/` and `output/male/`. Generated source tables stay with their batch under `results/functional_prediction/`.
 
 See the [main-figure guide](figures/README.md) and
 [supplementary-figure guide](supplementary_figures/README.md) for figure sources

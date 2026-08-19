@@ -25,8 +25,10 @@ later assembled in Photoshop. The portable
 [`generate_figure_s2_abc.R`](../../supplementary_figures/Figure_S2/generate_figure_s2_abc.R)
 reads the already normalized batch-01 abundance table and canonical manifest,
 reproduces those nonparametric statistics and dotted display labels, and emits
-only the three individual PNG panels. It neither sources the historical script
-nor recreates the Photoshop composite. The paired
+only the three individual PNG panels through the shared
+[`figure_s2_s5_abundance_common.R`](../../supplementary_figures/figure_s2_s5_abundance_common.R)
+workflow. It neither sources the historical script nor recreates the Photoshop
+composite. The paired
 [`validator`](../../supplementary_figures/Figure_S2/validate_figure_s2_abc.R)
 locks the cohort, taxa, exact test results, significant comparisons, and output
 dimensions for traceability.
@@ -37,15 +39,17 @@ female and male F1-PND21 samples from batch 01; Figures S4 and S5 select female
 and male F1-PND365 and F2-PND365 samples, respectively, from batch 02. The
 historical numerical inputs are byte-identical to the canonical batch-specific
 relative-abundance tables, and the portable workflows join them to the
-canonical manifests rather than duplicating source data. The three generators
-share the validated
-[`figure_s3_s5_abundance_common.R`](../../supplementary_figures/figure_s3_s5_abundance_common.R)
+canonical manifests rather than duplicating source data. All four supplementary
+generators share the validated
+[`figure_s2_s5_abundance_common.R`](../../supplementary_figures/figure_s2_s5_abundance_common.R)
 renderer and preserve the legacy four-group Kruskal-Wallis plus six-pair Dunn
 test with FDR adjustment. They recreate all 72 individual source panels as PNG
 files without sourcing the legacy script or assembling the Photoshop
-composites. Their paired validators lock source checksums, cohorts, taxa, exact
-nonparametric results, significant comparison signatures, filenames, and
-dimensions.
+composites. Figure S3-S5 female panels are written to `output/females/` and
+male panels to `output/male/`, while each final composite remains at its output
+root. Their paired validators lock source checksums, cohorts, taxa, exact
+nonparametric results, significant comparison signatures, filenames,
+sex-specific paths, and dimensions.
 
 `Picrust_mestrado_Alberto.R` is preserved unchanged. The portable Figure 6 workflow uses only its KO-to-KEGG, four-group ALDEx2, six-comparison Bonferroni, pathway-selection, and visual-design provenance. It intentionally omits the exploratory PCA, EC, MetaCyc, GSEA, z-score heatmap, and mercuric-KO sections from the Figure 6 runtime. Its edited `pathway_errorbar3()` was not sourced because the legacy implementation could combine differently filtered/ordered DAA tables and was not safe for four-group fold-change bookkeeping; the corrected implementation aligns all rows by explicit keys and disables the undefined two-group fold-change panel.
 

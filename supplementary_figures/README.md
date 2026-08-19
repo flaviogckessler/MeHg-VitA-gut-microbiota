@@ -71,8 +71,9 @@ at or below 0.05 are annotated. This deliberately nonparametric workflow
 reproduces the tests and labels in the historical source panels; it does not
 choose a method from a normality test.
 
-[`generate_figure_s2_abc.R`](Figure_S2/generate_figure_s2_abc.R) generates the
-three individual 600 x 500 PNGs
+[`generate_figure_s2_abc.R`](Figure_S2/generate_figure_s2_abc.R) uses the shared
+[`figure_s2_s5_abundance_common.R`](figure_s2_s5_abundance_common.R) workflow
+and generates the three individual 600 x 500 PNGs
 [`FigureS2A_generated.png`](Figure_S2/output/FigureS2A_generated.png),
 [`FigureS2B_generated.png`](Figure_S2/output/FigureS2B_generated.png), and
 [`FigureS2C_generated.png`](Figure_S2/output/FigureS2C_generated.png). It does
@@ -104,15 +105,22 @@ they do not assemble the supplied Photoshop composites.
 
 | Figure | Cohort | Female panels | Male panels | Numerical source | Metadata source | Generator and validator |
 |---|---|---|---|---|---|---|
-| S3 | F1-PND21 | A-J | K-Q | [`batch01` abundance](../results/taxon_relative_abundance/batch01_iontorrent_dams-f0_f1-pnd21_taxon_relative_abundance.csv) | [`batch01` manifest](../data/metadata/batch01_iontorrent_dams-f0_f1-pnd21/sample_manifest.csv) | [`generator`](Figure_S3/generate_figure_s3_aq.R), [`validator`](Figure_S3/validate_figure_s3_aq.R) |
-| S4 | F1-PND365 | A-AC | AD-AN | [`batch02` abundance](../results/taxon_relative_abundance/batch02_illumina-miseq_f1-f2_pnd365_taxon_relative_abundance.csv) | [`batch02` manifest](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) | [`generator`](Figure_S4/generate_figure_s4_a_an.R), [`validator`](Figure_S4/validate_figure_s4_a_an.R) |
-| S5 | F2-PND365 | A-H | I-O | [`batch02` abundance](../results/taxon_relative_abundance/batch02_illumina-miseq_f1-f2_pnd365_taxon_relative_abundance.csv) | [`batch02` manifest](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) | [`generator`](Figure_S5/generate_figure_s5_ao.R), [`validator`](Figure_S5/validate_figure_s5_ao.R) |
+| S3 | F1-PND21 | [`A-J`](Figure_S3/output/females/) | [`K-Q`](Figure_S3/output/male/) | [`batch01` abundance](../results/taxon_relative_abundance/batch01_iontorrent_dams-f0_f1-pnd21_taxon_relative_abundance.csv) | [`batch01` manifest](../data/metadata/batch01_iontorrent_dams-f0_f1-pnd21/sample_manifest.csv) | [`generator`](Figure_S3/generate_figure_s3_aq.R), [`validator`](Figure_S3/validate_figure_s3_aq.R) |
+| S4 | F1-PND365 | [`A-AC`](Figure_S4/output/females/) | [`AD-AN`](Figure_S4/output/male/) | [`batch02` abundance](../results/taxon_relative_abundance/batch02_illumina-miseq_f1-f2_pnd365_taxon_relative_abundance.csv) | [`batch02` manifest](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) | [`generator`](Figure_S4/generate_figure_s4_a_an.R), [`validator`](Figure_S4/validate_figure_s4_a_an.R) |
+| S5 | F2-PND365 | [`A-H`](Figure_S5/output/females/) | [`I-O`](Figure_S5/output/male/) | [`batch02` abundance](../results/taxon_relative_abundance/batch02_illumina-miseq_f1-f2_pnd365_taxon_relative_abundance.csv) | [`batch02` manifest](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) | [`generator`](Figure_S5/generate_figure_s5_ao.R), [`validator`](Figure_S5/validate_figure_s5_ao.R) |
+
+For each figure, female generated panels are stored under `output/females/`
+and male generated panels under `output/male/`. The manually assembled final
+composite remains directly under `output/`. The shared generator derives the
+destination from each panel's manifest sex, and the validator checks both the
+expected sex-specific path and the absence of generated panels at the output
+root.
 
 The canonical abundance files are exact copies of the historical
 `AbundanciasTaxons_Todos.csv` and `AbundanciasTaxons_1year.csv` inputs, so no
-new figure-specific data copies or renaming were needed. All three generators
-use the shared
-[`figure_s3_s5_abundance_common.R`](figure_s3_s5_abundance_common.R) renderer,
+new figure-specific data copies or renaming were needed. Together with Figure
+S2, these generators use the shared
+[`figure_s2_s5_abundance_common.R`](figure_s2_s5_abundance_common.R) renderer,
 join abundance columns to the relevant manifest, honor
 `include_primary_analysis`, and select generation and sex explicitly. Each
 taxon is tested with a four-group Kruskal-Wallis test followed by all six Dunn
@@ -136,8 +144,8 @@ Rscript supplementary_figures/Figure_S5/validate_figure_s5_ao.R
 The validators independently reproduce the Kruskal-Wallis statistics and
 check the exact omnibus p-values, all Dunn comparison signatures, adjusted
 significance counts, source checksums and schemas, cohort membership and
-treatment counts, output names and dimensions, committed PNGs, and retained
-composite dimensions. All 72 archived TIFF panels under
+treatment counts, output names, sex-specific directories and dimensions,
+committed PNGs, and retained composite dimensions. All 72 archived TIFF panels under
 `Alberto/images/Abundancias/NONparametric/` were also compared with the
 generated PNGs during migration. The retained composites are
 [`Figure S3`](Figure_S3/output/Figure_S3_FinalFigure.png),

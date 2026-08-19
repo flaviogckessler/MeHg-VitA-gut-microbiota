@@ -8,18 +8,18 @@ find_figure_s5_common_script <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)
   repeat {
     candidates <- c(
-      file.path(path, "figure_s3_s5_abundance_common.R"),
+      file.path(path, "figure_s2_s5_abundance_common.R"),
       file.path(
         path,
         "supplementary_figures",
-        "figure_s3_s5_abundance_common.R"
+        "figure_s2_s5_abundance_common.R"
       )
     )
     existing <- candidates[file.exists(candidates)]
     if (length(existing) > 0L) return(existing[[1L]])
     parent <- dirname(path)
     if (identical(parent, path)) {
-      stop("Could not locate figure_s3_s5_abundance_common.R.", call. = FALSE)
+      stop("Could not locate figure_s2_s5_abundance_common.R.", call. = FALSE)
     }
     path <- parent
   }
@@ -55,6 +55,7 @@ figure_s5_specification <- list(
     label = figure_s5_labels,
     stringsAsFactors = FALSE
   ),
+  output_subdirectories = c(Female = "females", Male = "male"),
   treatment_levels = c("CN", "VitA", "MeHg", "VitA+MeHg"),
   treatment_colors = c(
     CN = "#98F5FF",

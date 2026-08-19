@@ -1,4 +1,4 @@
-# Shared nonparametric taxon-abundance workflow for Figures S3-S5.
+# Shared nonparametric taxon-abundance workflow for Figures S2-S5.
 #
 # The supplied final figures were assembled manually in Adobe Photoshop from
 # individual 600 x 500 TIFF panels. The portable workflows generate only the
@@ -18,7 +18,7 @@ supplementary_abundance_missing_packages <-
   ]
 if (length(supplementary_abundance_missing_packages) > 0L) {
   stop(
-    "Install the packages required by Figures S3-S5: ",
+    "Install the packages required by Figures S2-S5: ",
     paste(supplementary_abundance_missing_packages, collapse = ", "),
     call. = FALSE
   )
@@ -151,8 +151,52 @@ validate_supplementary_abundance_specification <- function(specification) {
   if (!all(panels$sex %in% names(specification$expected_sample_counts))) {
     stop("Panel table contains an unexpected sex.", call. = FALSE)
   }
+  if (!is.null(specification$output_subdirectories)) {
+    output_subdirectories <- specification$output_subdirectories
+    panel_sexes <- unique(panels$sex)
+    if (is.null(names(output_subdirectories)) ||
+        anyDuplicated(names(output_subdirectories)) ||
+        !all(panel_sexes %in% names(output_subdirectories))) {
+      stop(
+        "Output subdirectories must provide one named entry per panel sex.",
+        call. = FALSE
+      )
+    }
+    selected_subdirectories <- unname(output_subdirectories[panel_sexes])
+    if (anyNA(selected_subdirectories) ||
+        any(!grepl("^[A-Za-z0-9._-]+$", selected_subdirectories))) {
+      stop("Output subdirectory names are invalid.", call. = FALSE)
+    }
+  }
+
+  optional_panel_fields <- c(
+    "expected_omnibus_statistics", "expected_omnibus_p",
+    "expected_significant_counts", "expected_significant_signatures",
+    "expected_significant_adjusted_p"
+  )
+  for (field in optional_panel_fields) {
+    if (!is.null(specification[[field]]) &&
+        length(specification[[field]]) != nrow(panels)) {
+      stop(field, " must contain one entry per panel.", call. = FALSE)
+    }
+  }
 
   invisible(specification)
+}
+
+supplementary_abundance_panel_relative_paths <- function(specification) {
+  filenames <- paste0(
+    "Figure",
+    specification$figure_id,
+    specification$panels$panel,
+    "_generated.png"
+  )
+  if (is.null(specification$output_subdirectories)) return(filenames)
+
+  file.path(
+    unname(specification$output_subdirectories[specification$panels$sex]),
+    filenames
+  )
 }
 
 read_supplementary_abundance_sources <- function(
@@ -424,18 +468,17 @@ generate_supplementary_abundance_figure <- function(
   )
   plots <- lapply(panels, `[[`, "plot")
   statistics <- lapply(panels, `[[`, "statistics")
+  relative_paths <- supplementary_abundance_panel_relative_paths(specification)
   files <- setNames(
-    file.path(
-      output_dir,
-      paste0(
-        "Figure",
-        specification$figure_id,
-        specification$panels$panel,
-        "_generated.png"
-      )
-    ),
+    file.path(output_dir, relative_paths),
     specification$panels$panel
   )
+  invisible(lapply(
+    unique(dirname(unname(files))),
+    dir.create,
+    recursive = TRUE,
+    showWarnings = FALSE
+  ))
 
   Map(function(filename, plot) {
     ggplot2::ggsave(
@@ -610,22 +653,43 @@ validate_supplementary_abundance_figure <- function(
       "Expected significant Dunn-comparison pairs changed."
     )
   }
+  if (!is.null(specification$expected_significant_adjusted_p)) {
+    for (index in seq_along(statistics)) {
+      check_supplementary_abundance_numeric(
+        statistics[[index]]$significant$p.adj,
+        specification$expected_significant_adjusted_p[[index]],
+        tolerance = 1e-12,
+        paste0(
+          "Expected FDR-adjusted Dunn p-values changed in Figure ",
+          specification$figure_id,
+          " panel ",
+          specification$panels$panel[[index]],
+          "."
+        )
+      )
+    }
+  }
 
   validation_dir <- file.path(
     tempdir(),
     paste0("figure_", tolower(specification$figure_id), "_validation")
   )
   rendered <- generator(validation_dir)
-  expected_names <- paste0(
-    "Figure",
-    specification$figure_id,
-    specification$panels$panel,
-    "_generated.png"
+  expected_relative_paths <-
+    supplementary_abundance_panel_relative_paths(specification)
+  expected_names <- basename(expected_relative_paths)
+  expected_validation_files <- file.path(
+    validation_dir,
+    expected_relative_paths
   )
   check_supplementary_abundance_true(
     identical(basename(unname(rendered$files)), expected_names) &&
+      identical(
+        normalizePath(unname(rendered$files), winslash = "/", mustWork = TRUE),
+        normalizePath(expected_validation_files, winslash = "/", mustWork = TRUE)
+      ) &&
       all(file.exists(rendered$files)),
-    "Generated panel files are missing or misnamed."
+    "Generated panel files are missing, misnamed, or in the wrong directory."
   )
   check_supplementary_abundance_true(
     all(vapply(rendered$files, function(filename) {
@@ -643,12 +707,15 @@ validate_supplementary_abundance_figure <- function(
     "Generated panel PNGs or ggplot objects are invalid."
   )
 
-  committed_files <- file.path(
+  output_root <- file.path(
     project_root,
     "supplementary_figures",
     paste0("Figure_", specification$figure_id),
-    "output",
-    expected_names
+    "output"
+  )
+  committed_files <- file.path(
+    output_root,
+    expected_relative_paths
   )
   check_supplementary_abundance_true(
     all(file.exists(committed_files)) &&
@@ -660,6 +727,12 @@ validate_supplementary_abundance_figure <- function(
       }, logical(1))),
     "Committed generated panels are missing or have invalid dimensions."
   )
+  if (!is.null(specification$output_subdirectories)) {
+    check_supplementary_abundance_true(
+      !any(file.exists(file.path(output_root, expected_names))),
+      "A sex-specific generated panel remains at the output root."
+    )
+  }
 
   composite <- file.path(
     project_root,
