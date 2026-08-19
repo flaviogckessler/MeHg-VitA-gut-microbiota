@@ -46,6 +46,56 @@ Rscript supplementary_figures/Figure_S1/generate_figure_s1_ah.R
 Rscript supplementary_figures/Figure_S1/validate_figure_s1_ah.R
 ```
 
+## Figure S2
+
+Figure S2 contains three individual Dams (F0) relative-abundance boxplots.
+Panels are assigned from left to right in the supplied composite. The portable
+workflow reads the canonical batch-01
+[`taxon-relative-abundance table`](../results/taxon_relative_abundance/batch01_iontorrent_dams-f0_f1-pnd21_taxon_relative_abundance.csv)
+and joins its sample columns to the batch-01
+[`sample manifest`](../data/metadata/batch01_iontorrent_dams-f0_f1-pnd21/sample_manifest.csv).
+It honors `include_primary_analysis` and selects the 18 F0 dams: 5 `CN`, 4
+`VitA`, 5 `MeHg`, and 4 `VitA+MeHg` samples. No Figure S2-specific source-data
+copy is required because the historical `AbundanciasTaxons_Todos.csv` values
+are already preserved under the repository-compliant canonical filename.
+
+| Panel | Canonical taxon row | Display label | Significant FDR-adjusted Dunn comparisons |
+|---|---|---|---|
+| A | `g__[Eubacterium] ventriosum group` | `g__.Eubacterium..ventriosum.group` | `CN`-`MeHg`; `VitA`-`MeHg`; `MeHg`-`VitA+MeHg` |
+| B | `g__[Ruminococcus] gauvreauii group` | `g__.Ruminococcus..gauvreauii.group` | `CN`-`VitA+MeHg`; `MeHg`-`VitA+MeHg` |
+| C | `g__Oribacterium` | `g__Oribacterium` | `MeHg`-`VitA+MeHg` |
+
+All panels use a four-group Kruskal-Wallis test followed by all six pairwise
+Dunn tests with Benjamini-Hochberg FDR adjustment. Only adjusted comparisons
+at or below 0.05 are annotated. This deliberately nonparametric workflow
+reproduces the tests and labels in the historical source panels; it does not
+choose a method from a normality test.
+
+[`generate_figure_s2_abc.R`](Figure_S2/generate_figure_s2_abc.R) generates the
+three individual 600 x 500 PNGs
+[`FigureS2A_generated.png`](Figure_S2/output/FigureS2A_generated.png),
+[`FigureS2B_generated.png`](Figure_S2/output/FigureS2B_generated.png), and
+[`FigureS2C_generated.png`](Figure_S2/output/FigureS2C_generated.png). It does
+not assemble the publication layout. The supplied
+[`Figure_S2_FinalFigure.png`](Figure_S2/output/Figure_S2_FinalFigure.png) was
+assembled manually in Adobe Photoshop and is retained only as a visual
+reference. The three original 600 x 500 TIFF panel exports were inspected from
+the archived `Alberto/images/Abundancias/NONparametric/Dams_F0_NONparametric/`
+directory; the portable workflow creates PNG files only.
+
+Generate and validate all three panels from the repository root:
+
+``` powershell
+Rscript supplementary_figures/Figure_S2/generate_figure_s2_abc.R
+Rscript supplementary_figures/Figure_S2/validate_figure_s2_abc.R
+```
+
+[`validate_figure_s2_abc.R`](Figure_S2/validate_figure_s2_abc.R) checks source
+schemas, taxon identity, F0 membership, treatment counts, finite relative
+abundances, the exact Kruskal-Wallis results, all six Dunn comparisons per
+panel, the expected FDR-adjusted significant pairs, PNG names and 600 x 500
+dimensions, committed generated panels, and the supplied composite.
+
 ## Figures S8-S16
 
 Figures S8-S16 follow the same reproducibility boundary as main Figures 7 and 8. The KEGG pathway views were prepared manually, while their KO z-score heatmaps now have portable base-R renderers. The supplied final composites are retained as visual references under each figure's `output/` directory.
