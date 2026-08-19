@@ -1,51 +1,5 @@
 # Supplementary figures
 
-## Figure S1
-
-Figure S1 complements the Shannon-diversity results in main Figure 3 panels
-D-G by showing Observed richness and InvSimpson diversity for the same four
-canonical cohorts. The portable workflow reads the batch-specific
-[`alpha-diversity tables`](../results/alpha_diversity/) and joins them to the
-corresponding canonical [`sample manifests`](../data/metadata/). It honors
-`include_primary_analysis`, excluding low-quality samples `10F` and `22F`, and
-does not analyze undocumented batch 02 sample `t3`.
-
-| Panel | Metric | Cohort | Samples | Statistical workflow |
-|---|---|---|---:|---|
-| A | Observed | Dams (F0) | 18 | Within-sex one-way ANOVA and Tukey HSD |
-| B | Observed | F1-PND21 | 34 | Between-sex Wilcoxon test; within-sex Dunn tests with FDR adjustment |
-| C | Observed | F1-PND365 | 24 | Between-sex Wilcoxon test; within-sex Dunn tests with FDR adjustment |
-| D | Observed | F2-PND365 | 24 | Between-sex Welch t-test; within-sex one-way ANOVA and Tukey HSD |
-| E | InvSimpson | Dams (F0) | 18 | Within-sex one-way ANOVA and Tukey HSD |
-| F | InvSimpson | F1-PND21 | 34 | Between-sex Welch t-test; within-sex one-way ANOVA and Tukey HSD |
-| G | InvSimpson | F1-PND365 | 24 | Between-sex Welch t-test; within-sex one-way ANOVA and Tukey HSD |
-| H | InvSimpson | F2-PND365 | 24 | Between-sex Welch t-test; within-sex one-way ANOVA and Tukey HSD |
-
-[`generate_figure_s1_ah.R`](Figure_S1/generate_figure_s1_ah.R) implements the
-same treatment order, colors, sex facets, test labels, and PNG dimensions used
-for Figure 3 panels D-G. It generates
-`FigureS1A_generated.png`-`FigureS1H_generated.png` in
-[`Figure_S1/output/`](Figure_S1/output/). The matching
-[`validate_figure_s1_ah.R`](Figure_S1/validate_figure_s1_ah.R) checks the
-canonical sources, manifest join, exact cohort and exclusion sets, panel
-mapping, statistical-test coverage, PNG names and dimensions, committed panel
-outputs, and supplied composite.
-
-The supplied [`Figure_S1_FinalFigure.png`](Figure_S1/output/Figure_S1_FinalFigure.png)
-was assembled manually in Adobe Photoshop from the individual panels and is
-retained as a visual reference; the R workflow does not recreate that
-composite. The reference labels F1-PND365 as `n = 25`, reflecting the original
-inclusion of `t3`. The portable panels deliberately report `n = 24` because
-`t3` has no canonical metadata row; this follows the repository-wide cohort
-rule and makes the difference auditable.
-
-Generate and validate the panels from the repository root:
-
-``` powershell
-Rscript supplementary_figures/Figure_S1/generate_figure_s1_ah.R
-Rscript supplementary_figures/Figure_S1/validate_figure_s1_ah.R
-```
-
 ## Figure S2
 
 Figure S2 contains three individual Dams (F0) relative-abundance boxplots.
@@ -152,6 +106,35 @@ generated PNGs during migration. The retained composites are
 [`Figure S4`](Figure_S4/output/Figure_S4_FinalFigure.png), and
 [`Figure S5`](Figure_S5/output/Figure_S5_FinalFigure.png).
 
+## Figure S6
+
+Figure S6 is a manually prepared qualitative synthesis, not the output of a
+computational figure-generation workflow. The author made it after side-by-side
+visual inspection of the supplied final [`Figure 5`](../figures/Figure_5/output/Figure_5_FinalFigure.png)
+and [`Figures S2`](Figure_S2/output/Figure_S2_FinalFigure.png),
+[`S3`](Figure_S3/output/Figure_S3_FinalFigure.png),
+[`S4`](Figure_S4/output/Figure_S4_FinalFigure.png), and
+[`S5`](Figure_S5/output/Figure_S5_FinalFigure.png).
+
+To construct the summary, the author reviewed the treatment patterns and
+displayed comparisons in those figures within each available cohort and sex,
+then manually placed the taxa judged to be associated with `VitA`, `MeHg`, or
+`VitA+MeHg` into the corresponding box. Green, red, and black borders identify
+those three association categories, respectively. Dams (F0) are shown without
+a sex subdivision; F1-PND21, F1-PND365, and F2-PND365 are divided into females
+and males. A taxon may occur in more than one box when the visual interpretation
+supported more than one association, and an empty box means that no taxon was
+manually assigned to that cohort/sex/category combination.
+
+This classification is descriptive and interpretive. Figure S6 does not add a
+formal statistical test, pooled analysis, quantitative selection threshold, or
+automated rule beyond the analyses already displayed in its source figures.
+Consequently, it should be reproduced by repeating the documented visual review
+and manual transcription rather than by running an R script. The repository
+retains only the resulting 1836 x 1281 raster
+[`Figure_S6_FinalFigure.png`](Figure_S6/Figure_S6_FinalFigure.png); no editable
+layout file or Figure S6 generator is available.
+
 ## Figure S7
 
 Figure S7 is a four-panel PCA of the untransformed PICRUSt-predicted KEGG
@@ -248,58 +231,30 @@ The validator regenerates every panel in a temporary directory and checks all pe
 
 ## Figure S18
 
-Figure S18 is the repository-generated 4 x 4 comparison of four
-mercuric-related KEGG Orthologs across F0 dams, F1-PND21, F1-PND365, and
-F2-PND365. KEGG Orthologs are rows and cohort datasets are columns; no panel
-letters are assigned. The
-official portable workflow is
-[`generate_figure_s18.R`](Figure_S18/generate_figure_s18.R).
+Figure S18 is the repository-generated 4 x 4 comparison of four mercuric-related KEGG Orthologs across F0 dams, F1-PND21, F1-PND365, and F2-PND365. KEGG Orthologs are rows and cohort datasets are columns; no panel letters are assigned. The official portable workflow is [`generate_figure_s18.R`](Figure_S18/generate_figure_s18.R).
 
 | KO row | Annotation |
-|---|---|
+|----|----|
 | `K00520` (`merA`) | mercuric reductase [EC:1.16.1.1] |
 | `K08363` (`merT`) | mercuric ion transport protein |
 | `K08364` (`merP`) | periplasmic mercuric ion binding protein |
 | `K08365` (`merR`) | MerR family transcriptional regulator, mercuric resistance operon regulatory protein |
 
-| Column | Cohort | Batch | Included samples |
-|---|---|---|---:|
-| 1 | F0-Dams | `batch01_iontorrent_dams-f0_f1-pnd21` | 18 |
-| 2 | F1-PND21 | `batch01_iontorrent_dams-f0_f1-pnd21` | 34 |
-| 3 | F1-PND365 | `batch02_illumina-miseq_f1-f2_pnd365` | 24 |
-| 4 | F2-PND365 | `batch02_illumina-miseq_f1-f2_pnd365` | 24 |
+| Column | Cohort    | Batch                                 | Included samples |
+|--------|-----------|---------------------------------------|-----------------:|
+| 1      | F0-Dams   | `batch01_iontorrent_dams-f0_f1-pnd21` |               18 |
+| 2      | F1-PND21  | `batch01_iontorrent_dams-f0_f1-pnd21` |               34 |
+| 3      | F1-PND365 | `batch02_illumina-miseq_f1-f2_pnd365` |               24 |
+| 4      | F2-PND365 | `batch02_illumina-miseq_f1-f2_pnd365` |               24 |
 
-The numerical sources are the canonical PICRUSt2
-[`kegg_ortholog_abundance.tsv`](../results/functional_prediction/batch01_iontorrent_dams-f0_f1-pnd21/kegg_ortholog_abundance.tsv)
-matrix for batch 01 and the corresponding
-[`kegg_ortholog_abundance.tsv`](../results/functional_prediction/batch02_illumina-miseq_f1-f2_pnd365/kegg_ortholog_abundance.tsv)
-matrix for batch 02. Cohorts are selected through the batch-specific
-[`sample_manifest.csv`](../data/metadata/batch01_iontorrent_dams-f0_f1-pnd21/sample_manifest.csv)
-and
-[`sample_manifest.csv`](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv)
-files. The generator honors `include_primary_analysis`, so low-quality samples
-`10F` and `22F` are excluded. KO selection and annotation labels come from the
-preserved manual KEGG REST result
-[`kegg_api_find_ko_mercuric_orthologs.tsv`](../data/reference/kegg/kegg_api_find_ko_mercuric_orthologs.tsv).
+The numerical sources are the canonical PICRUSt2 [`kegg_ortholog_abundance.tsv`](../results/functional_prediction/batch01_iontorrent_dams-f0_f1-pnd21/kegg_ortholog_abundance.tsv) matrix for batch 01 and the corresponding [`kegg_ortholog_abundance.tsv`](../results/functional_prediction/batch02_illumina-miseq_f1-f2_pnd365/kegg_ortholog_abundance.tsv) matrix for batch 02. Cohorts are selected through the batch-specific [`sample_manifest.csv`](../data/metadata/batch01_iontorrent_dams-f0_f1-pnd21/sample_manifest.csv) and [`sample_manifest.csv`](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) files. The generator honors `include_primary_analysis`, so low-quality samples `10F` and `22F` are excluded. KO selection and annotation labels come from the preserved manual KEGG REST result [`kegg_api_find_ko_mercuric_orthologs.tsv`](../data/reference/kegg/kegg_api_find_ko_mercuric_orthologs.tsv).
 
-Within each dataset-by-KO cell, the boxplots compare the four exposure groups
-after pooling sexes; sex remains visible through point shape. The script fits a
-one-way treatment ANOVA and performs all six Tukey HSD pairwise exposure
-comparisons per cell. Only adjusted comparisons below 0.05 receive brackets and
-asterisks (`*` p < 0.05, `**` p < 0.01, `***` p < 0.001, and `****` p <
-0.0001). The current data contain no Tukey-adjusted comparison below 0.05 among
-the 96 evaluated comparisons.
+Within each dataset-by-KO cell, the boxplots compare the four exposure groups after pooling sexes; sex remains visible through point shape. The script fits a one-way treatment ANOVA and performs all six Tukey HSD pairwise exposure comparisons per cell. Only adjusted comparisons below 0.05 receive brackets and asterisks (`*` p \< 0.05, `**` p \< 0.01, `***` p \< 0.001, and `****` p \< 0.0001). The current data contain no Tukey-adjusted comparison below 0.05 among the 96 evaluated comparisons.
 
-The official 2700 x 2400 PNG is
-[`FigureS18_generated.png`](Figure_S18/output/FigureS18_generated.png).
-Generate it from the repository root with:
+The official 2700 x 2400 PNG is [`FigureS18_generated.png`](Figure_S18/output/FigureS18_generated.png). Generate it from the repository root with:
 
 ``` powershell
 Rscript supplementary_figures/Figure_S18/generate_figure_s18.R
 ```
 
-The script validates source schemas, matrix dimensions, cohort membership,
-sample counts, required sex-by-treatment replication, KO presence in both
-matrices, finite non-negative abundances, the expected 96 post-hoc comparisons,
-and output dimensions. It reports the 16 omnibus ANOVA values and any adjusted
-significant comparisons when run directly.
+The script validates source schemas, matrix dimensions, cohort membership, sample counts, required sex-by-treatment replication, KO presence in both matrices, finite non-negative abundances, the expected 96 post-hoc comparisons, and output dimensions. It reports the 16 omnibus ANOVA values and any adjusted significant comparisons when run directly.
