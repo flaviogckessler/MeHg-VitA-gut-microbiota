@@ -80,13 +80,11 @@ join abundance columns to the relevant manifest, honor
 taxon is tested with a four-group Kruskal-Wallis test followed by all six Dunn
 tests with Benjamini-Hochberg FDR adjustment; only adjusted comparisons at or
 below 0.05 are drawn. No parametric test or normality-based method selection is
-performed. Every workflow is required to use the common treatment order `CN`,
+performed. Every workflow uses the common treatment order `CN`,
 `VitA`, `MeHg`, `VitA+MeHg` and the shared colors `#98F5FF`, `#B3EE3A`,
-`#CD2626`, `#4D4D4D`, respectively. Figure S3 deliberately corrects the
-erroneous character-derived order in the historical PND21 exports while
-matching the palette used by Figures S2, S4, and S5. Its retained composite
-documents the historical assembly and is not the ordering reference for the
-corrected generated panels.
+`#CD2626`, `#4D4D4D`, respectively. Figure S3 generated panels and
+[`Figure_S3_FinalFigure.png`](Figure_S3/output/Figure_S3_FinalFigure.png) use
+this same order and palette.
 
 Generate and validate the panels from the repository root:
 
@@ -103,11 +101,8 @@ The validators independently reproduce the Kruskal-Wallis statistics and
 check the exact omnibus p-values, all Dunn comparison signatures, adjusted
 significance counts, source checksums and schemas, cohort membership and
 treatment counts, the common treatment order and colors, output names, sex-specific
-directories and dimensions, committed PNGs, and retained composite dimensions.
-All 72 archived TIFF panels under `Alberto/images/Abundancias/NONparametric/`
-were inspected during migration; the corrected S3 PNGs intentionally differ
-from their historical exports in treatment order and color assignment. The
-retained composites are
+directories and dimensions, committed PNGs, and final-composite dimensions.
+The authoritative composites are
 [`Figure S3`](Figure_S3/output/Figure_S3_FinalFigure.png),
 [`Figure S4`](Figure_S4/output/Figure_S4_FinalFigure.png), and
 [`Figure S5`](Figure_S5/output/Figure_S5_FinalFigure.png).
@@ -116,7 +111,7 @@ retained composites are
 
 Figure S6 is a manually prepared qualitative synthesis, not the output of a
 computational figure-generation workflow. The author made it after side-by-side
-visual inspection of the supplied final [`Figure 5`](../figures/Figure_5/output/Figure_5_FinalFigure.png)
+visual inspection of the current final [`Figure 5`](../figures/Figure_5/output/Figure_5_FinalFigure.png)
 and [`Figures S2`](Figure_S2/output/Figure_S2_FinalFigure.png),
 [`S3`](Figure_S3/output/Figure_S3_FinalFigure.png),
 [`S4`](Figure_S4/output/Figure_S4_FinalFigure.png), and
@@ -136,8 +131,8 @@ This classification is descriptive and interpretive. Figure S6 does not add a
 formal statistical test, pooled analysis, quantitative selection threshold, or
 automated rule beyond the analyses already displayed in its source figures.
 Consequently, it should be reproduced by repeating the documented visual review
-and manual transcription rather than by running an R script. The repository
-retains only the resulting 1836 x 1281 raster
+and manual transcription rather than by running an R script. The authoritative
+output is the 1836 x 1281 raster
 [`Figure_S6_FinalFigure.png`](Figure_S6/Figure_S6_FinalFigure.png); no editable
 layout file or Figure S6 generator is available.
 

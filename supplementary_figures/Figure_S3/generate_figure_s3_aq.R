@@ -58,9 +58,7 @@ figure_s3_specification <- list(
     stringsAsFactors = FALSE
   ),
   output_subdirectories = c(Female = "females", Male = "male"),
-  # The historical PND21 exports used an incorrect character-derived order.
-  # The portable panels deliberately apply the repository-wide treatment order
-  # and semantic colors instead of reproducing that source error.
+  # Apply the repository-wide treatment order and semantic colors.
   treatment_levels = c("CN", "VitA", "MeHg", "VitA+MeHg"),
   treatment_colors = c(
     CN = "#98F5FF",
