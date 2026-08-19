@@ -24,6 +24,7 @@ renv/local/
 # External reference data
 data/external/*
 !data/external/.gitkeep
+!data/external/README.md
 
 # Generated TIFF files are not permitted
 figures/**/output/*_generated.tif

@@ -4,6 +4,9 @@ These historical scripts were used as references when portable analysis and figu
 
 | Legacy reference script | Portable workflow derived from it |
 |---|---|
+| [`dada2_phyloseq_batch01_iontorrent.R`](dada2_phyloseq_batch01_iontorrent.R) | [`preprocess_16s.R`](../01_sequence_processing/preprocess_16s.R), batch 01 single-end Ion Torrent filtering, denoising, chimera removal, and processed-data exports. |
+| [`dada2_batch02_illumina.R`](dada2_batch02_illumina.R) | [`preprocess_16s.R`](../01_sequence_processing/preprocess_16s.R), batch 02 paired-end Illumina filtering, denoising, merging, chimera removal, and processed-data exports. |
+| [`phyloseq_exploratory.R`](phyloseq_exploratory.R) and [`taxa_summary.R`](taxa_summary.R) | Preserved as downstream exploratory provenance. They are not part of FASTQ preprocessing and are not sourced by the canonical workflow. |
 | [`Abundancias_Barras_Mestrado.R`](Abundancias_Barras_Mestrado.R) | [`generate_figure_3_abc.R`](../../figures/Figure_3/generate_figure_3_abc.R), panels A-C |
 | [`Alpha_Diversity.R`](Alpha_Diversity.R) | [`generate_figure_3_dg.R`](../../figures/Figure_3/generate_figure_3_dg.R), panels D-G, and [`generate_figure_s1_ah.R`](../../supplementary_figures/Figure_S1/generate_figure_s1_ah.R), supplementary panels A-H |
 | [`Abundancia_boxplots.R`](Abundancia_boxplots.R) | [`generate_figure_3_hk.R`](../../figures/Figure_3/generate_figure_3_hk.R), panels H-K; [`generate_figure_s2_abc.R`](../../supplementary_figures/Figure_S2/generate_figure_s2_abc.R), supplementary panels A-C; [`generate_figure_s3_aq.R`](../../supplementary_figures/Figure_S3/generate_figure_s3_aq.R), panels A-Q; [`generate_figure_s4_a_an.R`](../../supplementary_figures/Figure_S4/generate_figure_s4_a_an.R), panels A-AN; and [`generate_figure_s5_ao.R`](../../supplementary_figures/Figure_S5/generate_figure_s5_ao.R), panels A-O |
@@ -89,3 +92,5 @@ manually retrieved KEGG result is retained under
 and a repository-compliant filename.
 
 Legacy scripts that have not yet been used for a portable workflow remain directly under [`scripts/`](../). This separation makes it possible to identify migrated provenance files without changing or prematurely curating the unused scripts.
+
+The three preprocessing-related historical scripts were moved here without changing their contents. Their hard-coded user paths, package-installation calls, interactive `View()` calls, TIFF exports, whole-session saves, inconsistent taxonomy inputs, and exploratory downstream blocks are retained only for auditability. The portable replacement uses the DOI-pinned SILVA 138.1 DADA2 FASTAs with the historical `assignTaxonomy()` and `addSpecies()` method, writes repository-standard data products, and keeps raw reads and large references outside version control. See the [`16S preprocessing guide`](../01_sequence_processing/README.md) for the detailed mapping and current validation boundary.

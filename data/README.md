@@ -14,7 +14,7 @@ The microbiome data are organized by sequencing batch and processing level.
 - `metadata/` contains preserved source metadata, standardized per-batch sample manifests, a combined sample manifest, SRA deposition information, and validation results.
 - `processed/` contains ASV count tables, taxonomy, representative sequences, BIOM files, relative abundance data, and read tracking.
 - `reference/` contains small, versioned reference objects required to run portable analyses, including the repository-local ggpicrust2 KEGG-to-KO mapping used by the KO z-score generator and the preserved KEGG REST query result used to select the mercuric-resistance KOs in Figure S18.
-- `external/` is reserved for large external reference databases that should not be committed. No large external reference database is currently stored in the repository.
+- `external/` documents the ignored local location for large external reference databases that must not be committed. The required SILVA 138.1 taxonomy and species FASTAs are downloaded from the versioned [Zenodo record](https://doi.org/10.5281/zenodo.4587955); filenames, checksums, licensing, and download instructions are recorded in [`external/README.md`](external/README.md).
 
 Raw FASTQ files are deliberately not stored in `New_repo`, and there is no local `data/raw/` directory.
 
@@ -28,6 +28,6 @@ Raw sequencing data generated during this study have been deposited in the NCBI 
 
 The accession ranges are also recorded in `metadata/sra_data_availability.csv`. No one-to-one sample-to-BioSample mapping is asserted because that mapping was not supplied.
 
-For sequence reprocessing after public release, download the FASTQ files outside the repository and set the `RAW_FASTQ_DIR` environment variable before running `scripts/dada2.R`. The script no longer assumes or creates a repository-local raw-data directory.
+For sequence reprocessing after public release, download the FASTQ files outside the repository and follow the [`scripts/01_sequence_processing/` guide](../scripts/01_sequence_processing/README.md). Set `DADA2_BATCH_ID` and `RAW_FASTQ_DIR` before running `scripts/01_sequence_processing/preprocess_16s.R`. The script does not assume or create a repository-local raw-data directory, and it writes reviewed reruns below the selected processed batch without overwriting archived canonical products.
 
 The historical [`scripts/00_setup/organize_data.ps1`](../scripts/00_setup/organize_data.ps1) utility documents the initial curation process. Portable analyses should use the canonical files already organized under `data/` and `results/` rather than rebuilding them through the historical import workflow.

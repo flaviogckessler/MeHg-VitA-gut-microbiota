@@ -24,6 +24,7 @@ Sex, generation, treatment, sequencing batch, analysis inclusion, and data-depos
 
 This repository is under active reproducibility curation.
 
+- The two batch-specific FASTQ workflows have been consolidated into a portable, linear [`DADA2 preprocessing script`](scripts/01_sequence_processing/preprocess_16s.R). Its configuration and versioned SILVA 138.1 Zenodo references have been validated without raw reads; the complete rerun remains pending public SRA release and an accession-to-sample mapping.
 - Figure 3 panels A-K, Figure 4 panels A-D, Figure 5 panel D, Figure 6 panels A-C, Figure S1 panels A-H, all 75 taxon-abundance panels in Figures S2-S5, panels E of Figures 7 and 8, and all ten KO z-score heatmaps in Figures S8-S16 have portable, tested workflows. The 19 KO-level source tables shared by Figures 7, 8, and S8-S16 also have a portable, regression-tested generator. Their KEGG pathway panels remain retained manual exports prepared with the generated z-score tables as the coloring reference; supplied final composites are retained for visual validation.
 - Figure S3 generated panels and final composite use the same authoritative treatment order and colors as the other abundance panels: `CN` (`#98F5FF`), `VitA` (`#B3EE3A`), `MeHg` (`#CD2626`), and `VitA+MeHg` (`#4D4D4D`).
 - Figure S6 is a manual, qualitative synthesis made by visually reviewing the current Figure 5 and Figures S2-S5 composites. Its interpretive construction and reproducibility boundary are documented in the [`supplementary-figure guide`](supplementary_figures/README.md#figure-s6); it is not presented as the output of a statistical or scripted workflow.
@@ -40,6 +41,7 @@ This repository is under active reproducibility curation.
 | [`data/metadata/`](data/metadata/) | Canonical sample manifests, preserved source metadata, SRA information, and validation summaries. |
 | [`data/processed/`](data/processed/) | Processed ASV tables, taxonomy, representative sequences, BIOM files, relative abundances, and read tracking. |
 | [`data/reference/`](data/reference/) | Small, versioned reference objects required by portable analysis workflows. |
+| [`data/external/`](data/external/) | Download and checksum documentation plus the ignored local location for the SILVA 138.1 DADA2 reference FASTAs. |
 | [`figures/`](figures/) | Main-figure workflows, validation scripts, and lightweight generated PNG outputs. |
 | [`results/`](results/) | Alpha-diversity and taxon-abundance tables, functional-prediction exports, and legacy summary tables. |
 | [`scripts/`](scripts/) | Analysis and curation scripts, including unused legacy scripts awaiting migration. |
@@ -50,6 +52,8 @@ This repository is under active reproducibility curation.
 Canonical data and metadata are stored once under `data/`. Figure scripts should read these files directly rather than duplicate them within figure directories.
 
 ## Quick start
+
+Sequence preprocessing is documented in the [`16S preprocessing guide`](scripts/01_sequence_processing/README.md). Raw/source sequencing reads are not distributed here; after downloading the DOI-pinned SILVA references and after SRA release, each batch is processed by setting `DADA2_BATCH_ID` and `RAW_FASTQ_DIR` and running `Rscript scripts/01_sequence_processing/preprocess_16s.R`. Until then, validation-only mode checks the script, canonical manifests, reference configuration, and any downloaded reference checksums without FASTQ data.
 
 The validated Figure 3 and Figure S1 alpha-diversity workflows and the Figures S2-S5 taxon-abundance workflows require R and the `tidyverse`, `rstatix`, and `ggpubr` packages. The Figure 4 workflows use base R only. Start R from the repository root and run:
 
@@ -129,6 +133,8 @@ Raw FASTQ files are not stored in this repository. They have been deposited in t
 - F1-PND365 and F2-PND365: `SAMN61407672`–`SAMN61407719`.
 
 The records are currently on hold and are intended for public release with the manuscript. The repository does not infer individual sample-to-BioSample assignments where these were not supplied.
+
+The deposited material is the source sequencing data (raw reads), not the analysis source code. The versioned preprocessing source code is [`scripts/01_sequence_processing/preprocess_16s.R`](scripts/01_sequence_processing/preprocess_16s.R). A full raw-read rerun also requires the accession-to-`sample_id` mapping that was not included in the supplied deposition metadata.
 
 ## Figure-output policy
 
