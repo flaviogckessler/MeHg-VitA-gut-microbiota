@@ -6,7 +6,7 @@ These historical scripts were used as references when portable analysis and figu
 |---|---|
 | [`Abundancias_Barras_Mestrado.R`](Abundancias_Barras_Mestrado.R) | [`generate_figure_3_abc.R`](../../figures/Figure_3/generate_figure_3_abc.R), panels A-C |
 | [`Alpha_Diversity.R`](Alpha_Diversity.R) | [`generate_figure_3_dg.R`](../../figures/Figure_3/generate_figure_3_dg.R), panels D-G, and [`generate_figure_s1_ah.R`](../../supplementary_figures/Figure_S1/generate_figure_s1_ah.R), supplementary panels A-H |
-| [`Abundancia_boxplots.R`](Abundancia_boxplots.R) | [`generate_figure_3_hk.R`](../../figures/Figure_3/generate_figure_3_hk.R), panels H-K, and [`generate_figure_s2_abc.R`](../../supplementary_figures/Figure_S2/generate_figure_s2_abc.R), supplementary panels A-C |
+| [`Abundancia_boxplots.R`](Abundancia_boxplots.R) | [`generate_figure_3_hk.R`](../../figures/Figure_3/generate_figure_3_hk.R), panels H-K; [`generate_figure_s2_abc.R`](../../supplementary_figures/Figure_S2/generate_figure_s2_abc.R), supplementary panels A-C; [`generate_figure_s3_aq.R`](../../supplementary_figures/Figure_S3/generate_figure_s3_aq.R), panels A-Q; [`generate_figure_s4_a_an.R`](../../supplementary_figures/Figure_S4/generate_figure_s4_a_an.R), panels A-AN; and [`generate_figure_s5_ao.R`](../../supplementary_figures/Figure_S5/generate_figure_s5_ao.R), panels A-O |
 | [`Heatmap_Zscore_MestradoAlberto.R`](Heatmap_Zscore_MestradoAlberto.R) | Figure 4 generators [`A`](../../figures/Figure_4/generate_figure_4_a.R), [`B`](../../figures/Figure_4/generate_figure_4_b.R), [`C`](../../figures/Figure_4/generate_figure_4_c.R), and [`D`](../../figures/Figure_4/generate_figure_4_d.R) |
 | [`Correlacoes_Metadados.R`](Correlacoes_Metadados.R) | [`generate_figure_5_d.R`](../../figures/Figure_5/generate_figure_5_d.R), panel D |
 | [`Picrust_mestrado_Alberto.R`](Picrust_mestrado_Alberto.R) | Figure 6 generators [`A`](../../figures/Figure_6/generate_figure_6_a.R), [`B`](../../figures/Figure_6/generate_figure_6_b.R), and [`C`](../../figures/Figure_6/generate_figure_6_c.R), with shared corrected multi-group logic in [`figure_6_common.R`](../../figures/Figure_6/figure_6_common.R); the [`Figure S7 PCA generator`](../../supplementary_figures/Figure_S7/generate_figure_s7_ad.R); the [`KEGG-pathway KO z-score source-data generator`](../04_functional_prediction/generate_kegg_pathway_ko_z_scores.R) for Figures 7, 8, and S8-S16; the panel-E renderers for [`Figure 7`](../../figures/Figure_7/generate_figure_7_e.R) and [`Figure 8`](../../figures/Figure_8/generate_figure_8_e.R); the shared [`Figure S8-S16 heatmap renderer`](../../supplementary_figures/figure_s8_s16_common.R) with its [`validator`](../../supplementary_figures/validate_figure_s8_s16.R); and the [`Figure S18 generator`](../../supplementary_figures/Figure_S18/generate_figure_s18.R) |
@@ -30,6 +30,22 @@ nor recreates the Photoshop composite. The paired
 [`validator`](../../supplementary_figures/Figure_S2/validate_figure_s2_abc.R)
 locks the cohort, taxa, exact test results, significant comparisons, and output
 dimensions for traceability.
+
+The PND21 and one-year nonparametric blocks in `Abundancia_boxplots.R` also
+supply the analysis and visual provenance for Figures S3-S5. Figure S3 selects
+female and male F1-PND21 samples from batch 01; Figures S4 and S5 select female
+and male F1-PND365 and F2-PND365 samples, respectively, from batch 02. The
+historical numerical inputs are byte-identical to the canonical batch-specific
+relative-abundance tables, and the portable workflows join them to the
+canonical manifests rather than duplicating source data. The three generators
+share the validated
+[`figure_s3_s5_abundance_common.R`](../../supplementary_figures/figure_s3_s5_abundance_common.R)
+renderer and preserve the legacy four-group Kruskal-Wallis plus six-pair Dunn
+test with FDR adjustment. They recreate all 72 individual source panels as PNG
+files without sourcing the legacy script or assembling the Photoshop
+composites. Their paired validators lock source checksums, cohorts, taxa, exact
+nonparametric results, significant comparison signatures, filenames, and
+dimensions.
 
 `Picrust_mestrado_Alberto.R` is preserved unchanged. The portable Figure 6 workflow uses only its KO-to-KEGG, four-group ALDEx2, six-comparison Bonferroni, pathway-selection, and visual-design provenance. It intentionally omits the exploratory PCA, EC, MetaCyc, GSEA, z-score heatmap, and mercuric-KO sections from the Figure 6 runtime. Its edited `pathway_errorbar3()` was not sourced because the legacy implementation could combine differently filtered/ordered DAA tables and was not safe for four-group fold-change bookkeeping; the corrected implementation aligns all rows by explicit keys and disables the undefined two-group fold-change panel.
 

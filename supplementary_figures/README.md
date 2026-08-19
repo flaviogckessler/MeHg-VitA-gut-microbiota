@@ -96,6 +96,54 @@ abundances, the exact Kruskal-Wallis results, all six Dunn comparisons per
 panel, the expected FDR-adjusted significant pairs, PNG names and 600 x 500
 dimensions, committed generated panels, and the supplied composite.
 
+## Figures S3-S5
+
+Figures S3-S5 extend the same portable taxon-relative-abundance workflow to
+offspring cohorts. Together they generate 72 individual 600 x 500 PNG panels;
+they do not assemble the supplied Photoshop composites.
+
+| Figure | Cohort | Female panels | Male panels | Numerical source | Metadata source | Generator and validator |
+|---|---|---|---|---|---|---|
+| S3 | F1-PND21 | A-J | K-Q | [`batch01` abundance](../results/taxon_relative_abundance/batch01_iontorrent_dams-f0_f1-pnd21_taxon_relative_abundance.csv) | [`batch01` manifest](../data/metadata/batch01_iontorrent_dams-f0_f1-pnd21/sample_manifest.csv) | [`generator`](Figure_S3/generate_figure_s3_aq.R), [`validator`](Figure_S3/validate_figure_s3_aq.R) |
+| S4 | F1-PND365 | A-AC | AD-AN | [`batch02` abundance](../results/taxon_relative_abundance/batch02_illumina-miseq_f1-f2_pnd365_taxon_relative_abundance.csv) | [`batch02` manifest](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) | [`generator`](Figure_S4/generate_figure_s4_a_an.R), [`validator`](Figure_S4/validate_figure_s4_a_an.R) |
+| S5 | F2-PND365 | A-H | I-O | [`batch02` abundance](../results/taxon_relative_abundance/batch02_illumina-miseq_f1-f2_pnd365_taxon_relative_abundance.csv) | [`batch02` manifest](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) | [`generator`](Figure_S5/generate_figure_s5_ao.R), [`validator`](Figure_S5/validate_figure_s5_ao.R) |
+
+The canonical abundance files are exact copies of the historical
+`AbundanciasTaxons_Todos.csv` and `AbundanciasTaxons_1year.csv` inputs, so no
+new figure-specific data copies or renaming were needed. All three generators
+use the shared
+[`figure_s3_s5_abundance_common.R`](figure_s3_s5_abundance_common.R) renderer,
+join abundance columns to the relevant manifest, honor
+`include_primary_analysis`, and select generation and sex explicitly. Each
+taxon is tested with a four-group Kruskal-Wallis test followed by all six Dunn
+tests with Benjamini-Hochberg FDR adjustment; only adjusted comparisons at or
+below 0.05 are drawn. No parametric test or normality-based method selection is
+performed. Figure S3 preserves the historical PND21 panel order and positional
+colors (`CN`, `MeHg`, `VitA`, `VitA+MeHg`) for visual fidelity; Figures S4 and
+S5 use the canonical `CN`, `VitA`, `MeHg`, `VitA+MeHg` order.
+
+Generate and validate the panels from the repository root:
+
+``` powershell
+Rscript supplementary_figures/Figure_S3/generate_figure_s3_aq.R
+Rscript supplementary_figures/Figure_S3/validate_figure_s3_aq.R
+Rscript supplementary_figures/Figure_S4/generate_figure_s4_a_an.R
+Rscript supplementary_figures/Figure_S4/validate_figure_s4_a_an.R
+Rscript supplementary_figures/Figure_S5/generate_figure_s5_ao.R
+Rscript supplementary_figures/Figure_S5/validate_figure_s5_ao.R
+```
+
+The validators independently reproduce the Kruskal-Wallis statistics and
+check the exact omnibus p-values, all Dunn comparison signatures, adjusted
+significance counts, source checksums and schemas, cohort membership and
+treatment counts, output names and dimensions, committed PNGs, and retained
+composite dimensions. All 72 archived TIFF panels under
+`Alberto/images/Abundancias/NONparametric/` were also compared with the
+generated PNGs during migration. The retained composites are
+[`Figure S3`](Figure_S3/output/Figure_S3_FinalFigure.png),
+[`Figure S4`](Figure_S4/output/Figure_S4_FinalFigure.png), and
+[`Figure S5`](Figure_S5/output/Figure_S5_FinalFigure.png).
+
 ## Figure S7
 
 Figure S7 is a four-panel PCA of the untransformed PICRUSt-predicted KEGG
