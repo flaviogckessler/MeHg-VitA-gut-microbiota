@@ -127,10 +127,15 @@ validate_supplementary_abundance_specification <- function(specification) {
     stop("Unexpected sequencing batch in figure specification.", call. = FALSE)
   }
   if (!identical(
-    sort(specification$treatment_levels),
-    sort(supplementary_abundance_treatments)
+    specification$treatment_levels,
+    supplementary_abundance_treatments
   )) {
-    stop("Figure specification has invalid treatment levels.", call. = FALSE)
+    stop(
+      "Figure specification must use the common treatment order: ",
+      paste(supplementary_abundance_treatments, collapse = ", "),
+      ".",
+      call. = FALSE
+    )
   }
   if (!identical(names(specification$treatment_colors), specification$treatment_levels)) {
     stop("Treatment colors must be named in plotting order.", call. = FALSE)

@@ -80,9 +80,12 @@ join abundance columns to the relevant manifest, honor
 taxon is tested with a four-group Kruskal-Wallis test followed by all six Dunn
 tests with Benjamini-Hochberg FDR adjustment; only adjusted comparisons at or
 below 0.05 are drawn. No parametric test or normality-based method selection is
-performed. Figure S3 preserves the historical PND21 panel order and positional
-colors (`CN`, `MeHg`, `VitA`, `VitA+MeHg`) for visual fidelity; Figures S4 and
-S5 use the canonical `CN`, `VitA`, `MeHg`, `VitA+MeHg` order.
+performed. Every workflow is required to use the common treatment order `CN`,
+`VitA`, `MeHg`, `VitA+MeHg`. Figure S3 deliberately corrects the erroneous
+character-derived order in the historical PND21 exports and maps those groups
+to blue (`#98F5FF`), green (`#B3EE3A`), red (`#CD2626`), and black (`#000000`),
+respectively. Its retained composite documents the historical assembly and is
+not the ordering reference for the corrected generated panels.
 
 Generate and validate the panels from the repository root:
 
@@ -98,10 +101,12 @@ Rscript supplementary_figures/Figure_S5/validate_figure_s5_ao.R
 The validators independently reproduce the Kruskal-Wallis statistics and
 check the exact omnibus p-values, all Dunn comparison signatures, adjusted
 significance counts, source checksums and schemas, cohort membership and
-treatment counts, output names, sex-specific directories and dimensions,
-committed PNGs, and retained composite dimensions. All 72 archived TIFF panels under
-`Alberto/images/Abundancias/NONparametric/` were also compared with the
-generated PNGs during migration. The retained composites are
+treatment counts, the common treatment order, output names, sex-specific
+directories and dimensions, committed PNGs, and retained composite dimensions.
+All 72 archived TIFF panels under `Alberto/images/Abundancias/NONparametric/`
+were inspected during migration; the corrected S3 PNGs intentionally differ
+from their historical exports in treatment order and color assignment. The
+retained composites are
 [`Figure S3`](Figure_S3/output/Figure_S3_FinalFigure.png),
 [`Figure S4`](Figure_S4/output/Figure_S4_FinalFigure.png), and
 [`Figure S5`](Figure_S5/output/Figure_S5_FinalFigure.png).

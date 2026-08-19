@@ -58,15 +58,15 @@ figure_s3_specification <- list(
     stringsAsFactors = FALSE
   ),
   output_subdirectories = c(Female = "females", Male = "male"),
-  # The historical PND21 source panels plot the character-valued legacy Grupo
-  # field in this order. The order and positional colors are preserved here so
-  # the individual panels match the supplied reference exports exactly.
-  treatment_levels = c("CN", "MeHg", "VitA", "VitA+MeHg"),
+  # The historical PND21 exports used an incorrect character-derived order.
+  # The portable panels deliberately apply the repository-wide treatment order
+  # and semantic colors instead of reproducing that source error.
+  treatment_levels = c("CN", "VitA", "MeHg", "VitA+MeHg"),
   treatment_colors = c(
     CN = "#98F5FF",
-    MeHg = "#B3EE3A",
-    VitA = "#CD2626",
-    `VitA+MeHg` = "#4D4D4D"
+    VitA = "#B3EE3A",
+    MeHg = "#CD2626",
+    `VitA+MeHg` = "#000000"
   ),
   expected_sample_counts = c(Female = 18L, Male = 16L),
   expected_treatment_counts = list(
@@ -98,12 +98,12 @@ figure_s3_specification <- list(
     3L, 1L
   ),
   expected_significant_signatures = c(
-    "", "CN|VitA", "", "CN|VitA", "CN|MeHg,MeHg|VitA",
+    "", "CN|VitA", "", "CN|VitA", "CN|MeHg,VitA|MeHg",
     "CN|MeHg,CN|VitA+MeHg", "CN|VitA,VitA|VitA+MeHg", "",
-    "CN|VitA+MeHg", "", "MeHg|VitA", "MeHg|VitA", "MeHg|VitA",
-    "CN|VitA,MeHg|VitA,VitA|VitA+MeHg",
-    "CN|VitA,MeHg|VitA,VitA|VitA+MeHg",
-    "CN|VitA,MeHg|VitA,VitA|VitA+MeHg", "MeHg|VitA"
+    "CN|VitA+MeHg", "", "VitA|MeHg", "VitA|MeHg", "VitA|MeHg",
+    "CN|VitA,VitA|MeHg,VitA|VitA+MeHg",
+    "CN|VitA,VitA|MeHg,VitA|VitA+MeHg",
+    "CN|VitA,VitA|MeHg,VitA|VitA+MeHg", "VitA|MeHg"
   )
 )
 
