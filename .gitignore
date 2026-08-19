@@ -26,6 +26,9 @@ data/external/*
 !data/external/.gitkeep
 !data/external/README.md
 
+# Full DADA2 reruns are review artifacts, not archived inputs
+data/processed/*/dada2_rerun/
+
 # Generated TIFF files are not permitted
 figures/**/output/*_generated.tif
 figures/**/output/*_generated.tiff

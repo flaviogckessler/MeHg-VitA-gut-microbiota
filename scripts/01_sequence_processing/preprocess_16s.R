@@ -11,7 +11,7 @@
 #   SILVA_TAXONOMY_FASTA  path to silva_nr99_v138.1_train_set.fa.gz
 #   SILVA_SPECIES_FASTA   path to silva_species_assignment_v138.1.fa.gz
 #   DADA2_OUTPUT_DIR    rerun output directory
-#   DADA2_VALIDATE_ONLY true to validate configuration without FASTQ files
+#   DADA2_VALIDATE_ONLY true to validate configuration and archived products
 
 sra_bioproject <- "PRJNA1489663"
 silva_zenodo_doi <- "10.5281/zenodo.4587955"
@@ -40,6 +40,14 @@ if (!batch_id %in% c(batch01, batch02)) {
 }
 
 manifest_file <- file.path(repo_root, "data", "metadata", batch_id, "sample_manifest.csv")
+canonical_dir <- file.path(repo_root, "data", "processed", batch_id)
+validator_file <- file.path(
+  repo_root, "scripts", "01_sequence_processing", "validate_preprocess_16s_output.R"
+)
+if (!file.exists(validator_file)) {
+  stop("Preprocessing validator not found: ", validator_file, call. = FALSE)
+}
+source(validator_file, local = TRUE)
 silva_taxonomy_file <- Sys.getenv(
   "SILVA_TAXONOMY_FASTA",
   unset = file.path(
@@ -68,6 +76,7 @@ if (!"sample_id" %in% names(manifest) || anyDuplicated(manifest$sample_id)) {
 }
 
 if (validate_only) {
+  validate_archived_preprocess_contract(batch_id, canonical_dir, manifest)
   reference_files <- c(silva_taxonomy_file, silva_species_file)
   if (all(file.exists(reference_files))) {
     observed_md5 <- tolower(unname(tools::md5sum(reference_files)))
@@ -86,7 +95,8 @@ if (validate_only) {
   }
   message(
     "Validation passed for ", batch_id, ": the script parsed, the canonical ",
-    "manifest is readable, and ", reference_status, "."
+    "manifest and archived processed-data contract are consistent, and ",
+    reference_status, "."
   )
   quit(save = "no", status = 0L)
 }
@@ -137,6 +147,13 @@ output_dir <- Sys.getenv(
   "DADA2_OUTPUT_DIR",
   unset = file.path(repo_root, "data", "processed", batch_id, "dada2_rerun")
 )
+if (normalizePath(output_dir, mustWork = FALSE) == normalizePath(canonical_dir, mustWork = TRUE)) {
+  stop(
+    "DADA2_OUTPUT_DIR cannot be the archived processed-data directory. ",
+    "Write to a review directory and validate the rerun first.",
+    call. = FALSE
+  )
+}
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 filtered_dir <- file.path(output_dir, "filtered_fastq")
 dir.create(filtered_dir, recursive = TRUE, showWarnings = FALSE)
@@ -236,12 +253,14 @@ if (batch_id == batch01) {
     stop("Forward/reverse FASTQ filenames are not uniquely paired.", call. = FALSE)
   }
   sample_ids <- forward_ids
-  if (!setequal(sample_ids, manifest$sample_id)) {
+  expected_sample_ids <- c(manifest$sample_id, "t3")
+  if (!setequal(sample_ids, expected_sample_ids)) {
     stop(
-      "FASTQ sample identifiers must match the canonical manifest. Missing: ",
-      paste(setdiff(manifest$sample_id, sample_ids), collapse = ", "),
+      "To reproduce the archived batch 02 products, FASTQ identifiers must ",
+      "match the canonical manifest plus historical sample t3. Missing: ",
+      paste(setdiff(expected_sample_ids, sample_ids), collapse = ", "),
       "; unexpected: ",
-      paste(setdiff(sample_ids, manifest$sample_id), collapse = ", "),
+      paste(setdiff(sample_ids, expected_sample_ids), collapse = ", "),
       ". See scripts/01_sequence_processing/README.md.",
       call. = FALSE
     )
@@ -300,7 +319,10 @@ if (batch_id == batch01) {
     trimLeft = "20,0",
     maxEE = "2,2",
     pooling = "pseudo",
-    paired_id_check = "true"
+    paired_id_check = "true",
+    archived_sample_compatibility = "canonical manifest plus t3",
+    relative_taxa_filter = "Bacteria; Phylum/Class/Family assigned; prevalence > 6; total > 2; maximum > 1",
+    relative_id_scheme = "SV%05d based on unfiltered ASV position"
   )
 }
 
@@ -324,52 +346,103 @@ taxonomy <- dada2::addSpecies(
   verbose = TRUE
 )
 
-counts_table <- data.frame(
-  OTU = colnames(sequence_table),
-  t(sequence_table),
-  check.names = FALSE
-)
-taxonomy_table <- data.frame(
-  OTU = rownames(taxonomy),
-  taxonomy,
-  row.names = NULL,
-  check.names = FALSE
-)
-counts_with_taxonomy <- cbind(
-  taxonomy_table,
-  counts_table[, -1, drop = FALSE]
-)
-relative_table <- sweep(sequence_table, 1, rowSums(sequence_table), "/")
-relative_with_taxonomy <- cbind(
-  taxonomy_table,
-  data.frame(t(relative_table), row.names = NULL, check.names = FALSE)
-)
+if (batch_id == batch01) {
+  counts_table <- data.frame(
+    OTU = colnames(sequence_table), t(sequence_table), check.names = FALSE
+  )
+  taxonomy_table <- data.frame(
+    OTU = rownames(taxonomy), taxonomy, row.names = NULL, check.names = FALSE
+  )
+  lineage <- apply(
+    taxonomy, 1L,
+    function(x) paste0(
+      c("k__", "p__", "c__", "o__", "f__", "g__", "s__"),
+      ifelse(is.na(x), "NA", x), collapse = ";"
+    )
+  )
+  counts_with_taxonomy <- cbind(
+    taxonomy_table,
+    lineage = lineage,
+    counts_table[, -1, drop = FALSE]
+  )
+  counts_with_taxonomy$lineage <- paste0('"', counts_with_taxonomy$lineage, '"')
+  renamed_taxonomy <- data.frame(
+    ASV = paste0("ASV", seq_len(nrow(taxonomy))),
+    taxonomy, row.names = NULL, check.names = FALSE
+  )
 
-write.table(
-  counts_table,
-  file.path(output_dir, "asv_counts.tsv"),
-  sep = "\t", quote = FALSE, row.names = FALSE, na = "NA"
-)
-write.table(
-  taxonomy_table,
-  file.path(output_dir, "asv_taxonomy.tsv"),
-  sep = "\t", quote = FALSE, row.names = FALSE, na = "NA"
-)
-write.table(
-  counts_with_taxonomy,
-  file.path(output_dir, "asv_counts_with_taxonomy.tsv"),
-  sep = "\t", quote = FALSE, row.names = FALSE, na = "NA"
-)
-write.table(
-  relative_with_taxonomy,
-  file.path(output_dir, "asv_relative_abundance_with_taxonomy.tsv"),
-  sep = "\t", quote = FALSE, row.names = FALSE, na = "NA"
-)
-write.csv(
-  read_tracking,
-  file.path(output_dir, "read_tracking.csv"),
-  row.names = FALSE, quote = FALSE
-)
+  write.table(
+    counts_table, file.path(output_dir, "asv_counts.tsv"),
+    sep = "\t", quote = FALSE, row.names = FALSE, na = "NA"
+  )
+  write.table(
+    taxonomy_table, file.path(output_dir, "asv_taxonomy.tsv"),
+    sep = "\t", quote = FALSE, row.names = FALSE, na = "NA"
+  )
+  write.table(
+    counts_with_taxonomy,
+    file.path(output_dir, "asv_counts_with_taxonomy.tsv"),
+    sep = "\t", quote = FALSE, row.names = FALSE, na = "NA"
+  )
+  write.table(
+    renamed_taxonomy,
+    file.path(output_dir, "asv_taxonomy_renamed_ids.tsv"),
+    sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE, na = "NA"
+  )
+  tracking_table <- read_tracking[, -1, drop = FALSE]
+  rownames(tracking_table) <- read_tracking$sample_id
+  write.csv(
+    tracking_table,
+    file.path(output_dir, "read_tracking.csv"),
+    row.names = TRUE, quote = TRUE
+  )
+} else {
+  write.table(
+    t(sequence_table), file.path(output_dir, "asv_counts.tsv"),
+    sep = "\t", quote = FALSE, row.names = TRUE, col.names = NA
+  )
+  taxonomy_text <- apply(
+    taxonomy, 1L,
+    function(x) paste(ifelse(is.na(x), "NA", x), collapse = ";")
+  )
+  write.table(
+    data.frame(sequence = rownames(taxonomy), taxonomy = taxonomy_text),
+    file.path(output_dir, "asv_taxonomy.tsv"),
+    sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE
+  )
+
+  keep <- !is.na(taxonomy[, "Kingdom"]) & taxonomy[, "Kingdom"] == "Bacteria" &
+    !is.na(taxonomy[, "Phylum"]) & !is.na(taxonomy[, "Class"]) &
+    !is.na(taxonomy[, "Family"]) & taxonomy[, "Family"] != "Mitochondrias" &
+    colSums(sequence_table > 0) > 6 & colSums(sequence_table) > 2 &
+    apply(sequence_table, 2L, max) > 1
+  filtered_table <- sequence_table[, keep, drop = FALSE]
+  relative_table <- sweep(filtered_table, 1L, rowSums(filtered_table), "/")
+  relative_taxonomy <- taxonomy[keep, 1:6, drop = FALSE]
+  # Preserve the label used by the archived filtered table without altering
+  # the canonical full taxonomy export.
+  legacy_genus <- !is.na(relative_taxonomy[, "Genus"]) &
+    relative_taxonomy[, "Family"] == "Ruminococcaceae" &
+    relative_taxonomy[, "Genus"] == "Incertae Sedis"
+  relative_taxonomy[legacy_genus, "Genus"] <- "Ruminococcaceae Incertae Sedis"
+  relative_with_taxonomy <- data.frame(
+    ASV = sprintf("SV%05d", which(keep)),
+    relative_taxonomy,
+    t(relative_table),
+    row.names = NULL,
+    check.names = FALSE
+  )
+  write.table(
+    relative_with_taxonomy,
+    file.path(output_dir, "asv_relative_abundance_with_taxonomy.tsv"),
+    sep = "\t", quote = FALSE, row.names = FALSE, na = "NA"
+  )
+  write.csv(
+    read_tracking,
+    file.path(output_dir, "read_tracking.csv"),
+    row.names = FALSE, quote = FALSE
+  )
+}
 
 dada2::uniquesToFasta(
   sequence_table,
@@ -407,4 +480,6 @@ writeLines(
   file.path(output_dir, "preprocessing_session_info.txt")
 )
 
+validate_preprocess_16s_output(batch_id, output_dir, canonical_dir)
+message("All generated canonical products match the archived processed data.")
 message("Preprocessing completed. Review outputs in: ", normalizePath(output_dir))

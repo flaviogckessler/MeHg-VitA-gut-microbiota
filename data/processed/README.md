@@ -18,7 +18,11 @@ The data are archived without removing excluded or unexpected sample columns. Us
 
 The canonical [`preprocess_16s.R`](../../scripts/01_sequence_processing/preprocess_16s.R) workflow writes new results to `<batch>/dada2_rerun/` by default. This review location uses the same descriptive filenames listed above but protects the supplied archived products from accidental replacement. It also records `preprocessing_parameters.tsv` and `preprocessing_session_info.txt`. Promote rerun files to the batch root only after FASTQ availability, sample-identity validation, read-retention review, and regression comparison with the archived products.
 
-The workflow creates both combined count/taxonomy and relative-abundance/taxonomy tables for each batch. It retains all samples in the canonical batch manifest during preprocessing; `include_primary_analysis` exclusions are applied only by downstream analysis. It refuses undocumented identifiers such as historical batch 02 column `t3` unless the canonical metadata are updated first.
+The workflow reproduces the batch-specific archived schemas rather than creating a synthetic common schema. Batch 01 produces the combined count/taxonomy and renamed-taxonomy files. Batch 02 produces the filtered relative-abundance/taxonomy file. New products are compared automatically with this directory by `scripts/01_sequence_processing/validate_preprocess_16s_output.R`; a rerun fails if the canonical contents differ. BIOM comparison is semantic because generated JSON timestamps are not scientifically meaningful.
+
+Exact batch 02 reproduction retains the historical `t3` column during preprocessing, even though `t3` is absent from the supplied metadata. This is an output-compatibility decision, not permission to analyze the sample. Downstream workflows must exclude `t3` unless valid metadata are supplied.
+
+The batch 02 relative-abundance table is a filtered derivative of the 11,704-ASV count table. It contains 2,739 bacterial ASVs classified through Family and passing the documented prevalence/abundance thresholds. `SV` numbers refer to positions in the unfiltered table, and relative abundances are calculated after filtering. See the [preprocessing guide](../../scripts/01_sequence_processing/README.md) for the exact rule and the preserved historical genus-label convention.
 
 ## PICRUSt2-specific inputs
 
