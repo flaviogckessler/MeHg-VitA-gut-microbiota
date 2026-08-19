@@ -48,7 +48,8 @@ files without sourcing the legacy script or assembling the Photoshop
 composites. The historical PND21 block exposed Figure S3 to the incorrect
 character-derived order `CN`, `MeHg`, `VitA`, `VitA+MeHg`. The portable Figure
 S3 workflow intentionally corrects every panel to `CN`, `VitA`, `MeHg`,
-`VitA+MeHg`, assigns blue, green, red, and black fills, and treats the archived
+`VitA+MeHg`, assigns the shared `#98F5FF`, `#B3EE3A`, `#CD2626`, and `#4D4D4D`
+fills, and treats the archived
 PND21 exports and composite as provenance rather than as an ordering target.
 Figure S3-S5 female panels are written to `output/females/` and
 male panels to `output/male/`, while each final composite remains at its output

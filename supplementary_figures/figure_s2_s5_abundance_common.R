@@ -29,6 +29,12 @@ supplementary_abundance_batch_ids <- c(
   batch2 = "batch02_illumina-miseq_f1-f2_pnd365"
 )
 supplementary_abundance_treatments <- c("CN", "VitA", "MeHg", "VitA+MeHg")
+supplementary_abundance_treatment_colors <- c(
+  CN = "#98F5FF",
+  VitA = "#B3EE3A",
+  MeHg = "#CD2626",
+  `VitA+MeHg` = "#4D4D4D"
+)
 
 supplementary_abundance_panel_codes <- function(n) {
   encode <- function(index) {
@@ -137,8 +143,14 @@ validate_supplementary_abundance_specification <- function(specification) {
       call. = FALSE
     )
   }
-  if (!identical(names(specification$treatment_colors), specification$treatment_levels)) {
-    stop("Treatment colors must be named in plotting order.", call. = FALSE)
+  if (!identical(
+    specification$treatment_colors,
+    supplementary_abundance_treatment_colors
+  )) {
+    stop(
+      "Figure specification must use the common treatment colors.",
+      call. = FALSE
+    )
   }
 
   panels <- specification$panels

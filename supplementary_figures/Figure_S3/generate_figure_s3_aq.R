@@ -66,7 +66,7 @@ figure_s3_specification <- list(
     CN = "#98F5FF",
     VitA = "#B3EE3A",
     MeHg = "#CD2626",
-    `VitA+MeHg` = "#000000"
+    `VitA+MeHg` = "#4D4D4D"
   ),
   expected_sample_counts = c(Female = 18L, Male = 16L),
   expected_treatment_counts = list(

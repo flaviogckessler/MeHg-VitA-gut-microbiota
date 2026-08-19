@@ -81,11 +81,12 @@ taxon is tested with a four-group Kruskal-Wallis test followed by all six Dunn
 tests with Benjamini-Hochberg FDR adjustment; only adjusted comparisons at or
 below 0.05 are drawn. No parametric test or normality-based method selection is
 performed. Every workflow is required to use the common treatment order `CN`,
-`VitA`, `MeHg`, `VitA+MeHg`. Figure S3 deliberately corrects the erroneous
-character-derived order in the historical PND21 exports and maps those groups
-to blue (`#98F5FF`), green (`#B3EE3A`), red (`#CD2626`), and black (`#000000`),
-respectively. Its retained composite documents the historical assembly and is
-not the ordering reference for the corrected generated panels.
+`VitA`, `MeHg`, `VitA+MeHg` and the shared colors `#98F5FF`, `#B3EE3A`,
+`#CD2626`, `#4D4D4D`, respectively. Figure S3 deliberately corrects the
+erroneous character-derived order in the historical PND21 exports while
+matching the palette used by Figures S2, S4, and S5. Its retained composite
+documents the historical assembly and is not the ordering reference for the
+corrected generated panels.
 
 Generate and validate the panels from the repository root:
 
@@ -101,7 +102,7 @@ Rscript supplementary_figures/Figure_S5/validate_figure_s5_ao.R
 The validators independently reproduce the Kruskal-Wallis statistics and
 check the exact omnibus p-values, all Dunn comparison signatures, adjusted
 significance counts, source checksums and schemas, cohort membership and
-treatment counts, the common treatment order, output names, sex-specific
+treatment counts, the common treatment order and colors, output names, sex-specific
 directories and dimensions, committed PNGs, and retained composite dimensions.
 All 72 archived TIFF panels under `Alberto/images/Abundancias/NONparametric/`
 were inspected during migration; the corrected S3 PNGs intentionally differ
