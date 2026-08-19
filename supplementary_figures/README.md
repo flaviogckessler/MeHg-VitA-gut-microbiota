@@ -96,6 +96,43 @@ abundances, the exact Kruskal-Wallis results, all six Dunn comparisons per
 panel, the expected FDR-adjusted significant pairs, PNG names and 600 x 500
 dimensions, committed generated panels, and the supplied composite.
 
+## Figure S7
+
+Figure S7 is a four-panel PCA of the untransformed PICRUSt-predicted KEGG
+Ortholog (KO) scores. The official portable workflow is
+[`generate_figure_s7_ad.R`](Figure_S7/generate_figure_s7_ad.R). It generates
+the individual plots used in the supplied, manually assembled
+[`Figure_S7_FinalFigure.png`](Figure_S7/output/Figure_S7_FinalFigure.png).
+
+| Panel | Cohort | Numerical source | Metadata source | Generated PNG |
+|---|---|---|---|---|
+| A | Dams (F0) | [`batch01` KO predictions](../results/functional_prediction/batch01_iontorrent_dams-f0_f1-pnd21/kegg_ortholog_abundance.tsv) | [`batch01` manifest](../data/metadata/batch01_iontorrent_dams-f0_f1-pnd21/sample_manifest.csv) | [`FigureS7A_generated.png`](Figure_S7/output/FigureS7A_generated.png) |
+| B | F1-PND21 | [`batch01` KO predictions](../results/functional_prediction/batch01_iontorrent_dams-f0_f1-pnd21/kegg_ortholog_abundance.tsv) | [`batch01` manifest](../data/metadata/batch01_iontorrent_dams-f0_f1-pnd21/sample_manifest.csv) | [`FigureS7B_generated.png`](Figure_S7/output/FigureS7B_generated.png) |
+| C | F1-PND365 | [`batch02` KO predictions](../results/functional_prediction/batch02_illumina-miseq_f1-f2_pnd365/kegg_ortholog_abundance.tsv) | [`batch02` manifest](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) | [`FigureS7C_generated.png`](Figure_S7/output/FigureS7C_generated.png) |
+| D | F2-PND365 | [`batch02` KO predictions](../results/functional_prediction/batch02_illumina-miseq_f1-f2_pnd365/kegg_ortholog_abundance.tsv) | [`batch02` manifest](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) | [`FigureS7D_generated.png`](Figure_S7/output/FigureS7D_generated.png) |
+
+The generator joins matrix columns to the cohort manifests, honors
+`include_primary_analysis`, and therefore excludes low-quality batch01 samples
+`10F` and `22F` and the undocumented batch02 column `t3`. It applies base-R
+`prcomp()` to samples by all KOs with centering and no variance scaling, matching
+the legacy analysis. Treatment is encoded by the original ggplot2 discrete
+colors and 68% normal ellipses; sex is encoded by point shape for the offspring
+cohorts. The panel headings in the supplied composite were added during manual
+assembly and are not repeated inside the generated plot areas.
+
+Run the generator from the repository root:
+
+``` powershell
+Rscript supplementary_figures/Figure_S7/generate_figure_s7_ad.R
+```
+
+The same script validates the canonical source schemas and dimensions, cohort
+membership (18, 34, 24, and 24 samples), finite non-negative KO scores,
+treatment ellipse covariance, deterministic PCA orientation, the four
+reference variance pairs, each 1800 x 900 generated PNG, and the supplied
+2082 x 1179 composite. No new source-data file is needed: the canonical,
+descriptively named PICRUSt2 matrices and sample manifests are used directly.
+
 ## Figures S8-S16
 
 Figures S8-S16 follow the same reproducibility boundary as main Figures 7 and 8. The KEGG pathway views were prepared manually, while their KO z-score heatmaps now have portable base-R renderers. The supplied final composites are retained as visual references under each figure's `output/` directory.
