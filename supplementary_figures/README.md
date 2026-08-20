@@ -1,12 +1,14 @@
 # Supplementary figures
 
+Standalone validator source files used during repository curation are retained locally but intentionally excluded from version control for now. The commands below therefore document public generators only.
+
 ## Software, R packages, and sample-size convention
 
 `N` denotes biological samples (animals), not taxa or KOs. Microbiome counts are reported after applying `include_primary_analysis`. Packages distributed with R are cited collectively as R [@r-core].
 
 | Figure(s) | Software or required R packages | Analysis N |
 |---|---|---|
-| S1 | `dplyr`, `ggplot2`, `ggpubr`, and `rstatix`, plus base-R `stats` and `utils`; validation also loads base-R `tools` [@dplyr; @ggplot2; @ggpubr; @rstatix; @r-core] | Panels A/E: 18; B/F: 34; C/G: 24; D/H: 24. |
+| S1 | `dplyr`, `ggplot2`, `ggpubr`, and `rstatix`, plus base-R `stats` and `utils` [@dplyr; @ggplot2; @ggpubr; @rstatix; @r-core] | Panels A/E: 18; B/F: 34; C/G: 24; D/H: 24. |
 | S2 | `dplyr`, `ggplot2`, `ggpubr`, and `rstatix`, plus base-R `stats`, `tools`, and `utils` [@dplyr; @ggplot2; @ggpubr; @rstatix; @r-core] | 18 dams. |
 | S3 | Same as S2 | 34 F1-PND21 animals (18 female, 16 male). |
 | S4 | Same as S2 | 24 F1-PND365 animals (12/sex). |
@@ -23,11 +25,10 @@
 
 Figure S1 reports Observed richness (panels A-D) and InvSimpson diversity (panels E-H) for the same four cohorts used in Figure 3. Panels A/E use 18 F0 dams (`CN` 5, `VitA` 4, `MeHg` 5, `VitA+MeHg` 4); panels B/F use 34 F1-PND21 offspring (`CN` 10, `VitA` 7, `MeHg` 10, `VitA+MeHg` 7); panels C/G and D/H each use 24 animals, with three animals per sex-by-treatment cell.
 
-The official generator is [`generate_figure_s1_ah.R`](Figure_S1/generate_figure_s1_ah.R), and [`validate_figure_s1_ah.R`](Figure_S1/validate_figure_s1_ah.R) verifies the canonical alpha-diversity inputs, cohort membership, statistical results, output dimensions, and supplied composite. The required packages are `dplyr`, `ggplot2`, `ggpubr`, and `rstatix`, together with base-R `stats` and `utils`; the validator also loads base-R `tools`.
+The official generator is [`generate_figure_s1_ah.R`](Figure_S1/generate_figure_s1_ah.R). During curation, a local-only validator checked the canonical alpha-diversity inputs, cohort membership, statistical results, output dimensions, and supplied composite. The generator requires `dplyr`, `ggplot2`, `ggpubr`, and `rstatix`, together with base-R `stats` and `utils`.
 
 ```bash
 Rscript supplementary_figures/Figure_S1/generate_figure_s1_ah.R
-Rscript supplementary_figures/Figure_S1/validate_figure_s1_ah.R
 ```
 
 ## Figure S2
@@ -44,41 +45,37 @@ All panels use a four-group Kruskal-Wallis test followed by all six pairwise Dun
 
 [`generate_figure_s2_abc.R`](Figure_S2/generate_figure_s2_abc.R) uses the shared [`figure_s2_s5_abundance_common.R`](figure_s2_s5_abundance_common.R) workflow and generates the three individual 600 x 500 PNGs [`FigureS2A_generated.png`](Figure_S2/output/FigureS2A_generated.png), [`FigureS2B_generated.png`](Figure_S2/output/FigureS2B_generated.png), and [`FigureS2C_generated.png`](Figure_S2/output/FigureS2C_generated.png). It does not assemble the publication layout. The supplied [`Figure_S2_FinalFigure.png`](Figure_S2/output/Figure_S2_FinalFigure.png) was assembled manually in Adobe Photoshop and is retained only as a visual reference. The three original 600 x 500 TIFF panel exports were inspected from the archived `Alberto/images/Abundancias/NONparametric/Dams_F0_NONparametric/` directory; the portable workflow creates PNG files only.
 
-Generate and validate all three panels from the repository root:
+Generate all three panels from the repository root:
 
 ```bash
 Rscript supplementary_figures/Figure_S2/generate_figure_s2_abc.R
-Rscript supplementary_figures/Figure_S2/validate_figure_s2_abc.R
 ```
 
-[`validate_figure_s2_abc.R`](Figure_S2/validate_figure_s2_abc.R) checks source schemas, taxon identity, F0 membership, treatment counts, finite relative abundances, the exact Kruskal-Wallis results, all six Dunn comparisons per panel, the expected FDR-adjusted significant pairs, PNG names and 600 x 500 dimensions, committed generated panels, and the supplied composite.
+During curation, a local-only validator checked source schemas, taxon identity, F0 membership, treatment counts, finite relative abundances, the exact Kruskal-Wallis results, all six Dunn comparisons per panel, the expected FDR-adjusted significant pairs, PNG names and dimensions, generated panels, and the supplied composite.
 
 ## Figures S3-S5
 
 Figures S3-S5 extend the same portable taxon-relative-abundance workflow to offspring cohorts. Together they generate 72 individual 600 x 500 PNG panels; they do not assemble the supplied Photoshop composites.
 
-| Figure | Cohort | N (female/male) | Female panels | Male panels | Numerical source | Metadata source | Generator and validator |
+| Figure | Cohort | N (female/male) | Female panels | Male panels | Numerical source | Metadata source | Generator |
 |---|---|---:|---|---|---|---|---|
-| S3 | F1-PND21 | 18/16 | [`A-J`](Figure_S3/output/females/) | [`K-Q`](Figure_S3/output/male/) | [`batch01` abundance](../results/taxon_relative_abundance/batch01_iontorrent_dams-f0_f1-pnd21_taxon_relative_abundance.csv) | [`batch01` manifest](../data/metadata/batch01_iontorrent_dams-f0_f1-pnd21/sample_manifest.csv) | [`generator`](Figure_S3/generate_figure_s3_aq.R), [`validator`](Figure_S3/validate_figure_s3_aq.R) |
-| S4 | F1-PND365 | 12/12 | [`A-AC`](Figure_S4/output/females/) | [`AD-AN`](Figure_S4/output/male/) | [`batch02` abundance](../results/taxon_relative_abundance/batch02_illumina-miseq_f1-f2_pnd365_taxon_relative_abundance.csv) | [`batch02` manifest](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) | [`generator`](Figure_S4/generate_figure_s4_a_an.R), [`validator`](Figure_S4/validate_figure_s4_a_an.R) |
-| S5 | F2-PND365 | 12/12 | [`A-H`](Figure_S5/output/females/) | [`I-O`](Figure_S5/output/male/) | [`batch02` abundance](../results/taxon_relative_abundance/batch02_illumina-miseq_f1-f2_pnd365_taxon_relative_abundance.csv) | [`batch02` manifest](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) | [`generator`](Figure_S5/generate_figure_s5_ao.R), [`validator`](Figure_S5/validate_figure_s5_ao.R) |
+| S3 | F1-PND21 | 18/16 | [`A-J`](Figure_S3/output/females/) | [`K-Q`](Figure_S3/output/male/) | [`batch01` abundance](../results/taxon_relative_abundance/batch01_iontorrent_dams-f0_f1-pnd21_taxon_relative_abundance.csv) | [`batch01` manifest](../data/metadata/batch01_iontorrent_dams-f0_f1-pnd21/sample_manifest.csv) | [`generator`](Figure_S3/generate_figure_s3_aq.R) |
+| S4 | F1-PND365 | 12/12 | [`A-AC`](Figure_S4/output/females/) | [`AD-AN`](Figure_S4/output/male/) | [`batch02` abundance](../results/taxon_relative_abundance/batch02_illumina-miseq_f1-f2_pnd365_taxon_relative_abundance.csv) | [`batch02` manifest](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) | [`generator`](Figure_S4/generate_figure_s4_a_an.R) |
+| S5 | F2-PND365 | 12/12 | [`A-H`](Figure_S5/output/females/) | [`I-O`](Figure_S5/output/male/) | [`batch02` abundance](../results/taxon_relative_abundance/batch02_illumina-miseq_f1-f2_pnd365_taxon_relative_abundance.csv) | [`batch02` manifest](../data/metadata/batch02_illumina-miseq_f1-f2_pnd365/sample_manifest.csv) | [`generator`](Figure_S5/generate_figure_s5_ao.R) |
 
-For each figure, female generated panels are stored under `output/females/` and male generated panels under `output/male/`. The manually assembled final composite remains directly under `output/`. The shared generator derives the destination from each panel's manifest sex, and the validator checks both the expected sex-specific path and the absence of generated panels at the output root.
+For each figure, female generated panels are stored under `output/females/` and male generated panels under `output/male/`. The manually assembled final composite remains directly under `output/`. The shared generator derives the destination from each panel's manifest sex; local-only curation checks verified the sex-specific paths and absence of generated panels at the output root.
 
 The canonical abundance files are exact copies of the historical `AbundanciasTaxons_Todos.csv` and `AbundanciasTaxons_1year.csv` inputs, so no new figure-specific data copies or renaming were needed. Together with Figure S2, these generators use the shared [`figure_s2_s5_abundance_common.R`](figure_s2_s5_abundance_common.R) renderer, join abundance columns to the relevant manifest, honor `include_primary_analysis`, and select generation and sex explicitly. Each taxon is tested with a four-group Kruskal-Wallis test followed by all six Dunn tests with Benjamini-Hochberg FDR adjustment; only adjusted comparisons at or below 0.05 are drawn. Every workflow uses the common treatment order `CN`, `VitA`, `MeHg`, `VitA+MeHg` and the shared colors `#98F5FF`, `#B3EE3A`, `#CD2626`, `#4D4D4D`, respectively. Figure S3 generated panels and [`Figure_S3_FinalFigure.png`](Figure_S3/output/Figure_S3_FinalFigure.png) use this same order and palette.
 
-Generate and validate the panels from the repository root:
+Generate the panels from the repository root:
 
 ```bash
 Rscript supplementary_figures/Figure_S3/generate_figure_s3_aq.R
-Rscript supplementary_figures/Figure_S3/validate_figure_s3_aq.R
 Rscript supplementary_figures/Figure_S4/generate_figure_s4_a_an.R
-Rscript supplementary_figures/Figure_S4/validate_figure_s4_a_an.R
 Rscript supplementary_figures/Figure_S5/generate_figure_s5_ao.R
-Rscript supplementary_figures/Figure_S5/validate_figure_s5_ao.R
 ```
 
-The validators independently reproduce the Kruskal-Wallis statistics and check the exact omnibus p-values, all Dunn comparison signatures, adjusted significance counts, source checksums and schemas, cohort membership and treatment counts, the common treatment order and colors, output names, sex-specific directories and dimensions, committed PNGs, and final-composite dimensions. The authoritative composites are [`Figure S3`](Figure_S3/output/Figure_S3_FinalFigure.png), [`Figure S4`](Figure_S4/output/Figure_S4_FinalFigure.png), and [`Figure S5`](Figure_S5/output/Figure_S5_FinalFigure.png).
+Local-only curation checks independently reproduced the Kruskal-Wallis statistics and checked the exact omnibus p-values, Dunn comparison signatures, adjusted significance counts, source checksums and schemas, cohort membership and treatment counts, common treatment order and colors, output names, sex-specific directories and dimensions, generated PNGs, and final-composite dimensions. The authoritative composites are [`Figure S3`](Figure_S3/output/Figure_S3_FinalFigure.png), [`Figure S4`](Figure_S4/output/Figure_S4_FinalFigure.png), and [`Figure S5`](Figure_S5/output/Figure_S5_FinalFigure.png).
 
 ## Figure S6
 
@@ -133,7 +130,7 @@ Figures S8-S14 each use the 34 included F1-PND21 samples (`CN` 10, `VitA` 7, `Me
 
 -   [`figure_s8_s16_common.R`](figure_s8_s16_common.R) contains the shared source checks, reference KO orders, complete-linkage row clustering, deterministic dendrogram orientation, blue-white-red coloring, and PNG renderer. The thin per-figure scripts above are independently executable.
 -   The clean F1-PND21 inputs are in [`batch01_iontorrent_dams-f0_f1-pnd21/kegg_pathway_ko_z_scores/`](../results/functional_prediction/batch01_iontorrent_dams-f0_f1-pnd21/kegg_pathway_ko_z_scores/). Figure S15J and the supplied Figure S16 source are in [`batch02_illumina-miseq_f1-f2_pnd365/kegg_pathway_ko_z_scores/`](../results/functional_prediction/batch02_illumina-miseq_f1-f2_pnd365/kegg_pathway_ko_z_scores/).
--   The source tables are generated from canonical PICRUSt2 KO predictions and the canonical manifest by [`generate_kegg_pathway_ko_z_scores.R`](../scripts/04_functional_prediction/generate_kegg_pathway_ko_z_scores.R). [`validate_kegg_pathway_ko_z_scores.R`](../scripts/04_functional_prediction/validate_kegg_pathway_ko_z_scores.R) checks all 19 clean tables against the preserved legacy exports.
+-   The source tables are generated from canonical PICRUSt2 KO predictions and the canonical manifest by [`generate_kegg_pathway_ko_z_scores.R`](../scripts/04_functional_prediction/generate_kegg_pathway_ko_z_scores.R). Local-only regression checks compared all 19 clean tables with the preserved legacy exports during curation.
 -   The legacy workflow applied `na.omit()` before rendering. The new renderer makes this behavior explicit: three undefined constant-profile rows are omitted from S9 and seven from S13, and the exact KO IDs are validated.
 -   Panels A-D in S8-S14 and S16 were prepared manually at `https://www.kegg.jp/pathway/mapxxxxx`, one export for each treatment in the order `CN`, `VitA`, `MeHg`, and `VitA+MeHg`. Their pathway boxes use the matching KO z-score column and the shared blue-white-red scale. Figure S15 analogously contains four PND21 pathway views (A-D) and four PND365 views (E-H). These KEGG panels and the assembled composites are retained reference outputs, not products of the R heatmap scripts.
 
@@ -141,7 +138,7 @@ Figures S8-S14 each use the 34 included F1-PND21 samples (`CN` 10, `VitA` 7, `Me
 
 Each figure uses `supplementary_figures/Figure_S#/output/`, matching the organization of the main-figure workflows. Supplied composites are named `Figure_S#_FinalFigure.png`; generated heatmaps are named `FigureS#<panel>_generated.png`. Figure S15 therefore contains two generated files, `FigureS15I_generated.png` and `FigureS15J_generated.png`.
 
-### Run and validate
+### Run
 
 Run any individual generator from the repository root, for example:
 
@@ -157,13 +154,7 @@ source("supplementary_figures/figure_s8_s16_common.R")
 generate_all_supplementary_heatmaps()
 ```
 
-Run the complete rendering validation:
-
-```bash
-Rscript supplementary_figures/validate_figure_s8_s16.R
-```
-
-The validator regenerates every panel in a temporary directory and checks all per-figure scripts, source schemas, total and finite KO sets, explicit undefined-row omissions, row-wise z-score invariants, reference row orders, dendrogram compatibility, generated dimensions, committed generated panels, and supplied-composite dimensions. Current coverage is ten heatmaps containing 175 finite KO rows and ten explicitly omitted undefined rows.
+During curation, a local-only end-to-end validator regenerated every panel in a temporary directory and checked the per-figure scripts, source schemas, total and finite KO sets, explicit undefined-row omissions, row-wise z-score invariants, reference row orders, dendrogram compatibility, generated dimensions, generated panels, and supplied-composite dimensions. The verified coverage is ten heatmaps containing 175 finite KO rows and ten explicitly omitted undefined rows.
 
 ## Figure S17
 

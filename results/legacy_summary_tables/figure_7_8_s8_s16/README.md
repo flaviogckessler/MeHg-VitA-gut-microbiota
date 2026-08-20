@@ -14,9 +14,7 @@ canonical PICRUSt2 KO matrices and without reading these checkpoints. The clean
 tables omit the legacy row-number column and rename `ID` to `ko_id`; KO order,
 missing-value pattern, and z-score values are otherwise preserved.
 
-The matching
-[`validate_kegg_pathway_ko_z_scores.R`](../../../scripts/04_functional_prediction/validate_kegg_pathway_ko_z_scores.R)
-script compares all 19 regenerated tables with these checkpoints at a numeric
+The matching local-only regression script compares all 19 regenerated tables with these checkpoints at a numeric
 tolerance of `1e-12`. The initial migration comparison covered 229 pathway-KO
 rows and had a maximum absolute difference of `9.992007e-15`, attributable only
 to floating-point summation order.

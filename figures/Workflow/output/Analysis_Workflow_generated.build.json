@@ -1,0 +1,67 @@
+{
+  "specification_sha256": "1166ab8f02baad3f1e3f6a90677aba238f0b9bbfbff13316f8bd7b3fc738d5a9",
+  "schema_sha256": "3163cdc659152c24e2230678b2830585aee03cb14674b9349e3e85b98dd77bab",
+  "generator_sha256": "f2ea7e2647ad22bd1461002d777fb992464e64706f2f4ac188f4ddf9fec5f7d3",
+  "validation_library_sha256": "d74a2dbbc0e230244cdae855f0dbbf61608ce6b73d7793feb3122d6bf2b82dbe",
+  "rasterizer_sha256": "8743e90d718760c4fb08add38fd8cbde0b507a39f7aed4fb723659df5213ae2f",
+  "rendered_validator_sha256": "d1997aaf6514c310e80e391737b3ac93ce3280004f2c584c072b86a812682c35",
+  "generator_version": "3.3.0",
+  "repository_commit": "659f822ec7f7ca4427f2179545c771566431f54a",
+  "generated_at_utc": "2026-08-20T21:48:59Z",
+  "profiles": [
+    {
+      "id": "github_overview",
+      "profile_type": "responsive",
+      "description": "Responsive repository overview using the canonical SVG viewBox.",
+      "css_width": "100%",
+      "max_width_px": 3000
+    },
+    {
+      "id": "journal_landscape",
+      "profile_type": "print",
+      "description": "Expanded landscape rendering with parallel taxonomic and functional lanes and collapsed connector buses.",
+      "width_mm": 300,
+      "height_mm": 192,
+      "body_text_pt": 8.5,
+      "raster_dpi": 300,
+      "pixel_width": 3543,
+      "pixel_height": 2268
+    }
+  ],
+  "font": {
+    "family": "Arial",
+    "fallback_families": [
+      "Liberation Sans",
+      "sans-serif"
+    ],
+    "regular_file": "C:/Windows/Fonts/arial.ttf",
+    "bold_file": "C:/Windows/Fonts/arialbd.ttf"
+  },
+  "outputs": [
+    {
+      "format": "svg",
+      "path": "figures/Workflow/output/Analysis_Workflow_generated.svg",
+      "sha256": "fdc2681a4f72959947d6821dbc765ed94f09d5e509c94d6b22bdfa89e6f4678b",
+      "width_mm": 300,
+      "height_mm": 192,
+      "viewbox_width": 3000,
+      "viewbox_height": 1920
+    },
+    {
+      "format": "png",
+      "path": "figures/Workflow/output/Analysis_Workflow_generated.png",
+      "sha256": "3bc495c32ccc21d9a181d47236f7187fd9d9af8034863754387ccce8557219d7",
+      "pixel_width": 3543,
+      "pixel_height": 2268,
+      "dpi": 300,
+      "raster_source": "figures/Workflow/output/Analysis_Workflow_generated.svg"
+    }
+  ],
+  "supporting_artifacts": [
+    {
+      "format": "markdown",
+      "path": "figures/Workflow/output/Analysis_Workflow_alt_text.md",
+      "sha256": "48419d605484709a97101ce0d88216433359ce860b4cc01065bae9a76379f763"
+    }
+  ]
+}

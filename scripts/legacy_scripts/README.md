@@ -12,7 +12,7 @@ These historical scripts were used as references when portable analysis and figu
 | [`Abundancia_boxplots.R`](Abundancia_boxplots.R) | [`generate_figure_3_hk.R`](../../figures/Figure_3/generate_figure_3_hk.R), panels H-K; [`generate_figure_s2_abc.R`](../../supplementary_figures/Figure_S2/generate_figure_s2_abc.R), supplementary panels A-C; [`generate_figure_s3_aq.R`](../../supplementary_figures/Figure_S3/generate_figure_s3_aq.R), panels A-Q; [`generate_figure_s4_a_an.R`](../../supplementary_figures/Figure_S4/generate_figure_s4_a_an.R), panels A-AN; and [`generate_figure_s5_ao.R`](../../supplementary_figures/Figure_S5/generate_figure_s5_ao.R), panels A-O |
 | [`Heatmap_Zscore_MestradoAlberto.R`](Heatmap_Zscore_MestradoAlberto.R) | Figure 4 generators [`A`](../../figures/Figure_4/generate_figure_4_a.R), [`B`](../../figures/Figure_4/generate_figure_4_b.R), [`C`](../../figures/Figure_4/generate_figure_4_c.R), and [`D`](../../figures/Figure_4/generate_figure_4_d.R) |
 | [`Correlacoes_Metadados.R`](Correlacoes_Metadados.R) | [`generate_figure_5_d.R`](../../figures/Figure_5/generate_figure_5_d.R), panel D |
-| [`Picrust_mestrado_Alberto.R`](Picrust_mestrado_Alberto.R) | Figure 6 generators [`A`](../../figures/Figure_6/generate_figure_6_a.R), [`B`](../../figures/Figure_6/generate_figure_6_b.R), and [`C`](../../figures/Figure_6/generate_figure_6_c.R), with shared corrected multi-group logic in [`figure_6_common.R`](../../figures/Figure_6/figure_6_common.R); the [`Figure S7 PCA generator`](../../supplementary_figures/Figure_S7/generate_figure_s7_ad.R); the [`KEGG-pathway KO z-score source-data generator`](../04_functional_prediction/generate_kegg_pathway_ko_z_scores.R) for Figures 7, 8, and S8-S16; the panel-E renderers for [`Figure 7`](../../figures/Figure_7/generate_figure_7_e.R) and [`Figure 8`](../../figures/Figure_8/generate_figure_8_e.R); the shared [`Figure S8-S16 heatmap renderer`](../../supplementary_figures/figure_s8_s16_common.R) with its [`validator`](../../supplementary_figures/validate_figure_s8_s16.R); and the [`Figure S18 generator`](../../supplementary_figures/Figure_S18/generate_figure_s18.R) |
+| [`Picrust_mestrado_Alberto.R`](Picrust_mestrado_Alberto.R) | Figure 6 generators [`A`](../../figures/Figure_6/generate_figure_6_a.R), [`B`](../../figures/Figure_6/generate_figure_6_b.R), and [`C`](../../figures/Figure_6/generate_figure_6_c.R), with shared corrected multi-group logic in [`figure_6_common.R`](../../figures/Figure_6/figure_6_common.R); the [`Figure S7 PCA generator`](../../supplementary_figures/Figure_S7/generate_figure_s7_ad.R); the [`KEGG-pathway KO z-score source-data generator`](../04_functional_prediction/generate_kegg_pathway_ko_z_scores.R) for Figures 7, 8, and S8-S16; the panel-E renderers for [`Figure 7`](../../figures/Figure_7/generate_figure_7_e.R) and [`Figure 8`](../../figures/Figure_8/generate_figure_8_e.R); the shared [`Figure S8-S16 heatmap renderer`](../../supplementary_figures/figure_s8_s16_common.R); and the [`Figure S18 generator`](../../supplementary_figures/Figure_S18/generate_figure_s18.R) |
 | [`Script_picrust_mehg.txt`](Script_picrust_mehg.txt) | [`picrust2_workflow.md`](../04_functional_prediction/picrust2_workflow.md), exact PICRUSt2 inputs and analysis-ready functional-prediction exports used by the Figure 6 workflow |
 
 `Script_picrust_mehg.txt` documents successive batch 02 attempts in a command log that was overwritten during analysis. The portable workflow identifies the final successful filtered input, corrects the recorded sample/ASV-output counts from the supplied files, and keeps the historical text unchanged so the reconstruction remains auditable.
@@ -31,9 +31,8 @@ reproduces those nonparametric statistics and dotted display labels, and emits
 only the three individual PNG panels through the shared
 [`figure_s2_s5_abundance_common.R`](../../supplementary_figures/figure_s2_s5_abundance_common.R)
 workflow. It neither sources the historical script nor recreates the Photoshop
-composite. The paired
-[`validator`](../../supplementary_figures/Figure_S2/validate_figure_s2_abc.R)
-locks the cohort, taxa, exact test results, significant comparisons, and output
+composite. The paired local-only validator used during curation locks the
+cohort, taxa, exact test results, significant comparisons, and output
 dimensions for traceability.
 
 The PND21 and one-year nonparametric blocks in `Abundancia_boxplots.R` also
@@ -53,7 +52,7 @@ composites. Every Figure S3 panel uses the repository-wide treatment order
 `#CD2626`, and `#4D4D4D` fills.
 Figure S3-S5 female panels are written to `output/females/` and
 male panels to `output/male/`, while each final composite remains at its output
-root. Their paired validators lock source checksums, cohorts, taxa, exact
+root. Their paired local-only validators lock source checksums, cohorts, taxa, exact
 nonparametric results, significant comparison signatures, filenames,
 sex-specific paths, and dimensions.
 

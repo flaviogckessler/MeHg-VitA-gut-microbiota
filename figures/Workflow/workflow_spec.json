@@ -1,0 +1,1028 @@
+{
+  "$schema": "./workflow_spec.schema.json",
+  "schema_version": "2.0.0",
+  "workflow_id": "mehg_vitamin_a_16s_bioinformatics",
+  "title": "16S rRNA gene amplicon sequencing and gut microbiota bioinformatics workflow",
+  "short_title": "MeHg-vitamin A microbiota workflow",
+  "description": "Machine-readable scientific and rendering specification for the bioinformatics analyses conducted in the multigenerational methylmercury and vitamin A study.",
+  "status": "draft",
+  "repository_root": ".",
+  "generator_contract": {
+    "generator_version": "3.3.0",
+    "parser": "R package jsonlite (fromJSON with simplifyVector = FALSE)",
+    "schema_validator": "JSON Schema draft 2020-12; tests use PowerShell Test-Json and R uses jsonvalidate when available",
+    "rasterizer": "Node.js sharp: the canonical SVG is rasterized at the journal profile dimensions and density",
+    "freshness_manifest": "figures/Workflow/output/Analysis_Workflow_generated.build.json",
+    "outputs": [
+      {
+        "format": "svg",
+        "path": "figures/Workflow/output/Analysis_Workflow_generated.svg"
+      },
+      {
+        "format": "png",
+        "path": "figures/Workflow/output/Analysis_Workflow_generated.png"
+      }
+    ],
+    "supporting_artifacts": [
+      {
+        "format": "markdown",
+        "path": "figures/Workflow/output/Analysis_Workflow_alt_text.md"
+      }
+    ]
+  },
+  "study_context": {
+    "intervention_groups": [
+      {
+        "id": "cn",
+        "display_label": "CN",
+        "description": "Control",
+        "figure_color": "#98F5FF",
+        "display_order": 1
+      },
+      {
+        "id": "vita",
+        "display_label": "VitA",
+        "description": "Vitamin A",
+        "figure_color": "#B3EE3A",
+        "display_order": 2
+      },
+      {
+        "id": "mehg",
+        "display_label": "MeHg",
+        "description": "Methylmercury",
+        "figure_color": "#CD2626",
+        "display_order": 3
+      },
+      {
+        "id": "vita_mehg",
+        "display_label": "VitA + MeHg",
+        "description": "Vitamin A plus methylmercury",
+        "figure_color": "#4D4D4D",
+        "display_order": 4
+      }
+    ],
+    "cohorts": [
+      {
+        "id": "f0_dams",
+        "display_label": "F0 dams",
+        "generation": "F0",
+        "life_stage": "dam",
+        "collection_day_pnd": null,
+        "sex_structure": "female only",
+        "primary_analysis_n": 18,
+        "batch_id": "batch01_iontorrent_dams_f0_f1_pnd21",
+        "sequencing_platform": "Ion Torrent"
+      },
+      {
+        "id": "f1_pnd21",
+        "display_label": "F1-PND21",
+        "generation": "F1",
+        "life_stage": "offspring",
+        "collection_day_pnd": 21,
+        "sex_structure": "female and male",
+        "primary_analysis_n": 34,
+        "batch_id": "batch01_iontorrent_dams_f0_f1_pnd21",
+        "sequencing_platform": "Ion Torrent"
+      },
+      {
+        "id": "f1_pnd365",
+        "display_label": "F1-PND365",
+        "generation": "F1",
+        "life_stage": "adult offspring",
+        "collection_day_pnd": 365,
+        "sex_structure": "female and male",
+        "primary_analysis_n": 24,
+        "batch_id": "batch02_illumina_miseq_f1_f2_pnd365",
+        "sequencing_platform": "Illumina MiSeq"
+      },
+      {
+        "id": "f2_pnd365",
+        "display_label": "F2-PND365",
+        "generation": "F2",
+        "life_stage": "adult offspring",
+        "collection_day_pnd": 365,
+        "sex_structure": "female and male",
+        "primary_analysis_n": 24,
+        "batch_id": "batch02_illumina_miseq_f1_f2_pnd365",
+        "sequencing_platform": "Illumina MiSeq"
+      }
+    ],
+    "exclusion_rules": [
+      {
+        "id": "batch01_low_quality_samples",
+        "scope": "batch01_iontorrent_dams_f0_f1_pnd21",
+        "sample_ids": ["10F", "22F"],
+        "reason": "Low sequencing quality",
+        "rule": "include_primary_analysis must be true"
+      },
+      {
+        "id": "batch02_undocumented_sample",
+        "scope": "batch02_illumina_miseq_f1_f2_pnd365",
+        "sample_ids": ["t3"],
+        "reason": "Undocumented count-table column without valid metadata",
+        "rule": "Exclude from downstream analyses unless valid metadata are supplied"
+      }
+    ]
+  },
+  "lanes": [
+    {
+      "id": "core_processing",
+      "display_label": "Core processing",
+      "display_order": 1,
+      "figure_color": "#2B6CB0",
+      "background_color": "#F4F8FC",
+      "description": "Study inputs, sequencing, DADA2 processing, taxonomy assignment, and analysis-ready data products."
+    },
+    {
+      "id": "taxonomic_ecology",
+      "display_label": "Taxonomic ecology",
+      "display_order": 2,
+      "figure_color": "#087F8C",
+      "background_color": "#EFFAFA",
+      "description": "Parallel community-composition, alpha-diversity, taxon-level, and taxon-metal analyses."
+    },
+    {
+      "id": "functional_inference",
+      "display_label": "Functional inference",
+      "display_order": 3,
+      "figure_color": "#6B46C1",
+      "background_color": "#F8F5FC",
+      "description": "PICRUSt2 predicted functional profiles followed by parallel KO and pathway analyses."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "study_design",
+      "lane_id": "core_processing",
+      "node_type": "study_input",
+      "display_label": "Study design and cohorts",
+      "short_lines": [
+        "2 × 2 exposure design",
+        "Vitamin A × MeHg",
+        "F0–F2 cohorts"
+      ],
+      "inputs": [],
+      "outputs": ["cohort_definitions", "treatment_assignments", "sample_metadata"],
+      "execution": {
+        "automation_level": "manual",
+        "rerun_status": "not_applicable",
+        "status": "complete",
+        "visual_class": "manual",
+        "manual_boundary": "The study design and cohort definitions were predetermined by the research project and supplied by the author as authoritative contextual information; they are not reconstructed analysis outputs."
+      },
+      "evidence": {
+        "status": "manual_authoritative",
+        "authority": "manual_author_record",
+        "files": [
+          "README.md",
+          "data/metadata/sample_manifest_all_batches.csv",
+          "figures/Figure_1/Experimental_Procedures.png"
+        ]
+      }
+    },
+    {
+      "id": "sequencing",
+      "lane_id": "core_processing",
+      "node_type": "data_generation",
+      "display_label": "16S rRNA gene amplicon sequencing",
+      "short_lines": [
+        "16S rRNA gene",
+        "Ion Torrent",
+        "Illumina MiSeq"
+      ],
+      "inputs": ["intestinal_microbiota_samples"],
+      "outputs": ["demultiplexed_fastq_reads"],
+      "execution": {
+        "automation_level": "external",
+        "rerun_status": "not_rerun",
+        "status": "conditional",
+        "visual_class": "validated_reconstructed",
+        "manual_boundary": "Raw sequencing was performed outside the maintained analysis-code workflow."
+      },
+      "evidence": {
+        "status": "documented",
+        "authority": "repository_documentation",
+        "files": ["README.md", "scripts/01_sequence_processing/README.md"]
+      }
+    },
+    {
+      "id": "dada2_preprocessing",
+      "lane_id": "core_processing",
+      "node_type": "bioinformatics_processing",
+      "display_label": "DADA2 preprocessing",
+      "short_lines": [
+        "Quality filtering",
+        "ASV inference",
+        "Chimera removal"
+      ],
+      "inputs": ["demultiplexed_fastq_reads"],
+      "outputs": ["asv_count_table", "representative_asv_sequences", "read_tracking"],
+      "software": ["R", "DADA2", "biomformat"],
+      "execution": {
+        "automation_level": "fully_scripted",
+        "rerun_status": "not_rerun",
+        "status": "conditional",
+        "visual_class": "fully_scripted",
+        "manual_boundary": null
+      },
+      "evidence": {
+        "status": "partially_verified",
+        "authority": "hybrid",
+        "files": [
+          "scripts/01_sequence_processing/preprocess_16s.R",
+          "scripts/01_sequence_processing/README.md",
+          "scripts/01_sequence_processing/validate_preprocess_16s_output.R"
+        ]
+      }
+    },
+    {
+      "id": "taxonomy_assignment",
+      "lane_id": "core_processing",
+      "node_type": "annotation",
+      "display_label": "SILVA 138.1 taxonomy",
+      "short_lines": ["SILVA 138.1", "Taxonomy/species", "Versioned SILVA"],
+      "inputs": ["representative_asv_sequences"],
+      "outputs": ["asv_taxonomy"],
+      "software": ["DADA2"],
+      "execution": {
+        "automation_level": "fully_scripted",
+        "rerun_status": "not_rerun",
+        "status": "conditional",
+        "visual_class": "fully_scripted",
+        "manual_boundary": null
+      },
+      "evidence": {
+        "status": "partially_verified",
+        "authority": "maintained_code",
+        "files": ["scripts/01_sequence_processing/preprocess_16s.R", "data/external/README.md"]
+      }
+    },
+    {
+      "id": "analysis_ready_data",
+      "lane_id": "core_processing",
+      "node_type": "curated_dataset",
+      "display_label": "Analysis-ready data",
+      "short_lines": [
+        "ASV count table",
+        "Taxonomy + FASTA",
+        "Inclusion gate"
+      ],
+      "inputs": ["asv_count_table", "asv_taxonomy", "representative_asv_sequences", "sample_metadata"],
+      "outputs": ["taxonomic_analysis_inputs", "picrust2_analysis_inputs"],
+      "execution": {
+        "automation_level": "scripted_with_manual_steps",
+        "rerun_status": "validated_against_archived",
+        "status": "ready",
+        "visual_class": "hybrid",
+        "manual_boundary": "Canonical metadata and documented sample-inclusion decisions are curated inputs."
+      },
+      "evidence": {
+        "status": "verified",
+        "authority": "hybrid",
+        "files": ["data/processed/README.md", "results/README.md", "data/metadata/sample_manifest_all_batches.csv"]
+      }
+    },
+    {
+      "id": "community_composition",
+      "lane_id": "taxonomic_ecology",
+      "node_type": "taxonomic_analysis",
+      "display_label": "Community composition",
+      "short_lines": [
+        "Phylum profiles",
+        "Treatment × sex"
+      ],
+      "inputs": ["taxonomic_analysis_inputs"],
+      "outputs": ["community_composition_plots", "phylum_abundance_comparisons"],
+      "statistics": [
+        "Normality-aware treatment comparisons",
+        "Tukey HSD or Dunn tests depending on assumptions",
+        "Wilcoxon tests for sex comparisons where implemented"
+      ],
+      "paper_outputs": ["Figure 3A–C and 3H–K"],
+      "execution": {
+        "automation_level": "fully_scripted",
+        "rerun_status": "validated",
+        "status": "ready",
+        "visual_class": "fully_scripted",
+        "manual_boundary": null
+      },
+      "evidence": {
+        "status": "verified",
+        "authority": "maintained_code",
+        "files": ["figures/Figure_3/generate_figure_3_abc.R", "figures/Figure_3/generate_figure_3_hk.R"]
+      }
+    },
+    {
+      "id": "alpha_diversity",
+      "lane_id": "taxonomic_ecology",
+      "node_type": "ecological_diversity",
+      "display_label": "Alpha diversity",
+      "short_lines": ["Shannon index", "Richness + InvS", "Four cohorts"],
+      "inputs": ["taxonomic_analysis_inputs"],
+      "outputs": ["alpha_diversity_statistics", "alpha_diversity_plots"],
+      "statistics": [
+        "t test or Wilcoxon test for sex comparisons according to assumptions",
+        "Tukey HSD or Dunn test with FDR adjustment for treatment comparisons according to assumptions"
+      ],
+      "paper_outputs": ["Figure 3D–G and Figure S1A–H"],
+      "execution": {
+        "automation_level": "fully_scripted",
+        "rerun_status": "validated",
+        "status": "ready",
+        "visual_class": "fully_scripted",
+        "manual_boundary": null
+      },
+      "evidence": {
+        "status": "verified",
+        "authority": "maintained_code",
+        "files": ["figures/Figure_3/generate_figure_3_dg.R", "supplementary_figures/Figure_S1/generate_figure_s1_ah.R"]
+      }
+    },
+    {
+      "id": "taxon_differential_analysis",
+      "lane_id": "taxonomic_ecology",
+      "node_type": "differential_abundance",
+      "display_label": "Differential taxa",
+      "short_lines": ["Kruskal–Wallis", "Dunn + BH FDR", "z-score heatmaps"],
+      "inputs": ["taxonomic_analysis_inputs"],
+      "outputs": ["significant_taxa", "taxon_boxplots", "taxon_z_score_heatmaps"],
+      "statistics": [
+        "Kruskal-Wallis p <= 0.05 screening for Figure 4 heatmaps",
+        "Kruskal-Wallis followed by all six Dunn comparisons with Benjamini-Hochberg FDR for Figures S2–S5",
+        "Row-wise standardization of treatment means for heatmaps"
+      ],
+      "paper_outputs": ["Figures 4A–D and S2–S5"],
+      "execution": {
+        "automation_level": "fully_scripted",
+        "rerun_status": "validated",
+        "status": "ready",
+        "visual_class": "fully_scripted",
+        "manual_boundary": null
+      },
+      "evidence": {
+        "status": "verified",
+        "authority": "maintained_code",
+        "files": [
+          "figures/Figure_4/generate_figure_4_a.R",
+          "figures/Figure_4/generate_figure_4_b.R",
+          "figures/Figure_4/generate_figure_4_c.R",
+          "figures/Figure_4/generate_figure_4_d.R",
+          "supplementary_figures/figure_s2_s5_abundance_common.R"
+        ]
+      }
+    },
+    {
+      "id": "taxon_metal_association",
+      "lane_id": "taxonomic_ecology",
+      "node_type": "association_analysis",
+      "display_label": "Taxon-metal association",
+      "short_lines": ["Hg vs Dorea", "Figure 5D"],
+      "inputs": ["taxonomic_analysis_inputs", "total_hg_metadata"],
+      "outputs": ["spearman_statistics", "correlation_plot"],
+      "statistics": ["Spearman rank correlation"],
+      "paper_outputs": ["Figure 5D"],
+      "execution": {
+        "automation_level": "fully_scripted",
+        "rerun_status": "validated",
+        "status": "ready",
+        "visual_class": "fully_scripted",
+        "manual_boundary": null
+      },
+      "evidence": {
+        "status": "verified",
+        "authority": "maintained_code",
+        "files": ["figures/Figure_5/generate_figure_5_d.R"]
+      },
+      "italic_terms": ["Dorea"]
+    },
+    {
+      "id": "picrust2_prediction",
+      "lane_id": "functional_inference",
+      "node_type": "functional_prediction",
+      "display_label": "PICRUSt2 prediction",
+      "short_lines": [
+        "Predicted KO/EC/MetaCyc profiles",
+        "Weighted NSTI QC"
+      ],
+      "inputs": ["picrust2_analysis_inputs"],
+      "outputs": ["kegg_ortholog_abundance", "enzyme_commission_abundance", "metacyc_pathway_abundance", "weighted_nsti"],
+      "software": ["PICRUSt2", "BIOM"],
+      "execution": {
+        "automation_level": "scripted_with_manual_steps",
+        "rerun_status": "validated_against_archived",
+        "status": "conditional",
+        "visual_class": "validated_reconstructed",
+        "manual_boundary": "The terminal workflow is reconstructed; retained predicted profiles are the authoritative numerical products."
+      },
+      "evidence": {
+        "status": "verified",
+        "authority": "archived_outputs",
+        "files": ["scripts/04_functional_prediction/picrust2_workflow.md", "results/functional_prediction/README.md"]
+      }
+    },
+    {
+      "id": "ko_pca",
+      "lane_id": "functional_inference",
+      "node_type": "ordination",
+      "display_label": "KO-level structure",
+      "short_lines": ["Predicted KO PCA", "Centered, unscaled", "Group ellipses"],
+      "inputs": ["kegg_ortholog_abundance"],
+      "outputs": ["ko_pca_plots"],
+      "statistics": ["PCA using centered, untransformed predicted KO scores without scaling"],
+      "paper_outputs": ["Figure S7A–D"],
+      "execution": {
+        "automation_level": "fully_scripted",
+        "rerun_status": "validated",
+        "status": "ready",
+        "visual_class": "fully_scripted",
+        "manual_boundary": null
+      },
+      "evidence": {
+        "status": "verified",
+        "authority": "maintained_code",
+        "files": ["supplementary_figures/Figure_S7/generate_figure_s7_ad.R"]
+      }
+    },
+    {
+      "id": "kegg_pathway_differential_analysis",
+      "lane_id": "functional_inference",
+      "node_type": "functional_differential_analysis",
+      "display_label": "Differentially abundant predicted KEGG pathway profiles",
+      "short_lines": [
+        "Four-group ALDEx2 GLM",
+        "Rule: min(1, 6 × raw p)",
+        "No pairwise post hoc"
+      ],
+      "inputs": ["kegg_ortholog_abundance"],
+      "outputs": ["differential_kegg_pathways", "pathway_effect_plots"],
+      "software": ["ggpicrust2 2.0.0", "ALDEx2 1.28.1", "R 4.2.x (likely 4.2.1)"],
+      "statistics": [
+        "One four-group omnibus ALDEx2 GLM treatment test per pathway",
+        "No pairwise treatment contrasts are calculated by this node",
+        "Package-returned adjustment is retained separately as package_p_adjust",
+        "Author-approved additional conservative rule: author_sixfold_omnibus_p = min(1, 6 × raw_omnibus_p)",
+        "Legacy-compatible p_adjust equals author_sixfold_omnibus_p and is used for pathway selection",
+        "Fixed random seed 20260809"
+      ],
+      "paper_outputs": ["Figure 6A–C"],
+      "execution": {
+        "automation_level": "fully_scripted",
+        "rerun_status": "validated",
+        "status": "ready",
+        "visual_class": "fully_scripted",
+        "manual_boundary": null
+      },
+      "evidence": {
+        "status": "verified",
+        "authority": "hybrid",
+        "files": [
+          "figures/Figure_6/figure_6_common.R",
+          "figures/Figure_6/generate_figure_6_a.R",
+          "figures/Figure_6/generate_figure_6_b.R",
+          "figures/Figure_6/generate_figure_6_c.R",
+          "scripts/legacy_scripts/Picrust_mestrado_Alberto.R",
+          "data/reference/ggpicrust2/README.md"
+        ]
+      },
+      "author_decision_ids": ["figure6_dependency_versions"]
+    },
+    {
+      "id": "kegg_ko_z_scores",
+      "lane_id": "functional_inference",
+      "node_type": "pathway_interpretation",
+      "display_label": "KEGG pathway interrogation",
+      "short_lines": ["Scripted heatmaps", "Manual KEGG maps", "Manual composites"],
+      "inputs": ["kegg_ortholog_abundance", "sample_metadata", "kegg_reference_mapping"],
+      "outputs": ["pathway_specific_ko_z_scores", "clustered_ko_heatmaps", "colored_kegg_pathway_maps"],
+      "statistics": ["Treatment means per KO", "Row-wise z-score standardization", "Hierarchical clustering for heatmaps"],
+      "paper_outputs": ["Figures 7–8 and S8–S16"],
+      "execution": {
+        "automation_level": "scripted_with_manual_steps",
+        "rerun_status": "validated",
+        "status": "ready",
+        "visual_class": "hybrid",
+        "manual_boundary": "KO z-score tables and heatmaps are scripted; KEGG pathway views are manually colored from matching treatment z-score columns and final composites are manually assembled."
+      },
+      "evidence": {
+        "status": "verified",
+        "authority": "hybrid",
+        "files": [
+          "scripts/04_functional_prediction/generate_kegg_pathway_ko_z_scores.R",
+          "scripts/04_functional_prediction/validate_kegg_pathway_ko_z_scores.R",
+          "figures/Figure_7/generate_figure_7_e.R",
+          "figures/Figure_8/generate_figure_8_e.R",
+          "supplementary_figures/figure_s8_s16_common.R"
+        ]
+      }
+    },
+    {
+      "id": "mercury_related_kos",
+      "lane_id": "functional_inference",
+      "node_type": "targeted_functional_analysis",
+      "display_label": "Predicted mercury-related orthologs",
+      "short_lines": [
+        "Four predicted KOs",
+        "Four cohorts",
+        "ANOVA + Tukey"
+      ],
+      "inputs": ["kegg_ortholog_abundance", "sample_metadata", "mercuric_ko_reference"],
+      "outputs": ["mercuric_ko_comparison_grid"],
+      "statistics": ["One-way ANOVA within each KO-by-cohort panel", "Tukey adjusted pairwise comparisons"],
+      "paper_outputs": ["Figure S18"],
+      "execution": {
+        "automation_level": "fully_scripted",
+        "rerun_status": "validated",
+        "status": "ready",
+        "visual_class": "fully_scripted",
+        "manual_boundary": null
+      },
+      "evidence": {
+        "status": "verified",
+        "authority": "maintained_code",
+        "files": [
+          "supplementary_figures/Figure_S18/generate_figure_s18.R",
+          "data/reference/kegg/kegg_api_find_ko_mercuric_orthologs.tsv"
+        ]
+      }
+    },
+    {
+      "id": "taxonomic_outputs",
+      "lane_id": "taxonomic_ecology",
+      "node_type": "paper_output",
+      "display_label": "Taxonomic outputs",
+      "short_lines": ["Composition + diversity", "Differential taxa + Hg", "Figures 3–4, 5D, S1–S5"],
+      "inputs": ["community_composition_plots", "alpha_diversity_plots", "significant_taxa", "taxon_z_score_heatmaps", "correlation_plot"],
+      "outputs": ["taxonomic_manuscript_figures"],
+      "paper_outputs": ["Figures 3–4, 5D, S1–S5"],
+      "execution": {
+        "automation_level": "not_applicable",
+        "rerun_status": "not_applicable",
+        "status": "complete",
+        "visual_class": "hybrid",
+        "manual_boundary": null
+      },
+      "evidence": {
+        "status": "verified",
+        "authority": "repository_documentation",
+        "files": ["figures/README.md", "supplementary_figures/README.md"]
+      }
+    },
+    {
+      "id": "manual_taxonomic_synthesis",
+      "lane_id": "taxonomic_ecology",
+      "node_type": "manual_taxonomic_derivative",
+      "display_label": "Manual taxonomic synthesis",
+      "short_lines": [
+        "Visual synthesis",
+        "No new statistics",
+        "Figure S6"
+      ],
+      "inputs": ["taxonomic_manuscript_figures"],
+      "outputs": ["manual_taxonomic_association_summary"],
+      "paper_outputs": ["Figure S6"],
+      "execution": {
+        "automation_level": "manual",
+        "rerun_status": "not_applicable",
+        "status": "complete",
+        "visual_class": "manual",
+        "manual_boundary": "The author visually reviewed source figures and manually assigned taxa to association boxes; Figure S6 adds no formal statistical test, pooled analysis, quantitative selection threshold, or automated rule."
+      },
+      "evidence": {
+        "status": "manual_authoritative",
+        "authority": "manual_author_record",
+        "files": ["supplementary_figures/README.md"]
+      }
+    },
+    {
+      "id": "functional_outputs",
+      "lane_id": "functional_inference",
+      "node_type": "paper_output",
+      "display_label": "Functional outputs",
+      "short_lines": ["Differentially abundant predicted KEGG pathway profiles", "KO ordination, heatmaps + maps", "Figures 6–8, S7–S16, S18"],
+      "inputs": [
+        "ko_pca_plots",
+        "differential_kegg_pathways",
+        "pathway_specific_ko_z_scores",
+        "clustered_ko_heatmaps",
+        "colored_kegg_pathway_maps",
+        "mercuric_ko_comparison_grid"
+      ],
+      "outputs": ["functional_manuscript_figures"],
+      "paper_outputs": ["Figures 6–8, S7–S16, S18"],
+      "execution": {
+        "automation_level": "not_applicable",
+        "rerun_status": "not_applicable",
+        "status": "complete",
+        "visual_class": "hybrid",
+        "manual_boundary": null
+      },
+      "evidence": {
+        "status": "verified",
+        "authority": "repository_documentation",
+        "files": ["figures/README.md", "supplementary_figures/README.md", "results/functional_prediction/README.md"]
+      }
+    }
+  ],
+  "edges": [
+    {"id": "study_to_sequencing", "from": "study_design", "to": "sequencing", "edge_type": "sample_flow", "label": "Intestinal microbiota samples"},
+    {"id": "sequencing_to_dada2", "from": "sequencing", "to": "dada2_preprocessing", "edge_type": "data_flow", "label": "Demultiplexed FASTQ"},
+    {"id": "dada2_to_taxonomy", "from": "dada2_preprocessing", "to": "taxonomy_assignment", "edge_type": "data_flow", "label": "ASVs and representative sequences"},
+    {"id": "dada2_to_ready", "from": "dada2_preprocessing", "to": "analysis_ready_data", "edge_type": "data_flow", "label": "ASV count tables"},
+    {"id": "taxonomy_to_ready", "from": "taxonomy_assignment", "to": "analysis_ready_data", "edge_type": "annotation_flow", "label": "ASV taxonomy"},
+    {"id": "ready_to_composition", "from": "analysis_ready_data", "to": "community_composition", "edge_type": "analysis_branch", "label": "Taxonomic analysis inputs"},
+    {"id": "ready_to_alpha", "from": "analysis_ready_data", "to": "alpha_diversity", "edge_type": "analysis_branch", "label": "Taxonomic analysis inputs"},
+    {"id": "ready_to_differential_taxa", "from": "analysis_ready_data", "to": "taxon_differential_analysis", "edge_type": "analysis_branch", "label": "Taxon relative abundance and metadata"},
+    {"id": "ready_to_taxon_metal", "from": "analysis_ready_data", "to": "taxon_metal_association", "edge_type": "analysis_branch", "label": "Taxon abundance plus total Hg metadata"},
+    {"id": "composition_to_taxonomic_outputs", "from": "community_composition", "to": "taxonomic_outputs", "edge_type": "result_flow"},
+    {"id": "alpha_to_taxonomic_outputs", "from": "alpha_diversity", "to": "taxonomic_outputs", "edge_type": "result_flow"},
+    {"id": "differential_taxa_to_outputs", "from": "taxon_differential_analysis", "to": "taxonomic_outputs", "edge_type": "result_flow"},
+    {"id": "taxon_metal_to_outputs", "from": "taxon_metal_association", "to": "taxonomic_outputs", "edge_type": "result_flow"},
+    {"id": "taxonomic_outputs_to_manual_synthesis", "from": "taxonomic_outputs", "to": "manual_taxonomic_synthesis", "edge_type": "manual_derivation", "label": "Manual qualitative synthesis of Figure 5 and Figures S2–S5"},
+    {"id": "ready_to_picrust2", "from": "analysis_ready_data", "to": "picrust2_prediction", "edge_type": "analysis_branch", "label": "Batch-specific PICRUSt2 input tables and sequences"},
+    {"id": "picrust2_to_ko_pca", "from": "picrust2_prediction", "to": "ko_pca", "edge_type": "data_flow", "label": "Predicted KO abundance"},
+    {"id": "picrust2_to_pathway_statistics", "from": "picrust2_prediction", "to": "kegg_pathway_differential_analysis", "edge_type": "data_flow", "label": "Predicted KO abundance"},
+    {"id": "picrust2_to_ko_interpretation", "from": "picrust2_prediction", "to": "kegg_ko_z_scores", "edge_type": "data_flow", "label": "Predicted KO abundance"},
+    {"id": "picrust2_to_mercury_kos", "from": "picrust2_prediction", "to": "mercury_related_kos", "edge_type": "data_flow", "label": "Predicted KO abundance"},
+    {"id": "ko_pca_to_functional_outputs", "from": "ko_pca", "to": "functional_outputs", "edge_type": "result_flow"},
+    {"id": "pathway_statistics_to_outputs", "from": "kegg_pathway_differential_analysis", "to": "functional_outputs", "edge_type": "result_flow"},
+    {"id": "ko_interpretation_to_outputs", "from": "kegg_ko_z_scores", "to": "functional_outputs", "edge_type": "result_flow"},
+    {"id": "mercury_kos_to_outputs", "from": "mercury_related_kos", "to": "functional_outputs", "edge_type": "result_flow"}
+  ],
+  "excluded_outputs": [
+    {
+      "id": "behavioral_figure_s17",
+      "display_label": "Figure S17",
+      "domain": "behavioral phenotyping",
+      "reason": "Open-field and plus-maze behavioral endpoints are outside the taxonomic and predicted-functional bioinformatics workflow.",
+      "evidence_files": ["supplementary_figures/README.md"]
+    }
+  ],
+  "render": {
+    "orientation": "landscape",
+    "subtitle": "Sequential core processing followed by parallel taxonomic and predicted-functional analyses",
+    "canvas": {
+      "viewbox_width": 3000,
+      "viewbox_height": 1920
+    },
+    "profiles": [
+      {
+        "id": "github_overview",
+        "profile_type": "responsive",
+        "description": "Responsive repository overview using the canonical SVG viewBox.",
+        "css_width": "100%",
+        "max_width_px": 3000
+      },
+      {
+        "id": "journal_landscape",
+        "profile_type": "print",
+        "description": "Expanded landscape rendering with parallel taxonomic and functional lanes and collapsed connector buses.",
+        "width_mm": 300,
+        "height_mm": 192,
+        "body_text_pt": 8.5,
+        "raster_dpi": 300,
+        "pixel_width": 3543,
+        "pixel_height": 2268
+      }
+    ],
+    "font": {
+      "family": "Arial",
+      "fallback_families": ["Liberation Sans", "sans-serif"],
+      "regular_file": "C:/Windows/Fonts/arial.ttf",
+      "bold_file": "C:/Windows/Fonts/arialbd.ttf"
+    },
+    "theme": {
+      "palette": {
+        "ink": "#13293D",
+        "text": "#203548",
+        "muted": "#455A6D",
+        "line": "#52677B",
+        "paper": "#FFFFFF",
+        "input": "#854613",
+        "input_fill": "#FFF4E8",
+        "process": "#1F5A94",
+        "process_fill": "#EEF5FC",
+        "data": "#096B63",
+        "data_fill": "#EAF8F5",
+        "taxonomy": "#006D77",
+        "taxonomy_fill": "#EAF7F8",
+        "functional": "#5B3A9E",
+        "functional_fill": "#F4F0FA",
+        "output": "#324A5F",
+        "output_fill": "#EEF2F5",
+        "note_fill": "#FFF8D6",
+        "note": "#6B5500"
+      }
+    },
+    "execution_styles": [
+      {"id": "fully_scripted", "display_label": "Fully scripted", "card_label": "SCRIPTED", "stroke_dasharray": null, "stroke_width": 3},
+      {"id": "validated_reconstructed", "display_label": "Validated archive / reconstruction", "card_label": "RECONSTRUCTED", "stroke_dasharray": "12 7", "stroke_width": 3},
+      {"id": "hybrid", "display_label": "Hybrid scripted + curated/manual", "card_label": "HYBRID", "stroke_dasharray": "14 5 3 5", "stroke_width": 3},
+      {"id": "manual", "display_label": "Manual derivative", "card_label": "MANUAL", "stroke_dasharray": "3 7", "stroke_width": 4}
+    ],
+    "lane_layout": [
+      {"lane_id": "core_processing", "x": 30, "y": 155, "width": 2940, "height": 390},
+      {"lane_id": "taxonomic_ecology", "x": 30, "y": 590, "width": 1440, "height": 1240},
+      {"lane_id": "functional_inference", "x": 1530, "y": 590, "width": 1440, "height": 1300}
+    ],
+    "cards": [
+      {
+        "id": "card_study_design", "lane_id": "core_processing", "member_node_ids": ["study_design"],
+        "x": 60, "y": 250, "width": 480, "height": 240,
+        "title": {"mode": "node_label", "node_ids": ["study_design"], "separator": ""},
+        "bullet_sources": [{"node_id": "study_design", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "input", "fill_role": "input_fill"
+      },
+      {
+        "id": "card_sequencing", "lane_id": "core_processing", "member_node_ids": ["sequencing"],
+        "x": 600, "y": 250, "width": 480, "height": 240,
+        "title": {"mode": "node_label", "node_ids": ["sequencing"], "separator": ""},
+        "bullet_sources": [{"node_id": "sequencing", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "process", "fill_role": "process_fill"
+      },
+      {
+        "id": "card_dada2", "lane_id": "core_processing", "member_node_ids": ["dada2_preprocessing"],
+        "x": 1140, "y": 250, "width": 480, "height": 240,
+        "title": {"mode": "node_label", "node_ids": ["dada2_preprocessing"], "separator": ""},
+        "bullet_sources": [{"node_id": "dada2_preprocessing", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "process", "fill_role": "process_fill"
+      },
+      {
+        "id": "card_taxonomy_assignment", "lane_id": "core_processing", "member_node_ids": ["taxonomy_assignment"],
+        "x": 1680, "y": 250, "width": 480, "height": 240,
+        "title": {"mode": "node_label", "node_ids": ["taxonomy_assignment"], "separator": ""},
+        "bullet_sources": [{"node_id": "taxonomy_assignment", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "process", "fill_role": "process_fill"
+      },
+      {
+        "id": "card_analysis_ready", "lane_id": "core_processing", "member_node_ids": ["analysis_ready_data"],
+        "x": 2220, "y": 250, "width": 720, "height": 240,
+        "title": {"mode": "node_label", "node_ids": ["analysis_ready_data"], "separator": ""},
+        "bullet_sources": [{"node_id": "analysis_ready_data", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "data", "fill_role": "data_fill"
+      },
+      {
+        "id": "card_community_composition", "lane_id": "taxonomic_ecology", "member_node_ids": ["community_composition"],
+        "x": 70, "y": 760, "width": 320, "height": 280,
+        "title": {"mode": "node_label", "node_ids": ["community_composition"], "separator": ""},
+        "bullet_sources": [{"node_id": "community_composition", "field": "short_lines", "indexes": [1, 2]}],
+        "accent_role": "taxonomy", "fill_role": "taxonomy_fill"
+      },
+      {
+        "id": "card_alpha_diversity", "lane_id": "taxonomic_ecology", "member_node_ids": ["alpha_diversity"],
+        "x": 420, "y": 760, "width": 320, "height": 280,
+        "title": {"mode": "node_label", "node_ids": ["alpha_diversity"], "separator": ""},
+        "bullet_sources": [{"node_id": "alpha_diversity", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "taxonomy", "fill_role": "taxonomy_fill"
+      },
+      {
+        "id": "card_differential_taxa", "lane_id": "taxonomic_ecology", "member_node_ids": ["taxon_differential_analysis"],
+        "x": 770, "y": 760, "width": 320, "height": 280,
+        "title": {"mode": "node_label", "node_ids": ["taxon_differential_analysis"], "separator": ""},
+        "bullet_sources": [{"node_id": "taxon_differential_analysis", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "taxonomy", "fill_role": "taxonomy_fill"
+      },
+      {
+        "id": "card_taxon_metal", "lane_id": "taxonomic_ecology", "member_node_ids": ["taxon_metal_association"],
+        "x": 1120, "y": 760, "width": 320, "height": 280,
+        "title": {"mode": "node_label", "node_ids": ["taxon_metal_association"], "separator": ""},
+        "bullet_sources": [{"node_id": "taxon_metal_association", "field": "short_lines", "indexes": [1, 2], "italic_terms": ["Dorea"]}],
+        "accent_role": "taxonomy", "fill_role": "taxonomy_fill"
+      },
+      {
+        "id": "card_taxonomic_outputs", "lane_id": "taxonomic_ecology", "member_node_ids": ["taxonomic_outputs"],
+        "x": 410, "y": 1160, "width": 680, "height": 280,
+        "title": {"mode": "node_label", "node_ids": ["taxonomic_outputs"], "separator": ""},
+        "bullet_sources": [{"node_id": "taxonomic_outputs", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "output", "fill_role": "output_fill"
+      },
+      {
+        "id": "card_manual_taxonomic_synthesis", "lane_id": "taxonomic_ecology", "member_node_ids": ["manual_taxonomic_synthesis"],
+        "x": 570, "y": 1560, "width": 360, "height": 240,
+        "title": {"mode": "node_label", "node_ids": ["manual_taxonomic_synthesis"], "separator": ""},
+        "bullet_sources": [{"node_id": "manual_taxonomic_synthesis", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "output", "fill_role": "output_fill"
+      },
+      {
+        "id": "card_picrust2", "lane_id": "functional_inference", "member_node_ids": ["picrust2_prediction"],
+        "x": 2040, "y": 650, "width": 420, "height": 250,
+        "title": {"mode": "node_label", "node_ids": ["picrust2_prediction"], "separator": ""},
+        "bullet_sources": [{"node_id": "picrust2_prediction", "field": "short_lines", "indexes": [1, 2]}],
+        "accent_role": "functional", "fill_role": "functional_fill"
+      },
+      {
+        "id": "card_ko_pca", "lane_id": "functional_inference", "member_node_ids": ["ko_pca"],
+        "x": 1570, "y": 1050, "width": 320, "height": 360,
+        "title": {"mode": "node_label", "node_ids": ["ko_pca"], "separator": ""},
+        "bullet_sources": [{"node_id": "ko_pca", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "functional", "fill_role": "functional_fill"
+      },
+      {
+        "id": "card_pathway_statistics", "lane_id": "functional_inference", "member_node_ids": ["kegg_pathway_differential_analysis"],
+        "x": 1920, "y": 1050, "width": 360, "height": 360,
+        "title": {"mode": "node_label", "node_ids": ["kegg_pathway_differential_analysis"], "separator": ""},
+        "bullet_sources": [{"node_id": "kegg_pathway_differential_analysis", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "functional", "fill_role": "functional_fill"
+      },
+      {
+        "id": "card_kegg_interrogation", "lane_id": "functional_inference", "member_node_ids": ["kegg_ko_z_scores"],
+        "x": 2310, "y": 1050, "width": 320, "height": 360,
+        "title": {"mode": "node_label", "node_ids": ["kegg_ko_z_scores"], "separator": ""},
+        "bullet_sources": [{"node_id": "kegg_ko_z_scores", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "functional", "fill_role": "functional_fill"
+      },
+      {
+        "id": "card_mercury_orthologs", "lane_id": "functional_inference", "member_node_ids": ["mercury_related_kos"],
+        "x": 2660, "y": 1050, "width": 300, "height": 360,
+        "title": {"mode": "node_label", "node_ids": ["mercury_related_kos"], "separator": ""},
+        "bullet_sources": [{"node_id": "mercury_related_kos", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "functional", "fill_role": "functional_fill"
+      },
+      {
+        "id": "card_functional_outputs", "lane_id": "functional_inference", "member_node_ids": ["functional_outputs"],
+        "x": 1940, "y": 1540, "width": 620, "height": 320,
+        "title": {"mode": "node_label", "node_ids": ["functional_outputs"], "separator": ""},
+        "bullet_sources": [{"node_id": "functional_outputs", "field": "short_lines", "indexes": [1, 2, 3]}],
+        "accent_role": "output", "fill_role": "output_fill"
+      }
+    ],
+    "connector_policy": {
+      "mode": "derived_from_dag",
+      "color_role": "line",
+      "line_width": 3,
+      "arrow_size": 9
+    },
+    "connector_groups": [
+      {
+        "id": "core_study_to_sequencing",
+        "semantic_edge_ids": ["study_to_sequencing"],
+        "segments": [
+          {"id": "arrow", "source_node_id": "study_design", "target_node_id": "sequencing", "marker_end": true, "points": [{"x": 540, "y": 370}, {"x": 600, "y": 370}]}
+        ]
+      },
+      {
+        "id": "core_sequencing_to_dada2",
+        "semantic_edge_ids": ["sequencing_to_dada2"],
+        "segments": [
+          {"id": "arrow", "source_node_id": "sequencing", "target_node_id": "dada2_preprocessing", "marker_end": true, "points": [{"x": 1080, "y": 370}, {"x": 1140, "y": 370}]}
+        ]
+      },
+      {
+        "id": "core_dada2_to_taxonomy",
+        "semantic_edge_ids": ["dada2_to_taxonomy"],
+        "segments": [
+          {"id": "arrow", "source_node_id": "dada2_preprocessing", "target_node_id": "taxonomy_assignment", "marker_end": true, "points": [{"x": 1620, "y": 370}, {"x": 1680, "y": 370}]}
+        ]
+      },
+      {
+        "id": "core_inputs_to_ready",
+        "semantic_edge_ids": ["dada2_to_ready", "taxonomy_to_ready"],
+        "segments": [
+          {"id": "collapsed_arrow", "source_node_id": "taxonomy_assignment", "target_node_id": "analysis_ready_data", "marker_end": true, "points": [{"x": 2160, "y": 370}, {"x": 2220, "y": 370}]}
+        ]
+      },
+      {
+        "id": "analysis_ready_fanout",
+        "semantic_edge_ids": ["ready_to_composition", "ready_to_alpha", "ready_to_differential_taxa", "ready_to_taxon_metal", "ready_to_picrust2"],
+        "segments": [
+          {"id": "trunk", "source_node_id": "analysis_ready_data", "marker_end": false, "points": [{"x": 2580, "y": 490}, {"x": 2580, "y": 565}]},
+          {"id": "taxonomic_split", "marker_end": false, "points": [{"x": 2580, "y": 565}, {"x": 750, "y": 565}, {"x": 750, "y": 700}]},
+          {"id": "taxonomic_bus", "marker_end": false, "points": [{"x": 230, "y": 700}, {"x": 1280, "y": 700}]},
+          {"id": "composition_arrow", "target_node_id": "community_composition", "marker_end": true, "points": [{"x": 230, "y": 700}, {"x": 230, "y": 760}]},
+          {"id": "alpha_arrow", "target_node_id": "alpha_diversity", "marker_end": true, "points": [{"x": 580, "y": 700}, {"x": 580, "y": 760}]},
+          {"id": "differential_arrow", "target_node_id": "taxon_differential_analysis", "marker_end": true, "points": [{"x": 930, "y": 700}, {"x": 930, "y": 760}]},
+          {"id": "taxon_metal_arrow", "target_node_id": "taxon_metal_association", "marker_end": true, "points": [{"x": 1280, "y": 700}, {"x": 1280, "y": 760}]},
+          {"id": "picrust2_arrow", "target_node_id": "picrust2_prediction", "marker_end": true, "points": [{"x": 2580, "y": 565}, {"x": 2250, "y": 565}, {"x": 2250, "y": 650}]}
+        ]
+      },
+      {
+        "id": "taxonomic_fanin",
+        "semantic_edge_ids": ["composition_to_taxonomic_outputs", "alpha_to_taxonomic_outputs", "differential_taxa_to_outputs", "taxon_metal_to_outputs"],
+        "segments": [
+          {"id": "composition_branch", "source_node_id": "community_composition", "marker_end": false, "points": [{"x": 230, "y": 1040}, {"x": 230, "y": 1080}]},
+          {"id": "alpha_branch", "source_node_id": "alpha_diversity", "marker_end": false, "points": [{"x": 580, "y": 1040}, {"x": 580, "y": 1080}]},
+          {"id": "differential_branch", "source_node_id": "taxon_differential_analysis", "marker_end": false, "points": [{"x": 930, "y": 1040}, {"x": 930, "y": 1080}]},
+          {"id": "taxon_metal_branch", "source_node_id": "taxon_metal_association", "marker_end": false, "points": [{"x": 1280, "y": 1040}, {"x": 1280, "y": 1080}]},
+          {"id": "bus", "marker_end": false, "points": [{"x": 230, "y": 1080}, {"x": 1280, "y": 1080}]},
+          {"id": "output_arrow", "target_node_id": "taxonomic_outputs", "marker_end": true, "points": [{"x": 750, "y": 1080}, {"x": 750, "y": 1160}]}
+        ]
+      },
+      {
+        "id": "taxonomic_output_to_manual",
+        "semantic_edge_ids": ["taxonomic_outputs_to_manual_synthesis"],
+        "segments": [
+          {"id": "arrow", "source_node_id": "taxonomic_outputs", "target_node_id": "manual_taxonomic_synthesis", "marker_end": true, "points": [{"x": 750, "y": 1440}, {"x": 750, "y": 1560}]}
+        ]
+      },
+      {
+        "id": "picrust2_fanout",
+        "semantic_edge_ids": ["picrust2_to_ko_pca", "picrust2_to_pathway_statistics", "picrust2_to_ko_interpretation", "picrust2_to_mercury_kos"],
+        "segments": [
+          {"id": "trunk", "source_node_id": "picrust2_prediction", "marker_end": false, "points": [{"x": 2250, "y": 900}, {"x": 2250, "y": 980}]},
+          {"id": "bus", "marker_end": false, "points": [{"x": 1730, "y": 980}, {"x": 2810, "y": 980}]},
+          {"id": "ko_pca_arrow", "target_node_id": "ko_pca", "marker_end": true, "points": [{"x": 1730, "y": 980}, {"x": 1730, "y": 1050}]},
+          {"id": "pathway_arrow", "target_node_id": "kegg_pathway_differential_analysis", "marker_end": true, "points": [{"x": 2100, "y": 980}, {"x": 2100, "y": 1050}]},
+          {"id": "interpretation_arrow", "target_node_id": "kegg_ko_z_scores", "marker_end": true, "points": [{"x": 2470, "y": 980}, {"x": 2470, "y": 1050}]},
+          {"id": "mercury_arrow", "target_node_id": "mercury_related_kos", "marker_end": true, "points": [{"x": 2810, "y": 980}, {"x": 2810, "y": 1050}]}
+        ]
+      },
+      {
+        "id": "functional_fanin",
+        "semantic_edge_ids": ["ko_pca_to_functional_outputs", "pathway_statistics_to_outputs", "ko_interpretation_to_outputs", "mercury_kos_to_outputs"],
+        "segments": [
+          {"id": "ko_pca_branch", "source_node_id": "ko_pca", "marker_end": false, "points": [{"x": 1730, "y": 1410}, {"x": 1730, "y": 1460}]},
+          {"id": "pathway_branch", "source_node_id": "kegg_pathway_differential_analysis", "marker_end": false, "points": [{"x": 2100, "y": 1410}, {"x": 2100, "y": 1460}]},
+          {"id": "interpretation_branch", "source_node_id": "kegg_ko_z_scores", "marker_end": false, "points": [{"x": 2470, "y": 1410}, {"x": 2470, "y": 1460}]},
+          {"id": "mercury_branch", "source_node_id": "mercury_related_kos", "marker_end": false, "points": [{"x": 2810, "y": 1410}, {"x": 2810, "y": 1460}]},
+          {"id": "bus", "marker_end": false, "points": [{"x": 1730, "y": 1460}, {"x": 2810, "y": 1460}]},
+          {"id": "output_arrow", "target_node_id": "functional_outputs", "marker_end": true, "points": [{"x": 2250, "y": 1460}, {"x": 2250, "y": 1540}]}
+        ]
+      }
+    ],
+    "caption": {
+      "summary": "Sequential 16S rRNA gene processing produces analysis-ready ASV data, which feed parallel taxonomic analyses and PICRUSt2 predicted functional-profile analyses.",
+      "notes": [
+        "Exact trimming parameters and ASV counts are documented in the sequence-processing workflow rather than displayed in the figure.",
+        "Taxonomic manuscript mapping: Figures 3–4, 5D, S1–S5; manual taxonomic derivative: Figure S6.",
+        "Functional manuscript mapping: Figures 6–8, S7–S16, S18.",
+        "Figure S17 contains behavioral phenotyping and is excluded from this bioinformatics workflow."
+      ],
+      "include_exclusion_rules": true,
+      "include_manual_boundaries": true,
+      "excluded_output_ids": ["behavioral_figure_s17"]
+    },
+    "accessibility": {
+      "title_id": "workflow_title",
+      "desc_id": "workflow_description",
+      "alt_text": "Workflow for a 2 × 2 vitamin A and methylmercury study. Sequential 16S rRNA gene sequencing, DADA2 processing, SILVA taxonomy, and data curation lead to two parallel lanes: taxonomic ecology and PICRUSt2 predicted functional profiles. PICRUSt2 feeds four independent analyses, including KO PCA, predicted KEGG pathway testing, scripted KO heatmaps with manual map coloring and composites, and predicted mercury-related orthologs. Border patterns identify scripted, reconstructed, hybrid, and manual steps.",
+      "do_not_use_color_alone": true,
+      "minimum_body_text_pt": 8.5,
+      "minimum_contrast_ratio": 4.5,
+      "high_contrast_text": true,
+      "grayscale_required": true,
+      "cvd_profiles": ["protanopia", "deuteranopia", "tritanopia"]
+    }
+  },
+  "requires_author_decision": [],
+  "resolved_author_decisions": [
+    {
+      "id": "figure6_dependency_versions",
+      "status": "resolved",
+      "decision_date": "2026-08-20",
+      "decision": "Use ggpicrust2 2.0.0 and ALDEx2 1.28.1 as the reconstructed historical Figure 6 dependencies; record R 4.2.x, likely R 4.2.1, as contextual runtime evidence.",
+      "rationale": "The unchanged legacy script loads ggpicrust2 resources from the same user's R 4.2 library. The surviving package DESCRIPTION metadata identify ggpicrust2 2.0.0 and ALDEx2 1.28.1, and both installations predate the retained final Figure 6. The repository-local KEGG reference independently matches ggpicrust2 2.0.0.",
+      "implementation": [
+        "Document ggpicrust2 2.0.0 and ALDEx2 1.28.1 in the Figure 6 and functional-prediction provenance documentation.",
+        "Use these versions for future exact-environment reconstruction of the Figure 6 pathway analysis.",
+        "Retain the raw, package-adjusted, and author-sixfold p-value fields defined by the maintained workflow.",
+        "Record that no historical sessionInfo(), lockfile, or GitHub commit SHA survives, so the versions are inferred from the surviving local environment rather than cryptographically locked.",
+        "Leave the legacy script and statistical analysis code unchanged."
+      ],
+      "expected_numerical_effect": "None. This decision resolves dependency provenance and does not change the maintained Figure 6 calculations or pathway-selection rule."
+    },
+    {
+      "id": "figure6_author_sixfold_omnibus_rule",
+      "status": "resolved",
+      "decision_date": "2026-08-20",
+      "decision": "Retain the four-treatment omnibus GLM with the author-defined sixfold rule.",
+      "inference": "One four-treatment omnibus ALDEx2 GLM per pathway; no post-hoc pairwise tests.",
+      "rule_formula": "author_sixfold_omnibus_p = min(1, 6 × raw_omnibus_p)",
+      "rationale": "The factor of six reflects the six possible comparisons among four treatments and is retained as the author's additional conservative pathway-selection rule.",
+      "reporting_boundary": "Describe the result as an author-defined sixfold penalty on the omnibus p-value, not as an adjusted pairwise-test result.",
+      "implementation": [
+        "Preserve the package-returned adjustment as package_p_adjust.",
+        "Store the raw GLM value as raw_omnibus_p.",
+        "Store the author-defined value as author_sixfold_omnibus_p and copy it to the legacy-compatible p_adjust selection field.",
+        "Do not calculate or report post-hoc pairwise treatment tests.",
+        "Leave legacy scripts unchanged as provenance."
+      ],
+      "expected_numerical_effect": "None for Figure 6 pathway selection because the maintained workflow already used min(1, 6 × p_values); the structured fields clarify provenance and inference."
+    },
+    {
+      "id": "batch02_mitochondria_retention_policy",
+      "status": "resolved",
+      "decision_date": "2026-08-20",
+      "decision": "Intentionally retain mitochondrial family assignments.",
+      "rationale": "Retaining Mitochondria reproduces the processed batch-02 inputs already used for downstream analyses more closely.",
+      "implementation": [
+        "Remove the ineffective Family != 'Mitochondrias' comparison from maintained preprocessing.",
+        "Apply the same intentional-retention rule in the preprocessing validator.",
+        "Leave the historical legacy script unchanged as provenance."
+      ],
+      "expected_numerical_effect": "None for the retained batch-02 taxonomy because the removed plural value does not occur; the filtered set remains 2739 ASVs, including 17 Mitochondria ASVs.",
+      "downstream_regeneration_required": false
+    },
+    {
+      "id": "study_design_author_provided_context",
+      "status": "resolved",
+      "decision_date": "2026-08-20",
+      "decision": "Classify the study design and cohort definitions as manual, author-provided contextual information rather than a reconstructed workflow step.",
+      "rationale": "The exposure design and cohort structure were predetermined by the research project and supplied by the author for repository documentation; they were not inferred or reconstructed from downstream analysis artifacts.",
+      "implementation": [
+        "Set the study-design node automation level and visual class to manual.",
+        "Record its evidence as an authoritative manual author record supported by the repository metadata and experimental-procedures figure.",
+        "Render the study-design card with the manual label and border pattern."
+      ],
+      "expected_numerical_effect": "None. This is a provenance and visual-classification correction only."
+    }
+  ]
+}

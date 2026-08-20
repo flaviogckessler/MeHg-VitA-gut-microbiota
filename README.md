@@ -20,6 +20,19 @@ The microbiota data were generated in two sequencing batches:
 
 Sex, generation, treatment, sequencing batch, analysis inclusion, and data-deposition information are standardized in [`data/metadata/sample_manifest_all_batches.csv`](data/metadata/sample_manifest_all_batches.csv).
 
+## Analysis workflow
+
+[![Bioinformatics analysis workflow](figures/Workflow/output/Analysis_Workflow_generated.svg)](figures/Workflow/output/Analysis_Workflow_generated.png)
+
+The workflow begins with the manually defined 2 × 2 exposure design and F0–F2 cohorts. Two external 16S rRNA gene amplicon-sequencing batches are processed with DADA2, assigned SILVA 138.1 taxonomy, and combined with curated metadata to create analysis-ready ASV counts, taxonomy, and representative sequences.
+
+From the analysis-ready data, the repository separates the analyses into two parallel branches:
+
+- **Taxonomic ecology:** community composition, alpha diversity, differential-taxon testing, and the *Dorea*–mercury association produce Figures 3–4, 5D, and S1–S5. Figure S6 is a manual qualitative derivative of these taxonomic results.
+- **Predicted functional profiles:** PICRUSt2 predicted KO/EC/MetaCyc profiles support parallel KO PCA, differential testing of predicted KEGG pathway profiles, KO heatmap and KEGG-map interpretation, and targeted predicted mercury-related ortholog analyses. These outputs map to Figures 6–8, S7–S16, and S18. Behavioral Figure S17 is outside this workflow.
+
+Card labels and border patterns distinguish scripted, reconstructed, hybrid, and manual steps. The scientific DAG, wording, evidence status, execution status, visual mapping, and figure-output mappings are available in the machine-readable [`workflow_spec.json`](figures/Workflow/workflow_spec.json); an accessible text description is provided in [`Analysis_Workflow_alt_text.md`](figures/Workflow/output/Analysis_Workflow_alt_text.md). The rendering entry point and rasterizer are retained as implementation references, while the standalone validator and shared validation-helper source files are intentionally retained only in local working copies for now and excluded from version control. Consequently, end-to-end regeneration currently requires those local companion files.
+
 ## Repository status
 
 This repository is under active reproducibility curation.
@@ -40,47 +53,39 @@ This repository is under active reproducibility curation.
 | [`data/processed/`](data/processed/) | Processed ASV tables, taxonomy, representative sequences, BIOM files, relative abundances, and read tracking. |
 | [`data/reference/`](data/reference/) | Small, versioned reference objects required by portable analysis workflows. |
 | [`data/external/`](data/external/) | Download and checksum documentation plus the ignored local location for the SILVA 138.1 DADA2 reference FASTAs. |
-| [`figures/`](figures/) | Main-figure workflows, validation scripts, and lightweight generated PNG outputs. |
+| [`figures/`](figures/) | Main-figure workflows and lightweight generated outputs. |
+| [`figures/Workflow/`](figures/Workflow/) | Machine-readable analysis-workflow specification plus the canonical SVG, matching PNG, accessibility text, schema, and rendering sources. |
 | [`results/`](results/) | Alpha-diversity and taxon-abundance tables, functional-prediction exports, and legacy summary tables. |
 | [`scripts/`](scripts/) | Maintained preprocessing and functional-analysis workflows plus documented historical provenance. |
 | [`scripts/legacy_scripts/`](scripts/legacy_scripts/) | Unchanged legacy references already mapped to portable figure and PICRUSt2 workflows. |
-| [`supplementary_figures/`](supplementary_figures/) | Supplementary-figure workflows, validation scripts, retained composites, and generated panel outputs. |
+| [`supplementary_figures/`](supplementary_figures/) | Supplementary-figure workflows, retained composites, and generated panel outputs. |
 | [`bibliography.bib`](bibliography.bib) | Shared bibliography for software, databases, and analysis methods cited throughout the documentation. |
 
 Canonical data and metadata are stored once under `data/`. Figure scripts should read these files directly rather than duplicate them within figure directories.
 
 ## Quick start
 
-Sequence preprocessing is documented in the [`16S preprocessing guide`](scripts/01_sequence_processing/README.md). Raw source sequencing data are deposited in the SRA and are not distributed here; after downloading the DOI-pinned SILVA references and after SRA release, each batch is processed by setting `DADA2_BATCH_ID` and `RAW_FASTQ_DIR` and running `Rscript scripts/01_sequence_processing/preprocess_16s.R`. Until then, validation-only mode checks the script, canonical manifests, archived processed-data contracts, reference configuration, and any downloaded reference checksums without FASTQ data. A full run automatically compares the generated batch-specific products with `data/processed/` and fails if their scientific contents differ.
+Sequence preprocessing is documented in the [`16S preprocessing guide`](scripts/01_sequence_processing/README.md). Raw source sequencing data are deposited in the SRA and are not distributed here; after downloading the DOI-pinned SILVA references and after SRA release, each batch is processed by setting `DADA2_BATCH_ID` and `RAW_FASTQ_DIR` and running `Rscript scripts/01_sequence_processing/preprocess_16s.R`. With the retained local validator companion present, validation-only mode checks the script, canonical manifests, archived processed-data contracts, reference configuration, and any downloaded reference checksums without FASTQ data. A full run automatically compares the generated batch-specific products with `data/processed/` and fails if their scientific contents differ.
 
 The validated Figure 3 workflows use `tidyverse`, `scales`, `rstatix`, `ggpubr`, and `rlang`; Figures S1-S5 use `dplyr`, `ggplot2`, `rstatix`, and `ggpubr` [@tidyverse; @dplyr; @ggplot2; @scales; @rstatix; @ggpubr; @rlang]. The Figure 4 workflows use only packages distributed with R. Start R from the repository root and run:
 
 ```r
-source("figures/Figure_3/validate_figure_3_abc.R")
 source("figures/Figure_3/generate_figure_3_abc.R")
 generate_figure_3_abc()
-source("figures/Figure_3/validate_figure_3_dg.R")
 source("figures/Figure_3/generate_figure_3_dg.R")
 generate_figure_3_dg()
-source("supplementary_figures/Figure_S1/validate_figure_s1_ah.R")
 source("supplementary_figures/Figure_S1/generate_figure_s1_ah.R")
 generate_figure_s1_ah()
-source("supplementary_figures/Figure_S2/validate_figure_s2_abc.R")
 source("supplementary_figures/Figure_S2/generate_figure_s2_abc.R")
 generate_figure_s2_abc()
-source("supplementary_figures/Figure_S3/validate_figure_s3_aq.R")
 source("supplementary_figures/Figure_S3/generate_figure_s3_aq.R")
 generate_figure_s3_aq()
-source("supplementary_figures/Figure_S4/validate_figure_s4_a_an.R")
 source("supplementary_figures/Figure_S4/generate_figure_s4_a_an.R")
 generate_figure_s4_a_an()
-source("supplementary_figures/Figure_S5/validate_figure_s5_ao.R")
 source("supplementary_figures/Figure_S5/generate_figure_s5_ao.R")
 generate_figure_s5_ao()
-source("figures/Figure_3/validate_figure_3_hk.R")
 source("figures/Figure_3/generate_figure_3_hk.R")
 generate_figure_3_hk()
-source("figures/Figure_4/validate_figure_4.R")
 source("figures/Figure_4/generate_figure_4_a.R")
 generate_figure_4_a()
 source("figures/Figure_4/generate_figure_4_b.R")
@@ -97,9 +102,9 @@ source("figures/Figure_6/generate_figure_6_c.R")
 generate_figure_6_c()
 source("scripts/04_functional_prediction/generate_kegg_pathway_ko_z_scores.R")
 generate_kegg_pathway_ko_z_scores()
-source("scripts/04_functional_prediction/validate_kegg_pathway_ko_z_scores.R")
-validate_kegg_pathway_ko_z_scores()
 ```
+
+Standalone validator files used during repository curation are intentionally local-only and therefore are not included in the public quick-start commands.
 
 The reconstructed historical Figure 6 environment uses `ggpicrust2` 2.0.0 and `ALDEx2` 1.28.1, with R 4.2.x (likely R 4.2.1) retained as contextual evidence; see the [main-figure guide](figures/README.md) for the provenance and its session-snapshot limitation. The generators additionally require `ggplot2`, `patchwork`, and `scales` [@ggpicrust2; @aldex2; @ggplot2; @patchwork; @scales], and the seeded ALDEx2 step can take several minutes per panel. The KO z-score source-data workflow uses base R plus the versioned KEGG reference stored under `data/reference/` [@kegg]; it does not require an installed `ggpicrust2` package. Generated figure outputs are written to each figure's `output/` directory; Figures S3-S5 further separate individual panels into `output/females/` and `output/male/`. Generated source tables stay with their batch under `results/functional_prediction/`.
 
@@ -135,7 +140,7 @@ The deposited material is the source sequencing data (raw reads), not the analys
 
 ## Figure-output policy
 
-Generated figures are stored as compact PNG files suitable for inspection and reproducibility checks. Manually supplied publication/reference artifacts may be retained in their original format, but figure-generation scripts must not create new TIFF files. See [`figures/README.md`](figures/README.md).
+Generated figures are stored as compact PNG files suitable for inspection and reproducibility checks. The repository-wide analysis workflow is additionally committed as an accessible canonical SVG with a visually matching PNG. Manually supplied publication/reference artifacts may be retained in their original format, but figure-generation scripts must not create new TIFF files. See [`figures/README.md`](figures/README.md).
 
 Main figures use `figures/Figure_<number>/output/`; supplementary figures with
 portable panel workflows use `supplementary_figures/Figure_S<number>/output/`.

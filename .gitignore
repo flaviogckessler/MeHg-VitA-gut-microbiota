@@ -35,8 +35,13 @@ figures/**/output/*_generated.tiff
 supplementary_figures/**/output/*_generated.tif
 supplementary_figures/**/output/*_generated.tiff
 
-# Draft bioinformatics workflow figure and its generator
-figures/Workflow/
+# Local validator code (retained in the working tree, not versioned for now)
+**/validate_*.R
+**/validate_*.py
+**/validate_*.ps1
+figures/Workflow/tests/
+figures/Workflow/workflow_spec_lib.R
+figures/Workflow/.staging/
 
 # Temporary and log files
 *.tmp

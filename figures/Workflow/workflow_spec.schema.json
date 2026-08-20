@@ -1,0 +1,634 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "workflow_spec.schema.json",
+  "title": "Bioinformatics workflow specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "workflow_id",
+    "title",
+    "short_title",
+    "description",
+    "status",
+    "repository_root",
+    "generator_contract",
+    "study_context",
+    "lanes",
+    "nodes",
+    "edges",
+    "excluded_outputs",
+    "render",
+    "requires_author_decision",
+    "resolved_author_decisions"
+  ],
+  "properties": {
+    "$schema": { "const": "./workflow_spec.schema.json" },
+    "schema_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "workflow_id": { "$ref": "#/$defs/id" },
+    "title": { "$ref": "#/$defs/nonEmptyString" },
+    "short_title": { "$ref": "#/$defs/nonEmptyString" },
+    "description": { "$ref": "#/$defs/nonEmptyString" },
+    "status": { "enum": ["draft", "under_review", "approved"] },
+    "repository_root": { "$ref": "#/$defs/nonEmptyString" },
+    "generator_contract": { "$ref": "#/$defs/generatorContract" },
+    "study_context": { "$ref": "#/$defs/studyContext" },
+    "lanes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/lane" }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/edge" }
+    },
+    "excluded_outputs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/excludedOutput" }
+    },
+    "render": { "$ref": "#/$defs/render" },
+    "requires_author_decision": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/openDecision" }
+    },
+    "resolved_author_decisions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/resolvedDecision" }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "color": {
+      "type": "string",
+      "pattern": "^#[0-9A-Fa-f]{6}$"
+    },
+    "stringArray": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/nonEmptyString" },
+      "uniqueItems": true
+    },
+    "idArray": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/id" },
+      "uniqueItems": true
+    },
+    "generatorContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["generator_version", "parser", "schema_validator", "rasterizer", "freshness_manifest", "outputs", "supporting_artifacts"],
+      "properties": {
+        "generator_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "parser": { "$ref": "#/$defs/nonEmptyString" },
+        "schema_validator": { "$ref": "#/$defs/nonEmptyString" },
+        "rasterizer": { "$ref": "#/$defs/nonEmptyString" },
+        "freshness_manifest": { "$ref": "#/$defs/nonEmptyString" },
+        "outputs": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["format", "path"],
+            "properties": {
+              "format": { "enum": ["svg", "png"] },
+              "path": { "$ref": "#/$defs/nonEmptyString" }
+            }
+          }
+        },
+        "supporting_artifacts": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["format", "path"],
+            "properties": {
+              "format": { "const": "markdown" },
+              "path": { "$ref": "#/$defs/nonEmptyString" }
+            }
+          }
+        }
+      }
+    },
+    "studyContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["intervention_groups", "cohorts", "exclusion_rules"],
+      "properties": {
+        "intervention_groups": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "display_label", "description", "figure_color", "display_order"],
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "display_label": { "$ref": "#/$defs/nonEmptyString" },
+              "description": { "$ref": "#/$defs/nonEmptyString" },
+              "figure_color": { "$ref": "#/$defs/color" },
+              "display_order": { "type": "integer", "minimum": 1 }
+            }
+          }
+        },
+        "cohorts": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "display_label", "generation", "life_stage", "collection_day_pnd", "sex_structure", "primary_analysis_n", "batch_id", "sequencing_platform"],
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "display_label": { "$ref": "#/$defs/nonEmptyString" },
+              "generation": { "$ref": "#/$defs/nonEmptyString" },
+              "life_stage": { "$ref": "#/$defs/nonEmptyString" },
+              "collection_day_pnd": { "type": ["integer", "null"], "minimum": 0 },
+              "sex_structure": { "$ref": "#/$defs/nonEmptyString" },
+              "primary_analysis_n": { "type": "integer", "minimum": 1 },
+              "batch_id": { "$ref": "#/$defs/id" },
+              "sequencing_platform": { "$ref": "#/$defs/nonEmptyString" }
+            }
+          }
+        },
+        "exclusion_rules": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "scope", "sample_ids", "reason", "rule"],
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "scope": { "$ref": "#/$defs/id" },
+              "sample_ids": { "$ref": "#/$defs/stringArray" },
+              "reason": { "$ref": "#/$defs/nonEmptyString" },
+              "rule": { "$ref": "#/$defs/nonEmptyString" }
+            }
+          }
+        }
+      }
+    },
+    "lane": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "display_label", "display_order", "figure_color", "background_color", "description"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "display_label": { "$ref": "#/$defs/nonEmptyString" },
+        "display_order": { "type": "integer", "minimum": 1 },
+        "figure_color": { "$ref": "#/$defs/color" },
+        "background_color": { "$ref": "#/$defs/color" },
+        "description": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["automation_level", "rerun_status", "status", "visual_class", "manual_boundary"],
+      "properties": {
+        "automation_level": {
+          "enum": ["fully_scripted", "scripted_with_manual_steps", "manual", "external", "not_applicable"]
+        },
+        "rerun_status": {
+          "enum": ["validated", "validated_against_archived", "not_rerun", "blocked", "not_applicable"]
+        },
+        "status": {
+          "enum": ["ready", "conditional", "complete", "blocked", "not_applicable"]
+        },
+        "visual_class": {
+          "enum": ["fully_scripted", "validated_reconstructed", "hybrid", "manual"]
+        },
+        "manual_boundary": {
+          "type": ["string", "null"],
+          "minLength": 1
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "authority", "files"],
+      "properties": {
+        "status": {
+          "enum": ["verified", "partially_verified", "documented", "manual_authoritative", "unverified"]
+        },
+        "authority": {
+          "enum": ["maintained_code", "archived_outputs", "repository_documentation", "hybrid", "manual_author_record"]
+        },
+        "files": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/nonEmptyString" }
+        }
+      }
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "lane_id", "node_type", "display_label", "short_lines", "inputs", "outputs", "execution", "evidence"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "lane_id": { "$ref": "#/$defs/id" },
+        "node_type": {
+          "enum": [
+            "study_input",
+            "data_generation",
+            "bioinformatics_processing",
+            "annotation",
+            "curated_dataset",
+            "taxonomic_analysis",
+            "ecological_diversity",
+            "differential_abundance",
+            "association_analysis",
+            "functional_prediction",
+            "ordination",
+            "functional_differential_analysis",
+            "pathway_interpretation",
+            "targeted_functional_analysis",
+            "paper_output",
+            "manual_taxonomic_derivative"
+          ]
+        },
+        "display_label": { "$ref": "#/$defs/nonEmptyString" },
+        "short_lines": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/nonEmptyString" }
+        },
+        "inputs": { "$ref": "#/$defs/stringArray" },
+        "outputs": { "$ref": "#/$defs/stringArray" },
+        "software": { "$ref": "#/$defs/stringArray" },
+        "statistics": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/nonEmptyString" }
+        },
+        "paper_outputs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/nonEmptyString" },
+          "uniqueItems": true
+        },
+        "execution": { "$ref": "#/$defs/execution" },
+        "evidence": { "$ref": "#/$defs/evidence" },
+        "italic_terms": { "$ref": "#/$defs/stringArray" },
+        "author_decision_ids": { "$ref": "#/$defs/idArray" }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "from", "to", "edge_type"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "from": { "$ref": "#/$defs/id" },
+        "to": { "$ref": "#/$defs/id" },
+        "edge_type": {
+          "enum": ["sample_flow", "data_flow", "annotation_flow", "analysis_branch", "result_flow", "manual_derivation"]
+        },
+        "label": { "$ref": "#/$defs/nonEmptyString" }
+      }
+    },
+    "excludedOutput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "display_label", "domain", "reason", "evidence_files"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "display_label": { "$ref": "#/$defs/nonEmptyString" },
+        "domain": { "$ref": "#/$defs/nonEmptyString" },
+        "reason": { "$ref": "#/$defs/nonEmptyString" },
+        "evidence_files": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/nonEmptyString" }
+        }
+      }
+    },
+    "render": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["orientation", "subtitle", "canvas", "profiles", "font", "theme", "execution_styles", "lane_layout", "cards", "connector_policy", "connector_groups", "caption", "accessibility"],
+      "properties": {
+        "orientation": { "enum": ["landscape", "portrait"] },
+        "subtitle": { "$ref": "#/$defs/nonEmptyString" },
+        "canvas": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["viewbox_width", "viewbox_height"],
+          "properties": {
+            "viewbox_width": { "type": "integer", "minimum": 1 },
+            "viewbox_height": { "type": "integer", "minimum": 1 }
+          }
+        },
+        "profiles": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/renderProfile" }
+        },
+        "font": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["family", "fallback_families", "regular_file", "bold_file"],
+          "properties": {
+            "family": { "$ref": "#/$defs/nonEmptyString" },
+            "fallback_families": { "$ref": "#/$defs/stringArray" },
+            "regular_file": { "$ref": "#/$defs/nonEmptyString" },
+            "bold_file": { "$ref": "#/$defs/nonEmptyString" }
+          }
+        },
+        "theme": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["palette"],
+          "properties": {
+            "palette": {
+              "type": "object",
+              "minProperties": 1,
+              "additionalProperties": { "$ref": "#/$defs/color" }
+            }
+          }
+        },
+        "execution_styles": {
+          "type": "array",
+          "minItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "display_label", "card_label", "stroke_dasharray", "stroke_width"],
+            "properties": {
+              "id": { "enum": ["fully_scripted", "validated_reconstructed", "hybrid", "manual"] },
+              "display_label": { "$ref": "#/$defs/nonEmptyString" },
+              "card_label": { "$ref": "#/$defs/nonEmptyString" },
+              "stroke_dasharray": { "type": ["string", "null"] },
+              "stroke_width": { "type": "number", "minimum": 1 }
+            }
+          }
+        },
+        "lane_layout": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["lane_id", "x", "y", "width", "height"],
+            "properties": {
+              "lane_id": { "$ref": "#/$defs/id" },
+              "x": { "type": "number", "minimum": 0 },
+              "y": { "type": "number", "minimum": 0 },
+              "width": { "type": "number", "exclusiveMinimum": 0 },
+              "height": { "type": "number", "exclusiveMinimum": 0 }
+            }
+          }
+        },
+        "cards": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/renderCard" }
+        },
+        "connector_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "color_role", "line_width", "arrow_size"],
+          "properties": {
+            "mode": { "const": "derived_from_dag" },
+            "color_role": { "$ref": "#/$defs/id" },
+            "line_width": { "type": "number", "minimum": 1 },
+            "arrow_size": { "type": "number", "minimum": 1 }
+          }
+        },
+        "connector_groups": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/connectorGroup" }
+        },
+        "caption": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["summary", "notes", "include_exclusion_rules", "include_manual_boundaries", "excluded_output_ids"],
+          "properties": {
+            "summary": { "$ref": "#/$defs/nonEmptyString" },
+            "notes": { "$ref": "#/$defs/stringArray" },
+            "include_exclusion_rules": { "type": "boolean" },
+            "include_manual_boundaries": { "type": "boolean" },
+            "excluded_output_ids": { "$ref": "#/$defs/idArray" }
+          }
+        },
+        "accessibility": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["title_id", "desc_id", "alt_text", "do_not_use_color_alone", "minimum_body_text_pt", "minimum_contrast_ratio", "high_contrast_text", "grayscale_required", "cvd_profiles"],
+          "properties": {
+            "title_id": { "$ref": "#/$defs/id" },
+            "desc_id": { "$ref": "#/$defs/id" },
+            "alt_text": { "$ref": "#/$defs/nonEmptyString" },
+            "do_not_use_color_alone": { "const": true },
+            "minimum_body_text_pt": { "type": "number", "minimum": 8 },
+            "minimum_contrast_ratio": { "type": "number", "minimum": 4.5 },
+            "high_contrast_text": { "const": true },
+            "grayscale_required": { "const": true },
+            "cvd_profiles": {
+              "type": "array",
+              "minItems": 3,
+              "uniqueItems": true,
+              "items": { "enum": ["protanopia", "deuteranopia", "tritanopia"] }
+            }
+          }
+        }
+      }
+    },
+    "connectorGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "semantic_edge_ids", "segments"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "semantic_edge_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "segments": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/connectorSegment" }
+        }
+      }
+    },
+    "connectorSegment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "marker_end", "points"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "source_node_id": { "$ref": "#/$defs/id" },
+        "target_node_id": { "$ref": "#/$defs/id" },
+        "marker_end": { "type": "boolean" },
+        "points": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/connectorPoint" }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "marker_end": { "const": true } } },
+          "then": { "required": ["target_node_id"] }
+        }
+      ]
+    },
+    "connectorPoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y"],
+      "properties": {
+        "x": { "type": "number", "minimum": 0 },
+        "y": { "type": "number", "minimum": 0 }
+      }
+    },
+    "renderCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "lane_id", "member_node_ids", "x", "y", "width", "height", "title", "bullet_sources", "accent_role", "fill_role"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "lane_id": { "$ref": "#/$defs/id" },
+        "member_node_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "x": { "type": "number", "minimum": 0 },
+        "y": { "type": "number", "minimum": 0 },
+        "width": { "type": "number", "exclusiveMinimum": 0 },
+        "height": { "type": "number", "exclusiveMinimum": 0 },
+        "title": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "node_ids", "separator"],
+          "properties": {
+            "mode": { "enum": ["node_label", "joined_node_labels"] },
+            "node_ids": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/id" }
+            },
+            "separator": { "type": "string" }
+          }
+        },
+        "bullet_sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["node_id", "field", "indexes"],
+            "properties": {
+              "node_id": { "$ref": "#/$defs/id" },
+              "field": { "enum": ["short_lines", "paper_outputs", "statistics"] },
+              "indexes": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": { "type": "integer", "minimum": 1 }
+              },
+              "italic_terms": { "$ref": "#/$defs/stringArray" }
+            }
+          }
+        },
+        "accent_role": { "$ref": "#/$defs/id" },
+        "fill_role": { "$ref": "#/$defs/id" }
+      }
+    },
+    "renderProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "profile_type", "description"],
+      "properties": {
+        "id": { "enum": ["github_overview", "journal_landscape"] },
+        "profile_type": { "enum": ["responsive", "print"] },
+        "description": { "$ref": "#/$defs/nonEmptyString" },
+        "css_width": { "$ref": "#/$defs/nonEmptyString" },
+        "max_width_px": { "type": "integer", "minimum": 320 },
+        "width_mm": { "type": "number", "minimum": 100 },
+        "height_mm": { "type": "number", "minimum": 50 },
+        "body_text_pt": { "type": "number", "minimum": 8 },
+        "raster_dpi": { "type": "integer", "minimum": 150 },
+        "pixel_width": { "type": "integer", "minimum": 1000 },
+        "pixel_height": { "type": "integer", "minimum": 500 }
+      }
+    },
+    "openDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "blocks_rendering", "blocking_scope", "impacted_node_ids", "question", "reason", "required_action", "decision_owners"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "status": { "const": "open" },
+        "blocks_rendering": { "type": "boolean" },
+        "blocking_scope": { "$ref": "#/$defs/stringArray" },
+        "impacted_node_ids": { "$ref": "#/$defs/idArray" },
+        "question": { "$ref": "#/$defs/nonEmptyString" },
+        "reason": { "$ref": "#/$defs/nonEmptyString" },
+        "required_action": { "$ref": "#/$defs/nonEmptyString" },
+        "decision_owners": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "resolvedDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "decision_date", "decision", "rationale", "implementation"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "status": { "const": "resolved" },
+        "decision_date": { "type": "string", "format": "date" },
+        "decision": { "$ref": "#/$defs/nonEmptyString" },
+        "rationale": { "$ref": "#/$defs/nonEmptyString" },
+        "implementation": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/nonEmptyString" }
+        },
+        "inference": { "$ref": "#/$defs/nonEmptyString" },
+        "rule_formula": { "$ref": "#/$defs/nonEmptyString" },
+        "reporting_boundary": { "$ref": "#/$defs/nonEmptyString" },
+        "expected_numerical_effect": { "$ref": "#/$defs/nonEmptyString" },
+        "downstream_regeneration_required": { "type": "boolean" }
+      }
+    }
+  }
+}

@@ -64,7 +64,7 @@ The generator has no dependency on the copied legacy CSVs or the retained
 `legacy_ko2` matrices. In both batches, the canonical KO matrices were verified
 to be exactly identical to the legacy KO2 matrices after normalizing the
 canonical `ko:` prefix (same rows, columns, order, and numeric values). Legacy
-checkpoint filenames and tables are referenced only by the validator. The
+checkpoint filenames and tables are referenced only by local-only curation checks. The
 pathway IDs in the generator are explicit figure-source specifications, not
 values discovered from or read out of the checkpoint filenames.
 
@@ -74,26 +74,22 @@ the workflow does not depend on an installed package or computer-specific R
 library path. Reference provenance is documented in
 [`data/reference/ggpicrust2/README.md`](../../data/reference/ggpicrust2/README.md).
 
-Run the generator and its complete regression validation from the repository
-root:
+Run the generator from the repository root:
 
 ```r
 source("scripts/04_functional_prediction/generate_kegg_pathway_ko_z_scores.R")
 generate_kegg_pathway_ko_z_scores()
-source("scripts/04_functional_prediction/validate_kegg_pathway_ko_z_scores.R")
-validate_kegg_pathway_ko_z_scores()
 ```
 
-The validator regenerates every table in a temporary directory, compares it
-with the committed clean output and the unchanged legacy checkpoint under
+During curation, a local-only regression validator regenerated every table in a temporary directory, compared it
+with the clean output and the unchanged legacy checkpoint under
 [`results/legacy_summary_tables/figure_7_8_s8_s16/`](../legacy_summary_tables/figure_7_8_s8_s16/),
-and checks each finite row for mean zero and unit sample standard deviation.
+and checked each finite row for mean zero and unit sample standard deviation.
 
 The portable supplementary heatmap renderer and its figure-specific entry
 points are documented in
 [`supplementary_figures/README.md`](../../supplementary_figures/README.md).
-[`validate_figure_s8_s16.R`](../../supplementary_figures/validate_figure_s8_s16.R)
-checks the exact finite KO sets used in the ten S8-S16 heatmaps, including the
+Local-only rendering checks verified the exact finite KO sets used in the ten S8-S16 heatmaps, including the
 ten undefined constant-profile rows omitted by the historical `na.omit()`
 rendering step.
 
