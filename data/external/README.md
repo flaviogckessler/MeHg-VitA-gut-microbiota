@@ -24,3 +24,7 @@ Zenodo reports the SILVA 138.1 material under CC BY 4.0. Retain the license file
 The preprocessing script refuses a local reference whose MD5 differs from the values published by Zenodo. It uses `dada2::assignTaxonomy()` with the taxonomy training FASTA and `dada2::addSpecies()` with the species-assignment FASTA, matching the historical scripts.
 
 The Zenodo record states that this v1 reference has known label problems affecting 3 of 895 families and 59 of 3,936 genera. The affected labels are listed in the linked [`bad-taxa.csv`](https://github.com/mikemc/dada2-reference-databases/blob/main/silva-138.1/v1/bad-taxa.csv). Version 138.1 is retained because it is the study reference; do not silently substitute a newer SILVA release. Record any deliberate reference update as a new analysis version.
+
+## References
+
+The reference database, formatted dataset, and classifier are cited as SILVA, the Zenodo 138.1 DADA2 dataset, and DADA2 [@silva; @silva-dada2-138-1; @dada2]. Complete entries are in [`bibliography.bib`](../../bibliography.bib).

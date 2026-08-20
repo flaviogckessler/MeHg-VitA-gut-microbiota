@@ -8,6 +8,13 @@
 # paths, applies the primary-analysis exclusions from the sample manifest, and
 # has no non-base R dependencies or runtime dependency on the reference TIFF.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(graphics)
+  library(grDevices)
+  library(stats)
+})
+
 # - Repository paths
 find_project_root <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)
@@ -182,7 +189,7 @@ prepare_figure_5_d_data <- function(project_root = find_project_root()) {
   data
 }
 
-# - Statistics reproduced from ggpubr::stat_cor(method = "spearman")
+# - Statistics reproduced from the legacy ggpubr Spearman-correlation layer
 calculate_figure_5_d_statistics <- function(data) {
   statistics <- do.call(rbind, lapply(sex_levels, function(current_sex) {
     current <- data[data$sex == current_sex, , drop = FALSE]

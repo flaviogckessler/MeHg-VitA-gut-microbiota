@@ -4,6 +4,14 @@
 # panels used in the supplied Photoshop composite. This script generates the
 # individual panels only.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggplot2)
+  library(ggpubr)
+  library(rstatix)
+})
+
 find_figure_s3_common_script <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)
   repeat {

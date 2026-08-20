@@ -4,6 +4,12 @@
 # invariants, and comparison with the unchanged CSVs exported by the legacy
 # calculate_ZScore_KO2kegg() workflow.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(stats)
+  library(utils)
+})
+
 find_ko_z_score_script_directory <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)
 

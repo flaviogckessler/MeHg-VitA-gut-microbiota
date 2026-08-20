@@ -65,20 +65,20 @@ Every batch 01 sample in the selected manifest must be present exactly once. Exa
 
 Validation-only mode parses the script, checks the selected canonical manifest, and audits the internal contract of the archived processed files. The audit verifies ASV/sample dimensions, sequence lengths and order, taxonomy linkage, and batch-specific derived-table rules. If the SILVA FASTAs have been downloaded, it also verifies both files against the Zenodo MD5 values. FASTQ files and Bioconductor packages are not required.
 
-```powershell
-$env:DADA2_BATCH_ID = "batch01_iontorrent_dams-f0_f1-pnd21"
-$env:DADA2_VALIDATE_ONLY = "true"
+```bash
+export DADA2_BATCH_ID="batch01_iontorrent_dams-f0_f1-pnd21"
+export DADA2_VALIDATE_ONLY="true"
 Rscript scripts/01_sequence_processing/preprocess_16s.R
-Remove-Item Env:DADA2_VALIDATE_ONLY
+unset DADA2_VALIDATE_ONLY
 ```
 
 Repeat with `batch02_illumina-miseq_f1-f2_pnd365` to validate the second manifest.
 
 ## Full run after SRA release
 
-```powershell
-$env:DADA2_BATCH_ID = "batch01_iontorrent_dams-f0_f1-pnd21"
-$env:RAW_FASTQ_DIR = "D:\path\to\demultiplexed_fastq"
+```bash
+export DADA2_BATCH_ID="batch01_iontorrent_dams-f0_f1-pnd21"
+export RAW_FASTQ_DIR="/path/to/demultiplexed_fastq"
 Rscript scripts/01_sequence_processing/preprocess_16s.R
 ```
 
@@ -102,3 +102,7 @@ At the end of a full run, [`validate_preprocess_16s_output.R`](validate_preproce
 The script and validator have been syntax-checked in R, and validation-only mode has passed for both manifests, the archived processed-data contracts, and the Zenodo reference configuration. The batch-specific TSV serializers were also tested using the archived count/taxonomy matrices as stand-ins for the unavailable DADA2 objects; every generated canonical TSV/CSV matched its archived counterpart line-for-line. This tests file schemas, filtering, identifiers, ordering, taxonomy serialization, lineage formatting, and relative-abundance calculations without claiming that denoising itself was rerun.
 
 The denoising and taxonomy run cannot be tested until the raw source sequencing data deposited in the SRA and the accession-to-sample mapping are publicly available. At that time, review quality profiles, read retention, paired-read overlap, and the automatic archived-output comparison before replacing any archived product. Change trimming values only if the released reads demonstrate that the deposited data differ from the historical inputs.
+
+## References
+
+This workflow uses R, DADA2, the `biomformat` interface, the BIOM format, the SILVA database, the versioned SILVA 138.1 DADA2 training dataset, and the Sequence Read Archive [@r-core; @dada2; @biomformat; @biom; @silva; @silva-dada2-138-1; @sra]. Complete entries are in [`bibliography.bib`](../../bibliography.bib).

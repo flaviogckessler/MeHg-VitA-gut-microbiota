@@ -3,6 +3,9 @@
 # the default structural validation is fast because each full panel rerun can
 # take several minutes on Windows.
 
+# Load Packages ----
+suppressPackageStartupMessages(library(utils))
+
 find_figure_6_dir <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)
   repeat {

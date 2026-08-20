@@ -104,3 +104,7 @@ Figure S16 uses the F2-PND365
 ## Figure 6 use
 
 Figure 6 panels A-C read only the two canonical `kegg_ortholog_abundance.tsv` files. The scripts normalize the pipeline's `ko:K#####` identifiers to the `K#####` form expected by `ggpicrust2::ko2kegg_abundance()` in memory; the source files remain unchanged. The EC, MetaCyc, weighted-NSTI, and `_legacy_ko2.tsv` files are not used for Figure 6. See [`figures/README.md`](../../figures/README.md) for the panel-to-source and panel-to-script mapping.
+
+## References
+
+Functional predictions and downstream analyses use PICRUSt2, ggpicrust2, ALDEx2, and KEGG [@picrust2; @ggpicrust2; @aldex2; @kegg]. Complete entries are in [`bibliography.bib`](../../bibliography.bib).

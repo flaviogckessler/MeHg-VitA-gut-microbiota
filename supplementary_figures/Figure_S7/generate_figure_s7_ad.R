@@ -7,6 +7,13 @@
 # preserved in scripts/legacy_scripts/Picrust_mestrado_Alberto.R and is not
 # sourced at runtime.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(ggplot2)
+  library(stats)
+  library(utils)
+})
+
 figure_s7_required_packages <- "ggplot2"
 figure_s7_missing_packages <- figure_s7_required_packages[
   !vapply(

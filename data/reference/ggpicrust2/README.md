@@ -19,3 +19,7 @@ Provenance:
 The file is copied unchanged. The generator verifies its checksum, object name,
 dimensions, pathway IDs, and KO identifiers before using it. The historical CSV
 exports under `results/legacy_summary_tables/` are not generation inputs.
+
+## References
+
+This offline mapping is attributed to ggpicrust2 and KEGG [@ggpicrust2; @kegg]. Complete entries are in [`bibliography.bib`](../../../bibliography.bib).

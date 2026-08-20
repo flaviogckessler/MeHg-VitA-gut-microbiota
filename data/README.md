@@ -31,3 +31,7 @@ The accession ranges are also recorded in `metadata/sra_data_availability.csv`. 
 For sequence reprocessing after public release, download the FASTQ files outside the repository and follow the [`scripts/01_sequence_processing/` guide](../scripts/01_sequence_processing/README.md). Set `DADA2_BATCH_ID` and `RAW_FASTQ_DIR` before running `scripts/01_sequence_processing/preprocess_16s.R`. The script does not assume or create a repository-local raw-data directory, and it writes reviewed reruns below the selected processed batch without overwriting archived canonical products.
 
 The historical [`scripts/00_setup/organize_data.ps1`](../scripts/00_setup/organize_data.ps1) utility documents the initial curation process. Portable analyses should use the canonical files already organized under `data/` and `results/` rather than rebuilding them through the historical import workflow.
+
+## References
+
+Relevant records cover DADA2, SILVA 138.1, the versioned DADA2 training dataset, PICRUSt2, KEGG, and the Sequence Read Archive [@dada2; @silva; @silva-dada2-138-1; @picrust2; @kegg; @sra]. Complete entries are in [`bibliography.bib`](../bibliography.bib).

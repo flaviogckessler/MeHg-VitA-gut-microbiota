@@ -13,6 +13,17 @@
 #   DADA2_OUTPUT_DIR    rerun output directory
 #   DADA2_VALIDATE_ONLY true to validate configuration and archived products
 
+# Load Packages ----
+preprocess_validate_only <-
+  tolower(Sys.getenv("DADA2_VALIDATE_ONLY", unset = "false")) == "true"
+suppressPackageStartupMessages(library(tools))
+if (!preprocess_validate_only) {
+  suppressPackageStartupMessages({
+    library(dada2)
+    library(biomformat)
+  })
+}
+
 sra_bioproject <- "PRJNA1489663"
 silva_zenodo_doi <- "10.5281/zenodo.4587955"
 silva_taxonomy_md5 <- "6b41db7139834c71171f8ce5b5918fc6"
@@ -20,7 +31,7 @@ silva_species_md5 <- "f21c2d97c79ff07c17949a9622371a4c"
 batch01 <- "batch01_iontorrent_dams-f0_f1-pnd21"
 batch02 <- "batch02_illumina-miseq_f1-f2_pnd365"
 batch_id <- Sys.getenv("DADA2_BATCH_ID", unset = "")
-validate_only <- tolower(Sys.getenv("DADA2_VALIDATE_ONLY", unset = "false")) == "true"
+validate_only <- preprocess_validate_only
 
 script_option <- grep("^--file=", commandArgs(trailingOnly = FALSE), value = TRUE)
 repo_root <- if (length(script_option) == 1L) {

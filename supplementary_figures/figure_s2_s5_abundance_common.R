@@ -4,6 +4,17 @@
 # individual 600 x 500 TIFF panels. The portable workflows generate only the
 # corresponding individual PNG panels and never assemble the composites.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggplot2)
+  library(ggpubr)
+  library(rstatix)
+  library(stats)
+  library(tools)
+  library(utils)
+})
+
 supplementary_abundance_required_packages <- c(
   "dplyr", "ggplot2", "ggpubr", "rstatix"
 )

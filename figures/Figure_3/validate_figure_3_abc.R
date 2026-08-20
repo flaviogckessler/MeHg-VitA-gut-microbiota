@@ -1,3 +1,10 @@
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(scales)
+  library(tools)
+})
+
 # - Load the figure workflow
 find_figure_script <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)

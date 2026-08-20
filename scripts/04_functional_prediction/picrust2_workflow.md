@@ -135,3 +135,7 @@ No full rerun was performed during repository curation. Instead, all six retaine
 ## Downstream sample selection
 
 PICRUSt2 was run on all supplied columns. Figure-generation scripts must join samples to [`data/metadata/sample_manifest_all_batches.csv`](../../data/metadata/sample_manifest_all_batches.csv), honor `include_primary_analysis`, exclude batch 01 samples `10F` and `22F`, and exclude batch 02 column `t3` unless valid metadata are supplied.
+
+## References
+
+The reconstructed workflow uses PICRUSt2 and the BIOM format [@picrust2; @biom]. Complete entries are in [`bibliography.bib`](../../bibliography.bib).

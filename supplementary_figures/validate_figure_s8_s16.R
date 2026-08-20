@@ -1,5 +1,13 @@
 # End-to-end validation for the portable Figure S8-S16 heatmap renderers.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(graphics)
+  library(grDevices)
+  library(stats)
+  library(utils)
+})
+
 find_common_script <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)
   repeat {

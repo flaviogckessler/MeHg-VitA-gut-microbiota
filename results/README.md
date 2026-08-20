@@ -10,3 +10,7 @@ The `kegg_ortholog_abundance_legacy_ko2.tsv` filenames deliberately retain the `
 ## Raw-sequence availability
 
 The raw reads underlying these results are deposited in the NCBI Sequence Read Archive under [BioProject PRJNA1489663](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1489663). BioSample accessions span `SAMN61406324`–`SAMN61406377` for Dams_F0/F1-PND21 and `SAMN61407672`–`SAMN61407719` for F1-PND365/F2-PND365. They are currently on hold and will become public upon publication of the manuscript.
+
+## References
+
+Relevant methods and repositories are PICRUSt2, KEGG, R, and the Sequence Read Archive [@picrust2; @kegg; @r-core; @sra]. Complete entries are in [`bibliography.bib`](../bibliography.bib).

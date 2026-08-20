@@ -4,6 +4,14 @@
 # Photoshop. This script uses the shared Figures S2-S5 abundance workflow to
 # generate only the three individual Dams (F0) relative-abundance boxplots.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggplot2)
+  library(ggpubr)
+  library(rstatix)
+})
+
 find_figure_s2_common_script <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)
   repeat {

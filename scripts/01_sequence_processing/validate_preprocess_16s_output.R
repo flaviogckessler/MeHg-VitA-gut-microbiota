@@ -1,5 +1,11 @@
 # Validation helpers for the archived and newly generated DADA2 products.
 
+# Load Packages ----
+suppressPackageStartupMessages(library(utils))
+if (tolower(Sys.getenv("DADA2_VALIDATE_ONLY", unset = "false")) != "true") {
+  suppressPackageStartupMessages(library(biomformat))
+}
+
 same_values <- function(x, y, tolerance = 0) {
   if (!identical(dim(x), dim(y)) || !identical(dimnames(x), dimnames(y))) {
     return(FALSE)

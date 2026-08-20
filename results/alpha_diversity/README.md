@@ -11,3 +11,7 @@ The tables are canonical numerical inputs for main Figure 3 panels D-G
 (Shannon) and supplementary Figure S1 panels A-H (Observed and InvSimpson).
 The Figure S1 workflow records the unmatched batch 02 row `t3` but excludes it
 from analysis because no canonical metadata row was supplied.
+
+## References
+
+These R-derived microbiome summaries retain provenance to R and phyloseq [@r-core; @phyloseq]. Complete entries are in [`bibliography.bib`](../../bibliography.bib).

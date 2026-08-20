@@ -91,6 +91,10 @@ manually retrieved KEGG result is retained under
 [`data/reference/kegg/`](../../data/reference/kegg/) with its original contents
 and a repository-compliant filename.
 
-Legacy scripts that have not yet been used for a portable workflow remain directly under [`scripts/`](../). This separation makes it possible to identify migrated provenance files without changing or prematurely curating the unused scripts.
+Unreferenced exploratory scripts formerly stored directly under `scripts/` were removed during the repository-wide review. Every file retained in this directory is explicitly mapped to a maintained workflow or documented downstream provenance above.
 
 The three preprocessing-related historical scripts were moved here without changing their contents. Their hard-coded user paths, package-installation calls, interactive `View()` calls, TIFF exports, whole-session saves, inconsistent taxonomy inputs, and exploratory downstream blocks are retained only for auditability. The portable replacement uses the DOI-pinned SILVA 138.1 DADA2 FASTAs with the historical `assignTaxonomy()` and `addSpecies()` method, writes repository-standard data products, and keeps raw reads and large references outside version control. See the [`16S preprocessing guide`](../01_sequence_processing/README.md) for the detailed mapping and current validation boundary.
+
+## References
+
+The historical provenance spans R, DADA2, phyloseq, tidyverse/ggplot2, PICRUSt2, ggpicrust2, ALDEx2, SILVA, and KEGG [@r-core; @dada2; @phyloseq; @tidyverse; @ggplot2; @picrust2; @ggpicrust2; @aldex2; @silva; @kegg]. Complete entries are in [`bibliography.bib`](../../bibliography.bib).

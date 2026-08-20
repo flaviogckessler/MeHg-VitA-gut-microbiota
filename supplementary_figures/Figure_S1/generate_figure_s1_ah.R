@@ -5,6 +5,16 @@
 # supplied Figure_S1_FinalFigure.png was assembled manually in Adobe Photoshop;
 # this script generates the eight individual PNG panels used for that layout.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(dplyr)
+  library(ggplot2)
+  library(ggpubr)
+  library(rstatix)
+  library(stats)
+  library(utils)
+})
+
 figure_s1_required_packages <- c("dplyr", "ggplot2", "ggpubr", "rstatix")
 figure_s1_missing_packages <- figure_s1_required_packages[
   !vapply(

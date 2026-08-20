@@ -1,4 +1,13 @@
 # Reproducible Figure S10 panel E: F1-PND21/map00740 KO z-score heatmap.
+
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(graphics)
+  library(grDevices)
+  library(stats)
+  library(utils)
+})
+
 find_common_script <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)
   repeat {

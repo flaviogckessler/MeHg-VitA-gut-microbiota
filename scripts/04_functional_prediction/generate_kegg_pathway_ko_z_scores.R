@@ -7,6 +7,13 @@
 # and the offline KEGG membership reference installed with ggpicrust2. Legacy CSV
 # exports are not read here; they are used only by the separate validator.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(stats)
+  library(tools)
+  library(utils)
+})
+
 ko_z_score_treatment_levels <- c("CN", "VitA", "MeHg", "VitA+MeHg")
 ko_z_score_reference_relative_path <- file.path(
   "data", "reference", "ggpicrust2", "kegg_reference.RData"

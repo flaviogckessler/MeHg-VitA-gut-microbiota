@@ -8,6 +8,14 @@
 # six Tukey HSD pairwise comparisons. Only Tukey-adjusted p < 0.05 results are
 # annotated.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(ggplot2)
+  library(grDevices)
+  library(grid)
+  library(stats)
+})
+
 required_packages <- "ggplot2"
 missing_packages <- required_packages[
   !vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)

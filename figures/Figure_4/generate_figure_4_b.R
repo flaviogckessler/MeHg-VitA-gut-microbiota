@@ -4,6 +4,13 @@
 # Shared base-R input, statistical, and heatmap helpers are kept in the copied
 # panel-A workflow so that Figure 4 has exactly one generation script per panel.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(graphics)
+  library(grDevices)
+  library(stats)
+})
+
 find_panel_a_script <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)
   repeat {

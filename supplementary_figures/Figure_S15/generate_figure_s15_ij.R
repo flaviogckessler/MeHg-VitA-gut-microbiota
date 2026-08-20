@@ -1,4 +1,13 @@
 # Reproducible Figure S15 heatmaps: panel I (F1-PND21) and J (F1-PND365).
+
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(graphics)
+  library(grDevices)
+  library(stats)
+  library(utils)
+})
+
 find_common_script <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)
   repeat {

@@ -8,6 +8,17 @@
 #   * six-comparison Bonferroni adjustment; and
 #   * per-sample pathway relative abundance summarized as mean +/- SD.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(ggpicrust2)
+  library(ALDEx2)
+  library(ggplot2)
+  library(patchwork)
+  library(scales)
+  library(stats)
+  library(utils)
+})
+
 figure_6_treatment_levels <- c("CN", "VitA", "MeHg", "VitA+MeHg")
 figure_6_treatment_colors <- c(
   CN = "#43DFE8",

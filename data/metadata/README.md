@@ -24,3 +24,7 @@ Raw reads are not stored in this repository. They have been deposited in the NCB
 - F1-PND365 and F2-PND365: `SAMN61407672`–`SAMN61407719`.
 
 The records are currently on hold and will be made public upon publication of the manuscript. `sra_data_availability.csv` provides these batch-level ranges in machine-readable form. It does not infer individual sample-to-BioSample assignments.
+
+## References
+
+The raw-read repository is the NCBI Sequence Read Archive [@sra]. The complete entry is in [`bibliography.bib`](../../bibliography.bib).

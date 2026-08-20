@@ -1,10 +1,12 @@
 # Reproducible refactor of scripts/legacy_scripts/Alpha_Diversity.R.
 # The legacy file is retained for provenance and is not a runtime dependency.
 
-# - Packages
-library(tidyverse)
-library(rstatix)
-library(ggpubr)
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(rstatix)
+  library(ggpubr)
+})
 
 # - Repository paths
 find_project_root <- function(start = getwd()) {

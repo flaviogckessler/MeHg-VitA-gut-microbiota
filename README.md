@@ -1,6 +1,6 @@
 # MeHg–Vitamin A Gut Microbiota
 
-This repository supports the reproducibility of a multigenerational gut microbiota study investigating methylmercury (MeHg) exposure, vitamin A supplementation, and their combined effects. It brings together curated metadata, processed 16S rRNA sequencing products, analysis results, and figure-generation workflows in a portable project structure.
+This repository supports the reproducibility of a multigenerational gut microbiota study investigating methylmercury (MeHg) exposure, vitamin A supplementation, and their combined effects. It brings together curated metadata, processed 16S rRNA sequencing products, analysis results, and figure-generation workflows in a portable project structure. Analyses are implemented in R [@r-core], with method-specific software cited below and in the figure guides.
 
 ## Study overview
 
@@ -29,14 +29,12 @@ This repository is under active reproducibility curation.
 - Figure S3 generated panels and final composite use the same authoritative treatment order and colors as the other abundance panels: `CN` (`#98F5FF`), `VitA` (`#B3EE3A`), `MeHg` (`#CD2626`), and `VitA+MeHg` (`#4D4D4D`).
 - Figure S6 is a manual, qualitative synthesis made by visually reviewing the current Figure 5 and Figures S2-S5 composites. Its interpretive construction and reproducibility boundary are documented in the [`supplementary-figure guide`](supplementary_figures/README.md#figure-s6); it is not presented as the output of a statistical or scripted workflow.
 - The PICRUSt2 terminal workflow, exact batch-specific inputs, analysis-ready outputs, and weighted-NSTI quality metrics have been harmonized and validated against the supplied pipeline products. Figure 6 uses only the canonical KO predictions and canonical sample manifest.
-- Additional main and supplementary figure workflows will be migrated and validated progressively.
-- Legacy scripts already used as provenance for portable workflows are isolated under [`scripts/legacy_scripts/`](scripts/legacy_scripts/). Unused legacy scripts remain directly under `scripts/` until their corresponding analyses are curated.
+- Historical scripts cited by the provenance documentation are isolated under [`scripts/legacy_scripts/`](scripts/legacy_scripts/) and preserved unchanged. Unreferenced exploratory scripts and placeholder-only directories were removed during the repository-wide review.
 
 ## Repository structure
 
 | Path | Contents |
 |---|---|
-| [`config/`](config/) | Reserved for project-wide configuration files. |
 | [`data/`](data/) | Data organization and provenance documentation. |
 | [`data/metadata/`](data/metadata/) | Canonical sample manifests, preserved source metadata, SRA information, and validation summaries. |
 | [`data/processed/`](data/processed/) | Processed ASV tables, taxonomy, representative sequences, BIOM files, relative abundances, and read tracking. |
@@ -44,10 +42,10 @@ This repository is under active reproducibility curation.
 | [`data/external/`](data/external/) | Download and checksum documentation plus the ignored local location for the SILVA 138.1 DADA2 reference FASTAs. |
 | [`figures/`](figures/) | Main-figure workflows, validation scripts, and lightweight generated PNG outputs. |
 | [`results/`](results/) | Alpha-diversity and taxon-abundance tables, functional-prediction exports, and legacy summary tables. |
-| [`scripts/`](scripts/) | Analysis and curation scripts, including unused legacy scripts awaiting migration. |
+| [`scripts/`](scripts/) | Maintained preprocessing and functional-analysis workflows plus documented historical provenance. |
 | [`scripts/legacy_scripts/`](scripts/legacy_scripts/) | Unchanged legacy references already mapped to portable figure and PICRUSt2 workflows. |
 | [`supplementary_figures/`](supplementary_figures/) | Supplementary-figure workflows, validation scripts, retained composites, and generated panel outputs. |
-| [`docs/`](docs/) | Reserved for extended project documentation. |
+| [`bibliography.bib`](bibliography.bib) | Shared bibliography for software, databases, and analysis methods cited throughout the documentation. |
 
 Canonical data and metadata are stored once under `data/`. Figure scripts should read these files directly rather than duplicate them within figure directories.
 
@@ -55,7 +53,7 @@ Canonical data and metadata are stored once under `data/`. Figure scripts should
 
 Sequence preprocessing is documented in the [`16S preprocessing guide`](scripts/01_sequence_processing/README.md). Raw source sequencing data are deposited in the SRA and are not distributed here; after downloading the DOI-pinned SILVA references and after SRA release, each batch is processed by setting `DADA2_BATCH_ID` and `RAW_FASTQ_DIR` and running `Rscript scripts/01_sequence_processing/preprocess_16s.R`. Until then, validation-only mode checks the script, canonical manifests, archived processed-data contracts, reference configuration, and any downloaded reference checksums without FASTQ data. A full run automatically compares the generated batch-specific products with `data/processed/` and fails if their scientific contents differ.
 
-The validated Figure 3 and Figure S1 alpha-diversity workflows and the Figures S2-S5 taxon-abundance workflows require R and the `tidyverse`, `rstatix`, and `ggpubr` packages. The Figure 4 workflows use base R only. Start R from the repository root and run:
+The validated Figure 3 workflows use `tidyverse`, `scales`, `rstatix`, `ggpubr`, and `rlang`; Figures S1-S5 use `dplyr`, `ggplot2`, `rstatix`, and `ggpubr` [@tidyverse; @dplyr; @ggplot2; @scales; @rstatix; @ggpubr; @rlang]. The Figure 4 workflows use only packages distributed with R. Start R from the repository root and run:
 
 ```r
 source("figures/Figure_3/validate_figure_3_abc.R")
@@ -103,7 +101,7 @@ source("scripts/04_functional_prediction/validate_kegg_pathway_ko_z_scores.R")
 validate_kegg_pathway_ko_z_scores()
 ```
 
-The Figure 6 generators additionally require `ggpicrust2`, `ALDEx2`, `ggplot2`, `patchwork`, and `scales`; its seeded ALDEx2 step can take several minutes per panel. The KO z-score source-data workflow uses base R plus the versioned KEGG reference stored under `data/reference/`; it does not require an installed `ggpicrust2` package. Generated figure outputs are written to each figure's `output/` directory; Figures S3-S5 further separate individual panels into `output/females/` and `output/male/`. Generated source tables stay with their batch under `results/functional_prediction/`.
+The Figure 6 generators additionally require `ggpicrust2`, `ALDEx2`, `ggplot2`, `patchwork`, and `scales` [@ggpicrust2; @aldex2; @ggplot2; @patchwork; @scales]; its seeded ALDEx2 step can take several minutes per panel. The KO z-score source-data workflow uses base R plus the versioned KEGG reference stored under `data/reference/` [@kegg]; it does not require an installed `ggpicrust2` package. Generated figure outputs are written to each figure's `output/` directory; Figures S3-S5 further separate individual panels into `output/females/` and `output/male/`. Generated source tables stay with their batch under `results/functional_prediction/`.
 
 See the [main-figure guide](figures/README.md) and
 [supplementary-figure guide](supplementary_figures/README.md) for figure sources
@@ -127,7 +125,7 @@ Further details are available in the [`data`](data/README.md), [`metadata`](data
 
 ## Raw sequence availability
 
-Raw FASTQ files are not stored in this repository. They have been deposited in the NCBI Sequence Read Archive under [BioProject PRJNA1489663](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1489663):
+Raw FASTQ files are not stored in this repository. They have been deposited in the NCBI Sequence Read Archive [@sra] under [BioProject PRJNA1489663](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1489663):
 
 - Dams F0 and F1-PND21: `SAMN61406324`–`SAMN61406377`;
 - F1-PND365 and F2-PND365: `SAMN61407672`–`SAMN61407719`.
@@ -148,6 +146,6 @@ filenames should be normalized to this convention once the figure number and
 panel mapping are confirmed. Scientific cohort conflicts must be documented
 and resolved rather than hidden by renaming an artifact.
 
-## Citation and license
+## References and license
 
-Citation information will be added when the associated manuscript is available. A repository license has not yet been assigned; one should be selected before public release.
+Documentation citations use Pandoc-style keys whose complete BibTeX records are stored in [`bibliography.bib`](bibliography.bib). Cite the associated manuscript when it becomes available, together with the software, databases, and datasets used by the relevant workflow. The repository is distributed under the [`LICENSE`](LICENSE) file.

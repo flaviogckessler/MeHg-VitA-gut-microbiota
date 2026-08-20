@@ -7,6 +7,13 @@
 # reproduces the legacy logic:
 # Kruskal-Wallis screening (p <= 0.05), treatment means, and row-wise z-scores.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(graphics)
+  library(grDevices)
+  library(stats)
+})
+
 # - Repository paths
 find_project_root <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)
@@ -43,13 +50,15 @@ read_taxon_abundance <- function(project_root, batch_id, filename) {
     abundance_file,
     check.names = FALSE,
     stringsAsFactors = FALSE,
-    na.strings = c("", "NA")
+    na.strings = c("", "NA"),
+    fileEncoding = "UTF-8-BOM"
   )
   metadata <- read.csv(
     metadata_file,
     check.names = FALSE,
     stringsAsFactors = FALSE,
-    na.strings = c("", "NA")
+    na.strings = c("", "NA"),
+    fileEncoding = "UTF-8-BOM"
   )
   included <- tolower(as.character(metadata$include_primary_analysis)) %in%
     c("true", "t", "1", "yes")

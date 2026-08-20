@@ -2,6 +2,15 @@
 # The historical reference is scripts/legacy_scripts/Picrust_mestrado_Alberto.R;
 # it is retained for provenance and is not sourced at runtime.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(ggpicrust2)
+  library(ALDEx2)
+  library(ggplot2)
+  library(patchwork)
+  library(scales)
+})
+
 find_figure_6_directory <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)
   repeat {

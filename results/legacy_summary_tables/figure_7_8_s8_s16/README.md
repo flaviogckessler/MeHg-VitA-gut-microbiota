@@ -27,3 +27,7 @@ are unchanged provenance artifacts.
 
 The Figure S16 checkpoint is `ko00311__F2_1year.csv`, corresponding to the
 F2-PND365 cohort used for that figure.
+
+## References
+
+These checkpoints derive from R-based ggpicrust2 and KEGG processing [@r-core; @ggpicrust2; @kegg]. Complete entries are in [`bibliography.bib`](../../../bibliography.bib).

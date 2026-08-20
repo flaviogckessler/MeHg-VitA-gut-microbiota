@@ -12,3 +12,7 @@ abundance matrix, and the four used in Figure S18 (`K00520`, `K08363`, `K08364`,
 and `K08365`) are also present in the batch 02 matrix. The official generation
 script validates the query schema, both canonical KO matrices, and this explicit
 four-KO cross-batch subset before plotting.
+
+## References
+
+The pathway and orthology identifiers are from KEGG [@kegg]. The complete entry is in [`bibliography.bib`](../../../bibliography.bib).

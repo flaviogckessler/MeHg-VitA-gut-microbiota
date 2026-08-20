@@ -36,3 +36,7 @@ Both PICRUSt2 count tables retain all columns used in the historical runs. This 
 ## Raw-sequence availability
 
 The underlying raw reads are not stored in this repository. They are deposited in the NCBI Sequence Read Archive under [BioProject PRJNA1489663](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1489663). BioSample ranges are `SAMN61406324`–`SAMN61406377` for Dams_F0/F1-PND21 and `SAMN61407672`–`SAMN61407719` for F1-PND365/F2-PND365. The records are on hold and will be released publicly upon manuscript publication.
+
+## References
+
+The processed products and interchange formats are associated with DADA2, phyloseq, the `biomformat` interface, BIOM, PICRUSt2, and the Sequence Read Archive [@dada2; @phyloseq; @biomformat; @biom; @picrust2; @sra]. Complete entries are in [`bibliography.bib`](../../bibliography.bib).

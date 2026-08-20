@@ -2,6 +2,9 @@
 # This follows the Figure 3 validation pattern while also checking the preserved
 # significant-taxon checkpoints under results/legacy_summary_tables/figure_4/.
 
+# Load Packages ----
+suppressPackageStartupMessages(library(stats))
+
 # - Locate and load each panel script in an isolated environment
 find_figure_4_dir <- function(start = getwd()) {
   path <- normalizePath(start, winslash = "/", mustWork = TRUE)

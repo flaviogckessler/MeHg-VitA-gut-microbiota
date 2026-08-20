@@ -13,3 +13,7 @@ These unchanged `Signif_*.csv` tables preserve the significant-taxon lists and t
 | [`Signif_1year_F2Male.csv`](Signif_1year_F2Male.csv) | Panel D, F2 PND365 males |
 
 The checkpoints are consumed by [`validate_figure_4.R`](../../../figures/Figure_4/validate_figure_4.R). Canonical runtime inputs are documented in the main [`figures/README.md`](../../../figures/README.md).
+
+## References
+
+The portable validator uses R [@r-core]. The complete entry is in [`bibliography.bib`](../../../bibliography.bib).

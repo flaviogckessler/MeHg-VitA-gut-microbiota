@@ -6,6 +6,14 @@
 # clean F1-PND21/map00310 table generated from canonical PICRUSt2 KO abundance
 # by scripts/04_functional_prediction/generate_kegg_pathway_ko_z_scores.R.
 
+# Load Packages ----
+suppressPackageStartupMessages({
+  library(graphics)
+  library(grDevices)
+  library(stats)
+  library(utils)
+})
+
 figure_7_e_treatment_levels <- c("CN", "VitA", "MeHg", "VitA+MeHg")
 
 # The legacy heatmap used hierarchical clustering without column clustering.
