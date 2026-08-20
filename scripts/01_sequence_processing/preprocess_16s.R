@@ -422,9 +422,13 @@ if (batch_id == batch01) {
     sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE
   )
 
+  # Retain mitochondrial-family assignments intentionally. The archived
+  # batch-02 tables used downstream include them, and the historical plural
+  # predicate (Family != "Mitochondrias") never excluded the actual singular
+  # Family value "Mitochondria".
   keep <- !is.na(taxonomy[, "Kingdom"]) & taxonomy[, "Kingdom"] == "Bacteria" &
     !is.na(taxonomy[, "Phylum"]) & !is.na(taxonomy[, "Class"]) &
-    !is.na(taxonomy[, "Family"]) & taxonomy[, "Family"] != "Mitochondrias" &
+    !is.na(taxonomy[, "Family"]) &
     colSums(sequence_table > 0) > 6 & colSums(sequence_table) > 2 &
     apply(sequence_table, 2L, max) > 1
   filtered_table <- sequence_table[, keep, drop = FALSE]

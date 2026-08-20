@@ -126,9 +126,11 @@ validate_archived_preprocess_contract <- function(batch_id, canonical_dir, manif
     colnames(taxonomy) <- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species")
     taxonomy[taxonomy == "NA"] <- NA_character_
 
+    # The maintained compatibility policy intentionally retains assigned
+    # mitochondrial families to match the archived batch-02 products.
     keep <- !is.na(taxonomy[, "Kingdom"]) & taxonomy[, "Kingdom"] == "Bacteria" &
       !is.na(taxonomy[, "Phylum"]) & !is.na(taxonomy[, "Class"]) &
-      !is.na(taxonomy[, "Family"]) & taxonomy[, "Family"] != "Mitochondrias" &
+      !is.na(taxonomy[, "Family"]) &
       rowSums(counts > 0) > 6 & rowSums(counts) > 2 & apply(counts, 1L, max) > 1
     relative <- read.delim(
       file.path(canonical_dir, "asv_relative_abundance_with_taxonomy.tsv"),

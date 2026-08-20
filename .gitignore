@@ -35,6 +35,9 @@ figures/**/output/*_generated.tiff
 supplementary_figures/**/output/*_generated.tif
 supplementary_figures/**/output/*_generated.tiff
 
+# Draft bioinformatics workflow figure and its generator
+figures/Workflow/
+
 # Temporary and log files
 *.tmp
 *.temp
