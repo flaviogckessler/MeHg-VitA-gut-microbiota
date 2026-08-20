@@ -105,6 +105,8 @@ Figure S16 uses the F2-PND365
 
 Figure 6 panels A-C read only the two canonical `kegg_ortholog_abundance.tsv` files. The scripts normalize the pipeline's `ko:K#####` identifiers to the `K#####` form expected by `ggpicrust2::ko2kegg_abundance()` in memory; the source files remain unchanged. The EC, MetaCyc, weighted-NSTI, and `_legacy_ko2.tsv` files are not used for Figure 6. See [`figures/README.md`](../../figures/README.md) for the panel-to-source and panel-to-script mapping.
 
+Each pathway is evaluated with one four-treatment omnibus ALDEx2 GLM; Figure 6 does not calculate post-hoc pairwise tests. The workflow preserves the adjustment returned by ggpicrust2/ALDEx2 as `package_p_adjust`, then applies the author's additional conservative rule `author_sixfold_omnibus_p = min(1, 6 * raw_omnibus_p)`. The same value is copied to the legacy-compatible `p_adjust` field used by the panel-selection code. The factor of six reflects the six possible treatment pairs but remains a penalty on the omnibus p-value and must not be presented as an adjusted pairwise-test result.
+
 Functional predictions and downstream analyses use PICRUSt2, ggpicrust2, ALDEx2, and KEGG [@picrust2; @ggpicrust2; @aldex2; @kegg].
 
 ## References

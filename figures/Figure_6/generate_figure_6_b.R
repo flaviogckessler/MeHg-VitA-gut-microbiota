@@ -62,7 +62,7 @@ prepare_figure_6_b_data <- function(
       paste0(
         "Panel B pathway selection differs from the final-figure specification. ",
         "Threshold-selected: ", paste(threshold_selected$feature, collapse = ", "),
-        "; expected adjusted p-values: ",
+        "; expected author-defined sixfold omnibus values: ",
         paste(format_figure_6_p_value(selected$p_adjust), collapse = ", ")
       ),
       call. = FALSE
@@ -113,7 +113,10 @@ if (sys.nframe() == 0L) {
   result <- generate_figure_6_b()
   message("Generated Figure 6 panel B: ", normalizePath(result$file, winslash = "/"))
   print(
-    result$selected_daa[, c("feature", "pathway_name", "p_values", "p_adjust")],
+    result$selected_daa[, c(
+      "feature", "pathway_name", "raw_omnibus_p", "package_p_adjust",
+      "author_sixfold_omnibus_p"
+    )],
     row.names = FALSE
   )
 }

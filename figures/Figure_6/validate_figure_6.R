@@ -66,6 +66,23 @@ validate_figure_6 <- function(
     )
   )
   invisible(lapply(scripts, parse))
+  common_text <- paste(readLines(scripts[[1L]], warn = FALSE), collapse = "\n")
+  check_true(
+    grepl(
+      'daa$adj_method <- "author-defined sixfold conservative omnibus rule"',
+      common_text,
+      fixed = TRUE
+    ) && grepl(
+      'daa$inference_scope <- "four-treatment omnibus only; no post-hoc pairwise tests"',
+      common_text,
+      fixed = TRUE
+    ) && grepl(
+      "daa$author_sixfold_omnibus_p <- pmin(1, 6 * daa$raw_omnibus_p)",
+      common_text,
+      fixed = TRUE
+    ),
+    "Figure 6 must retain the documented author-defined sixfold omnibus rule."
+  )
 
   batch_ids <- c(
     "batch01_iontorrent_dams-f0_f1-pnd21",
@@ -212,6 +229,24 @@ validate_figure_6 <- function(
       check_true(
         setequal(results[[index]]$selected_daa$feature, expected_features[[index]]),
         paste("Full validation selected incorrect pathways for panel", LETTERS[[index]], ".")
+      )
+      selected_daa <- results[[index]]$selected_daa
+      check_true(
+        isTRUE(all.equal(
+          selected_daa$author_sixfold_omnibus_p,
+          pmin(1, 6 * selected_daa$raw_omnibus_p),
+          tolerance = 0,
+          check.attributes = FALSE
+        )) && isTRUE(all.equal(
+          selected_daa$p_adjust,
+          selected_daa$author_sixfold_omnibus_p,
+          tolerance = 0,
+          check.attributes = FALSE
+        )) && all(
+          selected_daa$inference_scope ==
+            "four-treatment omnibus only; no post-hoc pairwise tests"
+        ),
+        paste("Panel", LETTERS[[index]], "did not preserve the sixfold omnibus rule.")
       )
     }
   }

@@ -4,8 +4,9 @@
 # multi-group bookkeeping in the legacy pathway_errorbar3() while preserving
 # the analysis choices used for the final figure:
 #   * PICRUSt2 KO predictions aggregated to KEGG pathways with ggpicrust2;
-#   * four-group ALDEx2 GLM test;
-#   * six-comparison Bonferroni adjustment; and
+#   * one four-treatment omnibus ALDEx2 GLM test per pathway;
+#   * the author's additional conservative sixfold rule applied to each raw
+#     omnibus p-value, with no post-hoc pairwise testing; and
 #   * per-sample pathway relative abundance summarized as mean +/- SD.
 
 # Load Packages ----
@@ -203,11 +204,33 @@ run_figure_6_daa <- function(kegg_abundance, metadata, seed = 20260809L) {
   if (nrow(daa) != nrow(kegg_abundance)) {
     stop("The ALDEx2 GLM result is incomplete.", call. = FALSE)
   }
+  required_p_columns <- c("p_values", "p_adjust")
+  missing_p_columns <- setdiff(required_p_columns, colnames(daa))
+  if (length(missing_p_columns)) {
+    stop(
+      "The ALDEx2 GLM result is missing p-value column(s): ",
+      paste(missing_p_columns, collapse = ", "),
+      call. = FALSE
+    )
+  }
 
-  # The historical workflow treated the six pairwise contrasts among four
-  # groups as the Bonferroni family, rather than using the number of pathways.
-  daa$p_adjust <- pmin(1, 6 * as.numeric(daa$p_values))
-  daa$adj_method <- "bonferroni (six treatment contrasts)"
+  # Preserve the package-returned adjustment for provenance. Figure 6 uses one
+  # four-treatment omnibus GLM p-value per pathway and does not calculate
+  # post-hoc pairwise tests. The author additionally defined a conservative
+  # decision rule motivated by the six possible pairs among four treatments:
+  # multiply each raw omnibus p-value by six and cap it at one. The legacy-
+  # compatible p_adjust column remains the value used for pathway selection.
+  daa$raw_omnibus_p <- as.numeric(daa$p_values)
+  daa$package_p_adjust <- as.numeric(daa$p_adjust)
+  daa$package_adj_method <- if ("adj_method" %in% colnames(daa)) {
+    as.character(daa$adj_method)
+  } else {
+    NA_character_
+  }
+  daa$author_sixfold_omnibus_p <- pmin(1, 6 * daa$raw_omnibus_p)
+  daa$p_adjust <- daa$author_sixfold_omnibus_p
+  daa$adj_method <- "author-defined sixfold conservative omnibus rule"
+  daa$inference_scope <- "four-treatment omnibus only; no post-hoc pairwise tests"
   daa
 }
 
