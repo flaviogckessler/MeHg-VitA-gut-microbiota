@@ -57,7 +57,9 @@ root. Their paired validators lock source checksums, cohorts, taxa, exact
 nonparametric results, significant comparison signatures, filenames,
 sex-specific paths, and dimensions.
 
-`Picrust_mestrado_Alberto.R` is preserved unchanged. The portable Figure 6 workflow uses only its KO-to-KEGG, four-group ALDEx2, six-comparison Bonferroni, pathway-selection, and visual-design provenance. It intentionally omits the exploratory PCA, EC, MetaCyc, GSEA, z-score heatmap, and mercuric-KO sections from the Figure 6 runtime. Its edited `pathway_errorbar3()` was not sourced because the legacy implementation could combine differently filtered/ordered DAA tables and was not safe for four-group fold-change bookkeeping; the corrected implementation aligns all rows by explicit keys and disables the undefined two-group fold-change panel.
+`Picrust_mestrado_Alberto.R` is preserved unchanged. The portable Figure 6 workflow uses only its KO-to-KEGG, four-group ALDEx2, author-defined sixfold omnibus-p penalty, pathway-selection, and visual-design provenance. It intentionally omits the exploratory PCA, EC, MetaCyc, GSEA, z-score heatmap, and mercuric-KO sections from the Figure 6 runtime. Its edited `pathway_errorbar3()` was not sourced because the legacy implementation could combine differently filtered/ordered DAA tables and was not safe for four-group fold-change bookkeeping; the corrected implementation aligns all rows by explicit keys and disables the undefined two-group fold-change panel.
+
+The script's explicit R 4.2 user-library path and the surviving local package metadata support `ggpicrust2` 2.0.0 and `ALDEx2` 1.28.1 as the historical Figure 6 dependency versions. Both installations predate the retained final figure, and the repository-local KEGG reference independently matches `ggpicrust2` 2.0.0. R 4.2.x, likely R 4.2.1, is recorded only as contextual evidence because no historical `sessionInfo()`, lockfile, or GitHub commit SHA survives. The legacy script remains unchanged.
 
 The PCA block around lines 658-742 supplies the analytical and visual
 provenance for

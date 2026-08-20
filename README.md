@@ -101,11 +101,10 @@ source("scripts/04_functional_prediction/validate_kegg_pathway_ko_z_scores.R")
 validate_kegg_pathway_ko_z_scores()
 ```
 
-The Figure 6 generators additionally require `ggpicrust2`, `ALDEx2`, `ggplot2`, `patchwork`, and `scales` [@ggpicrust2; @aldex2; @ggplot2; @patchwork; @scales]; its seeded ALDEx2 step can take several minutes per panel. The KO z-score source-data workflow uses base R plus the versioned KEGG reference stored under `data/reference/` [@kegg]; it does not require an installed `ggpicrust2` package. Generated figure outputs are written to each figure's `output/` directory; Figures S3-S5 further separate individual panels into `output/females/` and `output/male/`. Generated source tables stay with their batch under `results/functional_prediction/`.
+The reconstructed historical Figure 6 environment uses `ggpicrust2` 2.0.0 and `ALDEx2` 1.28.1, with R 4.2.x (likely R 4.2.1) retained as contextual evidence; see the [main-figure guide](figures/README.md) for the provenance and its session-snapshot limitation. The generators additionally require `ggplot2`, `patchwork`, and `scales` [@ggpicrust2; @aldex2; @ggplot2; @patchwork; @scales], and the seeded ALDEx2 step can take several minutes per panel. The KO z-score source-data workflow uses base R plus the versioned KEGG reference stored under `data/reference/` [@kegg]; it does not require an installed `ggpicrust2` package. Generated figure outputs are written to each figure's `output/` directory; Figures S3-S5 further separate individual panels into `output/females/` and `output/male/`. Generated source tables stay with their batch under `results/functional_prediction/`.
 
-See the [main-figure guide](figures/README.md) and
-[supplementary-figure guide](supplementary_figures/README.md) for figure sources
-and generation details. The supplied Figures S1-S5 final composites
+See the [supplementary-figure guide](supplementary_figures/README.md) for its
+figure sources and generation details. The supplied Figures S1-S5 final composites
 were assembled manually in Adobe Photoshop and are retained as visual
 references rather than R-generated outputs.
 
