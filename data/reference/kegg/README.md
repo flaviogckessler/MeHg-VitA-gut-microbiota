@@ -13,6 +13,8 @@ and `K08365`) are also present in the batch 02 matrix. The official generation
 script validates the query schema, both canonical KO matrices, and this explicit
 four-KO cross-batch subset before plotting.
 
+The pathway and orthology identifiers are from KEGG [@kegg].
+
 ## References
 
-The pathway and orthology identifiers are from KEGG [@kegg]. The complete entry is in [`bibliography.bib`](../../../bibliography.bib).
+- <a id="ref-kegg"></a>Kanehisa, M., & Goto, S. (2000). KEGG: Kyoto Encyclopedia of Genes and Genomes. *Nucleic Acids Research, 28*(1), 27–30. [https://doi.org/10.1093/nar/28.1.27](https://doi.org/10.1093/nar/28.1.27)

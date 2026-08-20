@@ -20,6 +20,9 @@ The file is copied unchanged. The generator verifies its checksum, object name,
 dimensions, pathway IDs, and KO identifiers before using it. The historical CSV
 exports under `results/legacy_summary_tables/` are not generation inputs.
 
+This offline mapping is attributed to ggpicrust2 and KEGG [@ggpicrust2; @kegg].
+
 ## References
 
-This offline mapping is attributed to ggpicrust2 and KEGG [@ggpicrust2; @kegg]. Complete entries are in [`bibliography.bib`](../../../bibliography.bib).
+- <a id="ref-kegg"></a>Kanehisa, M., & Goto, S. (2000). KEGG: Kyoto Encyclopedia of Genes and Genomes. *Nucleic Acids Research, 28*(1), 27–30. [https://doi.org/10.1093/nar/28.1.27](https://doi.org/10.1093/nar/28.1.27)
+- <a id="ref-ggpicrust2"></a>Yang, C., Mai, J., Cao, X., Burberry, A., Cominelli, F., & Zhang, L. (2023). ggpicrust2: An R package for PICRUSt2 predicted functional profile analysis and visualization. *Bioinformatics, 39*(8), btad470. [https://doi.org/10.1093/bioinformatics/btad470](https://doi.org/10.1093/bioinformatics/btad470)

@@ -28,6 +28,10 @@ are unchanged provenance artifacts.
 The Figure S16 checkpoint is `ko00311__F2_1year.csv`, corresponding to the
 F2-PND365 cohort used for that figure.
 
+These checkpoints derive from R-based ggpicrust2 and KEGG processing [@r-core; @ggpicrust2; @kegg].
+
 ## References
 
-These checkpoints derive from R-based ggpicrust2 and KEGG processing [@r-core; @ggpicrust2; @kegg]. Complete entries are in [`bibliography.bib`](../../../bibliography.bib).
+- <a id="ref-kegg"></a>Kanehisa, M., & Goto, S. (2000). KEGG: Kyoto Encyclopedia of Genes and Genomes. *Nucleic Acids Research, 28*(1), 27–30. [https://doi.org/10.1093/nar/28.1.27](https://doi.org/10.1093/nar/28.1.27)
+- <a id="ref-r-core"></a>R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing. [https://doi.org/10.32614/R.manuals](https://doi.org/10.32614/R.manuals)
+- <a id="ref-ggpicrust2"></a>Yang, C., Mai, J., Cao, X., Burberry, A., Cominelli, F., & Zhang, L. (2023). ggpicrust2: An R package for PICRUSt2 predicted functional profile analysis and visualization. *Bioinformatics, 39*(8), btad470. [https://doi.org/10.1093/bioinformatics/btad470](https://doi.org/10.1093/bioinformatics/btad470)

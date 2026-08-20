@@ -105,6 +105,11 @@ Figure S16 uses the F2-PND365
 
 Figure 6 panels A-C read only the two canonical `kegg_ortholog_abundance.tsv` files. The scripts normalize the pipeline's `ko:K#####` identifiers to the `K#####` form expected by `ggpicrust2::ko2kegg_abundance()` in memory; the source files remain unchanged. The EC, MetaCyc, weighted-NSTI, and `_legacy_ko2.tsv` files are not used for Figure 6. See [`figures/README.md`](../../figures/README.md) for the panel-to-source and panel-to-script mapping.
 
+Functional predictions and downstream analyses use PICRUSt2, ggpicrust2, ALDEx2, and KEGG [@picrust2; @ggpicrust2; @aldex2; @kegg].
+
 ## References
 
-Functional predictions and downstream analyses use PICRUSt2, ggpicrust2, ALDEx2, and KEGG [@picrust2; @ggpicrust2; @aldex2; @kegg]. Complete entries are in [`bibliography.bib`](../../bibliography.bib).
+- <a id="ref-picrust2"></a>Douglas, G. M., Maffei, V. J., Zaneveld, J. R., Yurgel, S. N., Brown, J. R., Taylor, C. M., Huttenhower, C., & Langille, M. G. I. (2020). PICRUSt2 for prediction of metagenome functions. *Nature Biotechnology, 38*(6), 685–688. [https://doi.org/10.1038/s41587-020-0548-6](https://doi.org/10.1038/s41587-020-0548-6)
+- <a id="ref-aldex2"></a>Fernandes, A. D., Reid, J. N. S., Macklaim, J. M., McMurrough, T. A., Edgell, D. R., & Gloor, G. B. (2014). Unifying the analysis of high-throughput sequencing datasets: Characterizing RNA-seq, 16S rRNA gene sequencing and selective growth experiments by compositional data analysis. *Microbiome, 2*, 15. [https://doi.org/10.1186/2049-2618-2-15](https://doi.org/10.1186/2049-2618-2-15)
+- <a id="ref-kegg"></a>Kanehisa, M., & Goto, S. (2000). KEGG: Kyoto Encyclopedia of Genes and Genomes. *Nucleic Acids Research, 28*(1), 27–30. [https://doi.org/10.1093/nar/28.1.27](https://doi.org/10.1093/nar/28.1.27)
+- <a id="ref-ggpicrust2"></a>Yang, C., Mai, J., Cao, X., Burberry, A., Cominelli, F., & Zhang, L. (2023). ggpicrust2: An R package for PICRUSt2 predicted functional profile analysis and visualization. *Bioinformatics, 39*(8), btad470. [https://doi.org/10.1093/bioinformatics/btad470](https://doi.org/10.1093/bioinformatics/btad470)

@@ -25,6 +25,10 @@ The preprocessing script refuses a local reference whose MD5 differs from the va
 
 The Zenodo record states that this v1 reference has known label problems affecting 3 of 895 families and 59 of 3,936 genera. The affected labels are listed in the linked [`bad-taxa.csv`](https://github.com/mikemc/dada2-reference-databases/blob/main/silva-138.1/v1/bad-taxa.csv). Version 138.1 is retained because it is the study reference; do not silently substitute a newer SILVA release. Record any deliberate reference update as a new analysis version.
 
+The reference database, formatted dataset, and classifier are cited as SILVA, the Zenodo 138.1 DADA2 dataset, and DADA2 [@silva; @silva-dada2-138-1; @dada2].
+
 ## References
 
-The reference database, formatted dataset, and classifier are cited as SILVA, the Zenodo 138.1 DADA2 dataset, and DADA2 [@silva; @silva-dada2-138-1; @dada2]. Complete entries are in [`bibliography.bib`](../../bibliography.bib).
+- <a id="ref-dada2"></a>Callahan, B. J., McMurdie, P. J., Rosen, M. J., Han, A. W., Johnson, A. J. A., & Holmes, S. P. (2016). DADA2: High-resolution sample inference from Illumina amplicon data. *Nature Methods, 13*(7), 581–583. [https://doi.org/10.1038/nmeth.3869](https://doi.org/10.1038/nmeth.3869)
+- <a id="ref-silva-dada2-138-1"></a>McLaren, M. R., & Callahan, B. J. (2021). *Silva 138.1 prokaryotic SSU taxonomic training data formatted for DADA2* (Version 1) [Data set]. Zenodo. [https://doi.org/10.5281/zenodo.4587955](https://doi.org/10.5281/zenodo.4587955)
+- <a id="ref-silva"></a>Quast, C., Pruesse, E., Yilmaz, P., Gerken, J., Schweer, T., Yarza, P., Peplies, J., & Glöckner, F. O. (2013). The SILVA ribosomal RNA gene database project: Improved data processing and web-based tools. *Nucleic Acids Research, 41*(D1), D590–D596. [https://doi.org/10.1093/nar/gks1219](https://doi.org/10.1093/nar/gks1219)

@@ -146,6 +146,22 @@ filenames should be normalized to this convention once the figure number and
 panel mapping are confirmed. Scientific cohort conflicts must be documented
 and resolved rather than hidden by renaming an artifact.
 
-## References and license
+## License
 
-Documentation citations use Pandoc-style keys whose complete BibTeX records are stored in [`bibliography.bib`](bibliography.bib). Cite the associated manuscript when it becomes available, together with the software, databases, and datasets used by the relevant workflow. The repository is distributed under the [`LICENSE`](LICENSE) file.
+The repository is distributed under the [`LICENSE`](LICENSE) file.
+
+## References
+
+- <a id="ref-aldex2"></a>Fernandes, A. D., Reid, J. N. S., Macklaim, J. M., McMurrough, T. A., Edgell, D. R., & Gloor, G. B. (2014). Unifying the analysis of high-throughput sequencing datasets: Characterizing RNA-seq, 16S rRNA gene sequencing and selective growth experiments by compositional data analysis. *Microbiome, 2*, 15. [https://doi.org/10.1186/2049-2618-2-15](https://doi.org/10.1186/2049-2618-2-15)
+- <a id="ref-rlang"></a>Henry, L., & Wickham, H. (2026). *rlang: Functions for base types and core R and Tidyverse features* (Version 1.3.0) [R package]. [https://doi.org/10.32614/CRAN.package.rlang](https://doi.org/10.32614/CRAN.package.rlang)
+- <a id="ref-kegg"></a>Kanehisa, M., & Goto, S. (2000). KEGG: Kyoto Encyclopedia of Genes and Genomes. *Nucleic Acids Research, 28*(1), 27–30. [https://doi.org/10.1093/nar/28.1.27](https://doi.org/10.1093/nar/28.1.27)
+- <a id="ref-ggpubr"></a>Kassambara, A., & Erdey, L. (2026). *ggpubr: ggplot2 based publication ready plots* [R package]. [https://doi.org/10.32614/CRAN.package.ggpubr](https://doi.org/10.32614/CRAN.package.ggpubr)
+- <a id="ref-rstatix"></a>Kassambara, A. (2026). *rstatix: Pipe-friendly framework for basic statistical tests* [R package]. [https://doi.org/10.32614/CRAN.package.rstatix](https://doi.org/10.32614/CRAN.package.rstatix)
+- <a id="ref-sra"></a>Leinonen, R., Sugawara, H., Shumway, M., & International Nucleotide Sequence Database Collaboration. (2011). The Sequence Read Archive. *Nucleic Acids Research, 39*(Database issue), D19–D21. [https://doi.org/10.1093/nar/gkq1019](https://doi.org/10.1093/nar/gkq1019)
+- <a id="ref-patchwork"></a>Pedersen, T. L. (2026). *patchwork: The composer of plots* [R package]. [https://doi.org/10.32614/CRAN.package.patchwork](https://doi.org/10.32614/CRAN.package.patchwork)
+- <a id="ref-scales"></a>Posit Software, PBC. (2026). *scales: Scale functions for visualization* [R package]. [https://doi.org/10.32614/CRAN.package.scales](https://doi.org/10.32614/CRAN.package.scales)
+- <a id="ref-r-core"></a>R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing. [https://doi.org/10.32614/R.manuals](https://doi.org/10.32614/R.manuals)
+- <a id="ref-ggpicrust2"></a>Yang, C., Mai, J., Cao, X., Burberry, A., Cominelli, F., & Zhang, L. (2023). ggpicrust2: An R package for PICRUSt2 predicted functional profile analysis and visualization. *Bioinformatics, 39*(8), btad470. [https://doi.org/10.1093/bioinformatics/btad470](https://doi.org/10.1093/bioinformatics/btad470)
+- <a id="ref-dplyr"></a>Wickham, H., François, R., Henry, L., Müller, K., & Vaughan, D. (2026). *dplyr: A grammar of data manipulation* (Version 1.2.1) [R package]. [https://doi.org/10.32614/CRAN.package.dplyr](https://doi.org/10.32614/CRAN.package.dplyr)
+- <a id="ref-ggplot2"></a>Wickham, H. (2016). *ggplot2: Elegant graphics for data analysis* (2nd ed.). Springer. [https://doi.org/10.1007/978-3-319-24277-4](https://doi.org/10.1007/978-3-319-24277-4)
+- <a id="ref-tidyverse"></a>Wickham, H., Averick, M., Bryan, J., et al. (2019). Welcome to the Tidyverse. *Journal of Open Source Software, 4*(43), 1686. [https://doi.org/10.21105/joss.01686](https://doi.org/10.21105/joss.01686)

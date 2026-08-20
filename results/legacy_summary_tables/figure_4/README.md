@@ -14,6 +14,8 @@ These unchanged `Signif_*.csv` tables preserve the significant-taxon lists and t
 
 The checkpoints are consumed by [`validate_figure_4.R`](../../../figures/Figure_4/validate_figure_4.R). Canonical runtime inputs are documented in the main [`figures/README.md`](../../../figures/README.md).
 
+The portable validator uses R [@r-core].
+
 ## References
 
-The portable validator uses R [@r-core]. The complete entry is in [`bibliography.bib`](../../../bibliography.bib).
+- <a id="ref-r-core"></a>R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing. [https://doi.org/10.32614/R.manuals](https://doi.org/10.32614/R.manuals)

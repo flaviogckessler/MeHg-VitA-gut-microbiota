@@ -12,6 +12,9 @@ The tables are canonical numerical inputs for main Figure 3 panels D-G
 The Figure S1 workflow records the unmatched batch 02 row `t3` but excludes it
 from analysis because no canonical metadata row was supplied.
 
+These R-derived microbiome summaries retain provenance to R and phyloseq [@r-core; @phyloseq].
+
 ## References
 
-These R-derived microbiome summaries retain provenance to R and phyloseq [@r-core; @phyloseq]. Complete entries are in [`bibliography.bib`](../../bibliography.bib).
+- <a id="ref-phyloseq"></a>McMurdie, P. J., & Holmes, S. (2013). phyloseq: An R package for reproducible interactive analysis and graphics of microbiome census data. *PLOS ONE, 8*(4), e61217. [https://doi.org/10.1371/journal.pone.0061217](https://doi.org/10.1371/journal.pone.0061217)
+- <a id="ref-r-core"></a>R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing. [https://doi.org/10.32614/R.manuals](https://doi.org/10.32614/R.manuals)

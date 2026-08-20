@@ -5,6 +5,9 @@
 
 Each table contains taxonomic descriptors in rows and sample-level relative abundances in columns. These files are the canonical repository locations used at runtime; figure workflows select the required taxa and join sample identifiers to the canonical manifests in [`data/metadata/`](../../data/metadata/).
 
+The historical microbiome processing provenance uses R and phyloseq [@r-core; @phyloseq].
+
 ## References
 
-The historical microbiome processing provenance uses R and phyloseq [@r-core; @phyloseq]. Complete entries are in [`bibliography.bib`](../../bibliography.bib).
+- <a id="ref-phyloseq"></a>McMurdie, P. J., & Holmes, S. (2013). phyloseq: An R package for reproducible interactive analysis and graphics of microbiome census data. *PLOS ONE, 8*(4), e61217. [https://doi.org/10.1371/journal.pone.0061217](https://doi.org/10.1371/journal.pone.0061217)
+- <a id="ref-r-core"></a>R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing. [https://doi.org/10.32614/R.manuals](https://doi.org/10.32614/R.manuals)

@@ -25,6 +25,8 @@ Raw reads are not stored in this repository. They have been deposited in the NCB
 
 The records are currently on hold and will be made public upon publication of the manuscript. `sra_data_availability.csv` provides these batch-level ranges in machine-readable form. It does not infer individual sample-to-BioSample assignments.
 
+The raw-read repository is the NCBI Sequence Read Archive [@sra].
+
 ## References
 
-The raw-read repository is the NCBI Sequence Read Archive [@sra]. The complete entry is in [`bibliography.bib`](../../bibliography.bib).
+- <a id="ref-sra"></a>Leinonen, R., Sugawara, H., Shumway, M., & International Nucleotide Sequence Database Collaboration. (2011). The Sequence Read Archive. *Nucleic Acids Research, 39*(Database issue), D19–D21. [https://doi.org/10.1093/nar/gkq1019](https://doi.org/10.1093/nar/gkq1019)

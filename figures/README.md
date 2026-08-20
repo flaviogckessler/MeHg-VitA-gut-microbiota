@@ -122,4 +122,16 @@
 
 ## References
 
-Complete entries for all citation keys used in this guide are in [`bibliography.bib`](../bibliography.bib).
+- <a id="ref-aldex2"></a>Fernandes, A. D., Reid, J. N. S., Macklaim, J. M., McMurrough, T. A., Edgell, D. R., & Gloor, G. B. (2014). Unifying the analysis of high-throughput sequencing datasets: Characterizing RNA-seq, 16S rRNA gene sequencing and selective growth experiments by compositional data analysis. *Microbiome, 2*, 15. [https://doi.org/10.1186/2049-2618-2-15](https://doi.org/10.1186/2049-2618-2-15)
+- <a id="ref-graphpad-prism"></a>GraphPad Software. (2026). *GraphPad Prism* [Computer software; repository source files record Prism 8.0.1]. [https://www.graphpad.com/](https://www.graphpad.com/)
+- <a id="ref-rlang"></a>Henry, L., & Wickham, H. (2026). *rlang: Functions for base types and core R and Tidyverse features* (Version 1.3.0) [R package]. [https://doi.org/10.32614/CRAN.package.rlang](https://doi.org/10.32614/CRAN.package.rlang)
+- <a id="ref-kegg"></a>Kanehisa, M., & Goto, S. (2000). KEGG: Kyoto Encyclopedia of Genes and Genomes. *Nucleic Acids Research, 28*(1), 27–30. [https://doi.org/10.1093/nar/28.1.27](https://doi.org/10.1093/nar/28.1.27)
+- <a id="ref-ggpubr"></a>Kassambara, A., & Erdey, L. (2026). *ggpubr: ggplot2 based publication ready plots* [R package]. [https://doi.org/10.32614/CRAN.package.ggpubr](https://doi.org/10.32614/CRAN.package.ggpubr)
+- <a id="ref-rstatix"></a>Kassambara, A. (2026). *rstatix: Pipe-friendly framework for basic statistical tests* [R package]. [https://doi.org/10.32614/CRAN.package.rstatix](https://doi.org/10.32614/CRAN.package.rstatix)
+- <a id="ref-microsoft-powerpoint"></a>Microsoft Corporation. (2026). *Microsoft PowerPoint* [Computer software]. [https://www.microsoft.com/microsoft-365/powerpoint](https://www.microsoft.com/microsoft-365/powerpoint)
+- <a id="ref-patchwork"></a>Pedersen, T. L. (2026). *patchwork: The composer of plots* [R package]. [https://doi.org/10.32614/CRAN.package.patchwork](https://doi.org/10.32614/CRAN.package.patchwork)
+- <a id="ref-scales"></a>Posit Software, PBC. (2026). *scales: Scale functions for visualization* [R package]. [https://doi.org/10.32614/CRAN.package.scales](https://doi.org/10.32614/CRAN.package.scales)
+- <a id="ref-r-core"></a>R Core Team. (2026). *R: A language and environment for statistical computing*. R Foundation for Statistical Computing. [https://doi.org/10.32614/R.manuals](https://doi.org/10.32614/R.manuals)
+- <a id="ref-ggpicrust2"></a>Yang, C., Mai, J., Cao, X., Burberry, A., Cominelli, F., & Zhang, L. (2023). ggpicrust2: An R package for PICRUSt2 predicted functional profile analysis and visualization. *Bioinformatics, 39*(8), btad470. [https://doi.org/10.1093/bioinformatics/btad470](https://doi.org/10.1093/bioinformatics/btad470)
+- <a id="ref-ggplot2"></a>Wickham, H. (2016). *ggplot2: Elegant graphics for data analysis* (2nd ed.). Springer. [https://doi.org/10.1007/978-3-319-24277-4](https://doi.org/10.1007/978-3-319-24277-4)
+- <a id="ref-tidyverse"></a>Wickham, H., Averick, M., Bryan, J., et al. (2019). Welcome to the Tidyverse. *Journal of Open Source Software, 4*(43), 1686. [https://doi.org/10.21105/joss.01686](https://doi.org/10.21105/joss.01686)
