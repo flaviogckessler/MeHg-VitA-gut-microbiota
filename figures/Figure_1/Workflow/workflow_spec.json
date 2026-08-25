@@ -12,21 +12,21 @@
     "parser": "R package jsonlite (fromJSON with simplifyVector = FALSE)",
     "schema_validator": "JSON Schema draft 2020-12; tests use PowerShell Test-Json and R uses jsonvalidate when available",
     "rasterizer": "Node.js sharp: the canonical SVG is rasterized at the journal profile dimensions and density",
-    "freshness_manifest": "figures/Workflow/output/Analysis_Workflow_generated.build.json",
+    "freshness_manifest": "figures/Figure_1/Workflow/output/Analysis_Workflow_generated.build.json",
     "outputs": [
       {
         "format": "svg",
-        "path": "figures/Workflow/output/Analysis_Workflow_generated.svg"
+        "path": "figures/Figure_1/Workflow/output/Analysis_Workflow_generated.svg"
       },
       {
         "format": "png",
-        "path": "figures/Workflow/output/Analysis_Workflow_generated.png"
+        "path": "figures/Figure_1/Workflow/output/Analysis_Workflow_generated.png"
       }
     ],
     "supporting_artifacts": [
       {
         "format": "markdown",
-        "path": "figures/Workflow/output/Analysis_Workflow_alt_text.md"
+        "path": "figures/Figure_1/Workflow/output/Analysis_Workflow_alt_text.md"
       }
     ]
   },

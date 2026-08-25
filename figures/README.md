@@ -12,7 +12,7 @@
 
 | Figure | Software or required R packages | Analysis N |
 |---|---|---|
-| 1 | Microsoft PowerPoint [@microsoft-powerpoint]; no R packages | Not applicable: this is an experimental-design schematic and its source deck does not encode per-group N. |
+| 1 | Panel A: Microsoft PowerPoint; panel B: R with `jsonlite` and Node.js with `sharp` (plus `jsonvalidate` when available); final composite: Adobe Photoshop [@microsoft-powerpoint; @r-core; @adobe-photoshop] | Not applicable: this is an experimental-design and bioinformatics-workflow schematic, and its source files do not encode per-group N. |
 | 2 | GraphPad Prism [@graphpad-prism]; no R packages | Endpoint-specific N is transcribed below from the non-empty, non-excluded Prism values. |
 | 3 | `tidyverse`, `scales`, `rstatix`, and `ggpubr` [@tidyverse; @ggplot2; @scales; @rstatix; @ggpubr; @rlang; @r-core] | A: 52; B: 24; C: 24; D/H: 18; E/I: 34; F/J: 24; G/K: 24. |
 | 4 | Base-R `graphics`, `grDevices`, and `stats` [@r-core] | A: 18; B: 34 (18 female, 16 male); C: 24 (12/sex); D: 24 (12/sex). |
@@ -26,8 +26,10 @@
 
 ### Figure 1
 
-- Source: [`Figure_1/Experimental_Procedures.pptx`](Figure_1/Experimental_Procedures.pptx).
-- Generation: the full figure was prepared in Microsoft PowerPoint and exported as [`Experimental_Procedures.png`](Figure_1/Experimental_Procedures.png).
+- Panel A is sourced from [`Figure_1/Experimental_Procedures.pptx`](Figure_1/Experimental_Procedures.pptx) and exported as [`Experimental_Procedures.png`](Figure_1/Experimental_Procedures.png).
+- Panel B is generated from the machine-readable [`workflow_spec.json`](Figure_1/Workflow/workflow_spec.json) by [`generate_analysis_workflow.R`](Figure_1/Workflow/generate_analysis_workflow.R). Its canonical standalone outputs are an accessible [`SVG`](Figure_1/Workflow/output/Analysis_Workflow_generated.svg) and matching [`PNG`](Figure_1/Workflow/output/Analysis_Workflow_generated.png); the text alternative is retained in [`Analysis_Workflow_alt_text.md`](Figure_1/Workflow/output/Analysis_Workflow_alt_text.md).
+- [`Figure_1_FinalFigure.png`](Figure_1/Workflow/output/Figure_1_FinalFigure.png) is the current final figure, assembled manually in Adobe Photoshop from panels A and B. The generator does not overwrite or recreate this composite.
+- Standalone validation helpers for the workflow panel remain local-only as described in the output policy; the specification, schema, generator, rasterizer, canonical panel outputs, and final composite remain with Figure 1.
 
 ### Figure 2
 
@@ -124,6 +126,7 @@
 
 ## References
 
+- <a id="ref-adobe-photoshop"></a>Adobe Inc. (2026). *Adobe Photoshop* [Computer software]. [https://www.adobe.com/products/photoshop.html](https://www.adobe.com/products/photoshop.html)
 - <a id="ref-aldex2"></a>Fernandes, A. D., Reid, J. N. S., Macklaim, J. M., McMurrough, T. A., Edgell, D. R., & Gloor, G. B. (2014). Unifying the analysis of high-throughput sequencing datasets: Characterizing RNA-seq, 16S rRNA gene sequencing and selective growth experiments by compositional data analysis. *Microbiome, 2*, 15. [https://doi.org/10.1186/2049-2618-2-15](https://doi.org/10.1186/2049-2618-2-15)
 - <a id="ref-graphpad-prism"></a>GraphPad Software. (2026). *GraphPad Prism* [Computer software; repository source files record Prism 8.0.1]. [https://www.graphpad.com/](https://www.graphpad.com/)
 - <a id="ref-rlang"></a>Henry, L., & Wickham, H. (2026). *rlang: Functions for base types and core R and Tidyverse features* (Version 1.3.0) [R package]. [https://doi.org/10.32614/CRAN.package.rlang](https://doi.org/10.32614/CRAN.package.rlang)

@@ -8,10 +8,10 @@ locate_workflow_directory <- function() {
     script_path <- sub("^--file=", "", file_argument[[1L]])
     return(dirname(normalizePath(script_path, winslash = "/", mustWork = TRUE)))
   }
-  candidates <- c(file.path(getwd(), "figures", "Workflow"), getwd())
+  candidates <- c(file.path(getwd(), "figures", "Figure_1", "Workflow"), getwd())
   matches <- candidates[file.exists(file.path(candidates, "workflow_spec_lib.R"))]
   if (length(matches) == 0L) {
-    stop("Could not locate figures/Workflow/workflow_spec_lib.R.", call. = FALSE)
+    stop("Could not locate figures/Figure_1/Workflow/workflow_spec_lib.R.", call. = FALSE)
   }
   normalizePath(matches[[1L]], winslash = "/", mustWork = TRUE)
 }

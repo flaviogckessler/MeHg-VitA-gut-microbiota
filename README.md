@@ -22,7 +22,9 @@ Sex, generation, treatment, sequencing batch, analysis inclusion, and data-depos
 
 ## Analysis workflow
 
-[![Bioinformatics analysis workflow](figures/Workflow/output/Analysis_Workflow_generated.svg)](figures/Workflow/output/Analysis_Workflow_generated.png)
+[![Figure 1: experimental design and bioinformatics analysis workflow](figures/Figure_1/Workflow/output/Figure_1_FinalFigure.png)](figures/Figure_1/Workflow/output/Figure_1_FinalFigure.png)
+
+Figure 1 combines the experimental design and sampling timeline (panel A) with the repository-wide bioinformatics workflow (panel B). The final two-panel figure was assembled manually in Adobe Photoshop from the PowerPoint experimental-procedures export and the generated workflow PNG [@microsoft-powerpoint; @adobe-photoshop].
 
 The workflow begins with the manually defined 2 × 2 exposure design and F0–F2 cohorts. Two external 16S rRNA gene amplicon-sequencing batches are processed with DADA2, assigned SILVA 138.1 taxonomy, and combined with curated metadata to create analysis-ready ASV counts, taxonomy, and representative sequences.
 
@@ -31,7 +33,7 @@ From the analysis-ready data, the repository separates the analyses into two par
 - **Taxonomic ecology:** community composition, alpha diversity, differential-taxon testing, and the *Dorea*–mercury association produce Figures 3–4, 5D, and S1–S5. Figure S6 is a manual qualitative derivative of these taxonomic results.
 - **Predicted functional profiles:** PICRUSt2 predicted KO/EC/MetaCyc profiles support parallel KO PCA, differential testing of predicted KEGG pathway profiles, KO heatmap and KEGG-map interpretation, and targeted predicted mercury-related ortholog analyses. These outputs map to Figures 6–8, S7–S16, and S18. Behavioral Figure S17 is outside this workflow.
 
-Card labels and border patterns distinguish scripted, reconstructed, hybrid, and manual steps. The scientific DAG, wording, evidence status, execution status, visual mapping, and figure-output mappings are available in the machine-readable [`workflow_spec.json`](figures/Workflow/workflow_spec.json); an accessible text description is provided in [`Analysis_Workflow_alt_text.md`](figures/Workflow/output/Analysis_Workflow_alt_text.md). The rendering entry point and rasterizer are retained as implementation references, while the standalone validator and shared validation-helper source files are intentionally retained only in local working copies for now and excluded from version control. Consequently, end-to-end regeneration currently requires those local companion files.
+Card labels and border patterns distinguish scripted, reconstructed, hybrid, and manual steps. The scientific DAG, wording, evidence status, execution status, visual mapping, and figure-output mappings are available in the machine-readable [`workflow_spec.json`](figures/Figure_1/Workflow/workflow_spec.json); an accessible text description is provided in [`Analysis_Workflow_alt_text.md`](figures/Figure_1/Workflow/output/Analysis_Workflow_alt_text.md). The rendering entry point and rasterizer are retained as implementation references, while the standalone validator and shared validation-helper source files are intentionally retained only in local working copies for now and excluded from version control. Consequently, end-to-end regeneration currently requires those local companion files.
 
 ## Repository status
 
@@ -54,7 +56,7 @@ This repository is under active reproducibility curation.
 | [`data/reference/`](data/reference/) | Small, versioned reference objects required by portable analysis workflows. |
 | [`data/external/`](data/external/) | Download and checksum documentation plus the ignored local location for the SILVA 138.1 DADA2 reference FASTAs. |
 | [`figures/`](figures/) | Main-figure workflows and lightweight generated outputs. |
-| [`figures/Workflow/`](figures/Workflow/) | Machine-readable analysis-workflow specification plus the canonical SVG, matching PNG, accessibility text, schema, and rendering sources. |
+| [`figures/Figure_1/`](figures/Figure_1/) | Figure 1 experimental-design source, generated workflow panel and specification, accessibility text, and manually assembled final composite. |
 | [`results/`](results/) | Alpha-diversity and taxon-abundance tables, functional-prediction exports, and legacy summary tables. |
 | [`scripts/`](scripts/) | Maintained preprocessing and functional-analysis workflows plus documented historical provenance. |
 | [`scripts/legacy_scripts/`](scripts/legacy_scripts/) | Unchanged legacy references already mapped to portable figure and PICRUSt2 workflows. |

@@ -39,9 +39,9 @@ supplementary_figures/**/output/*_generated.tiff
 **/validate_*.R
 **/validate_*.py
 **/validate_*.ps1
-figures/Workflow/tests/
-figures/Workflow/workflow_spec_lib.R
-figures/Workflow/.staging/
+figures/Figure_1/Workflow/tests/
+figures/Figure_1/Workflow/workflow_spec_lib.R
+figures/Figure_1/Workflow/.staging/
 
 # Temporary and log files
 *.tmp
