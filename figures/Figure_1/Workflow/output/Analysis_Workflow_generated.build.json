@@ -1,13 +1,13 @@
 {
-  "specification_sha256": "7d2bacab9ec2b6de0d0a5536352bcb37e3b2492e76867f2b1fe266a70e50be9f",
+  "specification_sha256": "05a76276c06c7f1f564106afe1aaf690169192d1253817f041e14420f7f54cf1",
   "schema_sha256": "e07d194a6dc96331aa78246886b008ebed869fb400c68eab2303db310b5476de",
   "generator_sha256": "839f9c3847e45d4f2243e73d938628cef5230af65d2253af711cff9a932047d3",
   "validation_library_sha256": "9f368c6dc6a3c3bb21de0e979d5d8bb2dffaa58e8ecdd1d8a224550f24cca861",
   "rasterizer_sha256": "8743e90d718760c4fb08add38fd8cbde0b507a39f7aed4fb723659df5213ae2f",
   "rendered_validator_sha256": "d1997aaf6514c310e80e391737b3ac93ce3280004f2c584c072b86a812682c35",
   "generator_version": "3.3.0",
-  "repository_commit": "94302e337aaa7ed96b8de205524931fa9f143f35",
-  "generated_at_utc": "2026-08-25T12:50:27Z",
+  "repository_commit": "60b879206ab0736bca8fb719b383f49f715bf3da",
+  "generated_at_utc": "2026-08-25T14:39:49Z",
   "profiles": [
     {
       "id": "github_overview",

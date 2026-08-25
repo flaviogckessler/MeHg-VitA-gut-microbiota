@@ -1,6 +1,7 @@
 #Source: https://ycl6.github.io/16S-Demo/index.html
 
-setwd("/home/lab32/Área de Trabalho/Alberto_mestrado/")
+# Historical workstation path removed for privacy; run from the project root.
+setwd(".")
 
 library("data.table")
 library("phyloseq")

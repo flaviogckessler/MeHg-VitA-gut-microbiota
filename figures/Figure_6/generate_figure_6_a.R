@@ -1,5 +1,5 @@
 # Reproducible KO-only generator for Figure 6 panel A (F1, PND21).
-# The historical reference is scripts/legacy_scripts/Picrust_mestrado_Alberto.R;
+# The historical reference is scripts/legacy_scripts/picrust_legacy.R;
 # it is retained for provenance and is not sourced at runtime.
 
 # Load Packages ----

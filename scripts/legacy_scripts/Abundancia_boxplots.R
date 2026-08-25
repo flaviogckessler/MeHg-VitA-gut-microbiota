@@ -39,7 +39,7 @@ group_level <- c("CN", "VitA", "MeHg", "VitA+MeHg")
 sex_level <- c("Female","Male")
 phyla_level <- c('Firmicutes','Bacteroidota','Proteobacteria','Actinobacteriota','Campylobacterota','Desulfobacterota','Verrucomicrobiota','Patescibacteria')
 ###########################################################################################################
-metadata_1year <- read.csv("C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Alberto_Hg/Data_metadata/metadata.csv")
+metadata_1year <- read.csv(file.path("data", "metadata", "legacy", "metadata.csv"))
 rownames(metadata_1year) <- metadata_1year$sampleID
 
 abund_relative_1year <- read_delim("outfiles/expr.relative_abundance.all.txt", delim = "\t")
@@ -134,8 +134,8 @@ rm(x, x_meta)
 write.csv(abund_taxons, file = "images/AbundanciasTaxons_1year.csv")
 #####################################################################################
 # ************************************************************************************* #
-abund_taxons_offs <- read_delim("C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Alberto_Hg/Data_metadata/AbundanciasTaxons_Todos.csv", delim = ",")
-metadata_offs <- read_delim("C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Alberto_Hg/Data_metadata/Metadata_mehg.csv", delim = ";")
+abund_taxons_offs <- read_delim(file.path("data", "metadata", "legacy", "AbundanciasTaxons_Todos.csv"), delim = ",")
+metadata_offs <- read_delim(file.path("data", "metadata", "legacy", "Metadata_mehg.csv"), delim = ";")
 
 x <- abund_taxons_offs %>% filter(tax_rank != "s")
 x <- dplyr::select(x, -taxon_id, -tax_rank, -tax_name,-Num)

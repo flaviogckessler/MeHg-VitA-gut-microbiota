@@ -480,7 +480,7 @@
           "figures/Figure_6/generate_figure_6_a.R",
           "figures/Figure_6/generate_figure_6_b.R",
           "figures/Figure_6/generate_figure_6_c.R",
-          "scripts/legacy_scripts/Picrust_mestrado_Alberto.R",
+          "scripts/legacy_scripts/picrust_legacy.R",
           "data/reference/ggpicrust2/README.md"
         ]
       },

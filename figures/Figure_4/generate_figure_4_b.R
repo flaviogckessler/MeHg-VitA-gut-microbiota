@@ -1,5 +1,5 @@
 # Reproducible refactor of
-# scripts/legacy_scripts/Heatmap_Zscore_MestradoAlberto.R.
+# scripts/legacy_scripts/heatmap_zscore_legacy.R.
 # Panel B: significant taxon relative abundances in F1 offspring at PND21.
 # Shared base-R input, statistical, and heatmap helpers are kept in the copied
 # panel-A workflow so that Figure 4 has exactly one generation script per panel.

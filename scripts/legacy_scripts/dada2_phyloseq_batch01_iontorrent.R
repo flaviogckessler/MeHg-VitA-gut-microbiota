@@ -12,7 +12,7 @@ library("phyloseq")
 library("Biostrings")
 ######Dada2#######
 
-path <- "C:\\Users\\flavi\\OneDrive\\Documentos\\R_Microbiota\\fastq"
+path <- file.path("data", "external", "fastq", "batch01")
 
 seqs <- sort(list.files(path, full.names = TRUE))
 
@@ -138,7 +138,7 @@ View(teste)
 
 names(teste)[names(teste) == 'taxonomy'] <- 'lineage'
 
-write.csv(teste,"output/Flavio_MeHg_HCPA.csv")
+write.csv(teste, file.path("output", "batch01_phyloseq_export.csv"))
 
 library("ape")
 random_tree = rtree(ntaxa(ps), rooted=TRUE, tip.label=taxa_names(ps))

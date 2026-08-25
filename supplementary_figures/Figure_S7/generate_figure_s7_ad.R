@@ -4,7 +4,7 @@
 # Dams (F0), F1-PND21, F1-PND365, and F2-PND365. The supplied
 # Figure_S7_FinalFigure.png was assembled manually; this script generates the
 # four individual PNG panels used in that layout. The historical workflow is
-# preserved in scripts/legacy_scripts/Picrust_mestrado_Alberto.R and is not
+# preserved in scripts/legacy_scripts/picrust_legacy.R and is not
 # sourced at runtime.
 
 # Load Packages ----

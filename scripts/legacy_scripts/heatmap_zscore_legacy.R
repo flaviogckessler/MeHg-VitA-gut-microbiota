@@ -16,8 +16,8 @@ taxons_offs <- read_delim("images/AbundanciasTaxons_Todos.csv", delim = ",")
 taxons_1year <- read_delim("images/AbundanciasTaxons_1year.csv", delim = ",")
 
 # Metadata
-metadata_offs <- read_delim("C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Alberto_Hg/Data_metadata/Metadata_mehg.csv", delim = ";")
-metadata_1year <- read_delim("C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Alberto_Hg/Data_metadata/metadata.csv", delim = ",")
+metadata_offs <- read_delim(file.path("data", "metadata", "legacy", "Metadata_mehg.csv"), delim = ";")
+metadata_1year <- read_delim(file.path("data", "metadata", "legacy", "metadata.csv"), delim = ",")
 rownames(metadata_offs) <- metadata_offs$SampleID
 rownames(metadata_1year) <- metadata_1year$sampleID
 ###########################################################################################################

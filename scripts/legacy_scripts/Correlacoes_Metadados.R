@@ -77,7 +77,7 @@ correlation.table <- associate(y,x, method = "spearman", mode = "table",
                                p.adj.threshold = 0.05, n.signif = 1,filter.self.correlations = TRUE)
 correlation.table <- filter(correlation.table, p.adj <= 0.05)
 
-#write.csv(correlation.table, file= "C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Pedrotti/correlacoes_metadados-metadados_Pedrotti.csv")
+#write.csv(correlation.table, file = file.path("output", "correlations_metadata.csv"))
 #correlation.table <- filter(correlation.table, Correlation > 0.3)
 kable(head(correlation.table))
 

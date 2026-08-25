@@ -2,7 +2,7 @@
 
 These 19 CSV files are the unchanged exports copied from the historical
 `calculate_ZScore_KO2kegg()` workflow in
-[`Picrust_mestrado_Alberto.R`](../../../scripts/legacy_scripts/Picrust_mestrado_Alberto.R).
+[`picrust_legacy.R`](../../../scripts/legacy_scripts/picrust_legacy.R).
 They preserve the KO-level treatment z-scores used for the Figure 7, Figure 8,
 and Figure S8-S16 heatmaps.
 

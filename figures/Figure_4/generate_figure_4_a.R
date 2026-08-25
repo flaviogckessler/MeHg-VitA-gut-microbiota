@@ -1,5 +1,5 @@
 # Reproducible refactor of
-# scripts/legacy_scripts/Heatmap_Zscore_MestradoAlberto.R.
+# scripts/legacy_scripts/heatmap_zscore_legacy.R.
 # Panel A: significant taxon relative abundances in dams (F0).
 #
 # The legacy script is retained for provenance and is not a runtime dependency.

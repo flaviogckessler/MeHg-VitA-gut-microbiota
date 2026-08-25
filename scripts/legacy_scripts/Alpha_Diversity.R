@@ -10,17 +10,17 @@ sex_level <- c("Female","Male")
 phyla_level <- c('Firmicutes','Bacteroidota','Proteobacteria','Actinobacteriota','Campylobacterota','Desulfobacterota','Verrucomicrobiota','Patescibacteria')
 ###########################################################################################################
 # F0 and F1 PND21
-metadata <- read.csv("C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Alberto_Hg/Data_metadata/Metadata_mehg.csv")
+metadata <- read.csv(file.path("data", "metadata", "legacy", "Metadata_mehg.csv"))
 rownames(metadata) <- metadata$SampleID
 
-alpha1<- read_csv("C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Alberto_Hg/Data_metadata/Alpha_filtered_Metadata_F0F1.csv")
+alpha1<- read_csv(file.path("data", "metadata", "legacy", "Alpha_filtered_Metadata_F0F1.csv"))
 rownames(alpha1) <- alpha1$SampleID
 
 # 1 year
-metadata <- read.csv("C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Alberto_Hg/Data_metadata/metadata.csv")
+metadata <- read.csv(file.path("data", "metadata", "legacy", "metadata.csv"))
 rownames(metadata) <- metadata$sampleID
 
-alpha<- read_csv("C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Alberto_Hg/Data_metadata/alpha_diversity.csv")
+alpha<- read_csv(file.path("data", "metadata", "legacy", "alpha_diversity.csv"))
 rownames(alpha) <- alpha$sampleID
 ###############################################
 #alpha_f0 <- subset(alpha1,Geracao == "F0")

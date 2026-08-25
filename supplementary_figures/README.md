@@ -43,7 +43,7 @@ Figure S2 contains three individual Dams (F0) relative-abundance boxplots. Panel
 
 All panels use a four-group Kruskal-Wallis test followed by all six pairwise Dunn tests with Benjamini-Hochberg FDR adjustment. Only adjusted comparisons at or below 0.05 are annotated. This deliberately nonparametric workflow reproduces the tests and labels in the historical source panels; it does not choose a method from a normality test.
 
-[`generate_figure_s2_abc.R`](Figure_S2/generate_figure_s2_abc.R) uses the shared [`figure_s2_s5_abundance_common.R`](figure_s2_s5_abundance_common.R) workflow and generates the three individual 600 x 500 PNGs [`FigureS2A_generated.png`](Figure_S2/output/FigureS2A_generated.png), [`FigureS2B_generated.png`](Figure_S2/output/FigureS2B_generated.png), and [`FigureS2C_generated.png`](Figure_S2/output/FigureS2C_generated.png). It does not assemble the publication layout. The supplied [`Figure_S2_FinalFigure.png`](Figure_S2/output/Figure_S2_FinalFigure.png) was assembled manually in Adobe Photoshop and is retained only as a visual reference. The three original 600 x 500 TIFF panel exports were inspected from the archived `Alberto/images/Abundancias/NONparametric/Dams_F0_NONparametric/` directory; the portable workflow creates PNG files only.
+[`generate_figure_s2_abc.R`](Figure_S2/generate_figure_s2_abc.R) uses the shared [`figure_s2_s5_abundance_common.R`](figure_s2_s5_abundance_common.R) workflow and generates the three individual 600 x 500 PNGs [`FigureS2A_generated.png`](Figure_S2/output/FigureS2A_generated.png), [`FigureS2B_generated.png`](Figure_S2/output/FigureS2B_generated.png), and [`FigureS2C_generated.png`](Figure_S2/output/FigureS2C_generated.png). It does not assemble the publication layout. The supplied [`Figure_S2_FinalFigure.png`](Figure_S2/output/Figure_S2_FinalFigure.png) was assembled manually in Adobe Photoshop and is retained only as a visual reference. The three original 600 x 500 TIFF panel exports were inspected from a private archived analysis directory; the portable workflow creates PNG files only.
 
 Generate all three panels from the repository root:
 
@@ -159,6 +159,7 @@ During curation, a local-only end-to-end validator regenerated every panel in a 
 ## Figure S17
 
 -   Source: [`Figure_S17_SourceData.pzfx`](Figure_S17_SourceData.pzfx).
+-   The GraphPad Prism login field was redacted for privacy; scientific content, software/version provenance, and non-personal timestamps are retained.
 -   Generation: the full figure was generated in GraphPad Prism and exported as [`Figure_S17.png`](Figure_S17.png).
 -   N values below are transcribed from non-empty Prism values and are shown as male/female:
 

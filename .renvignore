@@ -1,0 +1,13 @@
+# Archival scripts are provenance records, not maintained runtime dependencies.
+scripts/legacy_scripts/
+
+# Generated products and data do not contain R dependency declarations.
+data/
+results/
+figures/**/output/
+supplementary_figures/**/output/
+
+# Local-only validation and staging helpers.
+**/validate_*.R
+figures/Figure_1/Workflow/tests/
+figures/Figure_1/Workflow/.staging/

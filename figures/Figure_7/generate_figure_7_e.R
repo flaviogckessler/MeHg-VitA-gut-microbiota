@@ -1,7 +1,7 @@
 # Reproducible Figure 7 panel E: KO z-score heatmap for KEGG map00310.
 #
 # This is a portable base-R refactor of the heatmap.2() workflow near line 981
-# of scripts/legacy_scripts/Picrust_mestrado_Alberto.R. The legacy script is
+# of scripts/legacy_scripts/picrust_legacy.R. The legacy script is
 # retained for provenance and is not a runtime dependency. Panel E reads the
 # clean F1-PND21/map00310 table generated from canonical PICRUSt2 KO abundance
 # by scripts/04_functional_prediction/generate_kegg_pathway_ko_z_scores.R.

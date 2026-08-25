@@ -2,7 +2,7 @@
 # Figure 7, Figure 8, and Figure S8-S16 heatmaps.
 #
 # This is a portable replacement for calculate_ZScore_KO2kegg() and
-# write_KOs_ZScore() in scripts/legacy_scripts/Picrust_mestrado_Alberto.R.
+# write_KOs_ZScore() in scripts/legacy_scripts/picrust_legacy.R.
 # It uses only canonical PICRUSt2 KO predictions, the canonical sample manifest,
 # and the offline KEGG membership reference installed with ggpicrust2. Legacy CSV
 # exports are not read here; they are used only by the separate validator.

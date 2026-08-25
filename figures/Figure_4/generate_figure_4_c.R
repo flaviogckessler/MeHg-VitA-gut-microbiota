@@ -1,5 +1,5 @@
 # Reproducible refactor of
-# scripts/legacy_scripts/Heatmap_Zscore_MestradoAlberto.R.
+# scripts/legacy_scripts/heatmap_zscore_legacy.R.
 # Panel C: significant taxon relative abundances in F1 offspring at PND365.
 
 # Load Packages ----

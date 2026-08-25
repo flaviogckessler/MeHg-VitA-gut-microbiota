@@ -24,9 +24,9 @@ Sex, generation, treatment, sequencing batch, analysis inclusion, and data-depos
 
 [![Bioinformatics analyses workflow](figures/Figure_1/Workflow/output/Analysis_Workflow_generated.png)](figures/Figure_1/Workflow/output/Analysis_Workflow_generated.png)
 
-The documentation displays only the repository-wide bioinformatics analyses workflow. The final two-panel Figure 1 composite, which also includes the experimental design and sampling timeline, is reserved for use in the manuscript. It can be regenerated with [`assemble_final_figure.js`](figures/Figure_1/assemble_final_figure.js) and is intentionally not retained in the repository.
+The documentation displays only the repository-wide bioinformatics analyses workflow. The two-panel Figure 1 composite, which also includes the experimental design and sampling timeline, is a manuscript-preparation artifact. It can be regenerated with [`assemble_final_figure.js`](figures/Figure_1/assemble_final_figure.js), is retained under the Figure 1 workflow outputs, and is not embedded in this documentation.
 
-**AI-generated figure disclosure:** The bioinformatics analyses workflow figure shown above was generated using generative AI and reviewed by the authors for scientific accuracy.
+**AI-generated figure disclosure:** The bioinformatics analyses workflow figure shown above was generated using generative AI and reviewed by the authors for scientific accuracy. It is a text-based flowchart without AI-generated illustrative or photographic content. [Springer Nature's current AI guidance](https://group.springernature.com/gp/group/ai/ai-guidance-for-our-researchers-and-communities) states that text-based flowcharts without images fall outside its generative-image restriction, but the authors should disclose the use and confirm the target journal's current instructions before submission.
 
 The workflow begins with the manually defined 2 × 2 exposure design and F0–F2 cohorts. Two external 16S rRNA gene amplicon-sequencing batches are processed with DADA2, assigned SILVA 138.1 taxonomy, and combined with curated metadata to create analysis-ready ASV counts, taxonomy, and representative sequences.
 
@@ -46,7 +46,7 @@ This repository is under active reproducibility curation.
 - Figure S3 generated panels and final composite use the same authoritative treatment order and colors as the other abundance panels: `CN` (`#98F5FF`), `VitA` (`#B3EE3A`), `MeHg` (`#CD2626`), and `VitA+MeHg` (`#4D4D4D`).
 - Figure S6 is a manual, qualitative synthesis made by visually reviewing the current Figure 5 and Figures S2-S5 composites. Its interpretive construction and reproducibility boundary are documented in the [`supplementary-figure guide`](supplementary_figures/README.md#figure-s6); it is not presented as the output of a statistical or scripted workflow.
 - The PICRUSt2 terminal workflow, exact batch-specific inputs, analysis-ready outputs, and weighted-NSTI quality metrics have been harmonized and validated against the supplied pipeline products. Figure 6 uses only the canonical KO predictions and canonical sample manifest.
-- Historical scripts cited by the provenance documentation are isolated under [`scripts/legacy_scripts/`](scripts/legacy_scripts/) and preserved unchanged. Unreferenced exploratory scripts and placeholder-only directories were removed during the repository-wide review.
+- Historical scripts cited by the provenance documentation are isolated under [`scripts/legacy_scripts/`](scripts/legacy_scripts/). Privacy-sanitized copies preserve the analytical commands while replacing personal names, workstation paths, and user-specific output names. Unreferenced exploratory scripts and placeholder-only directories were removed during the repository-wide review.
 
 ## Repository structure
 
@@ -58,10 +58,10 @@ This repository is under active reproducibility curation.
 | [`data/reference/`](data/reference/) | Small, versioned reference objects required by portable analysis workflows. |
 | [`data/external/`](data/external/) | Download and checksum documentation plus the ignored local location for the SILVA 138.1 DADA2 reference FASTAs. |
 | [`figures/`](figures/) | Main-figure workflows and lightweight generated outputs. |
-| [`figures/Figure_1/`](figures/Figure_1/) | Figure 1 experimental-design source, AI-generated documentation workflow and specification, accessibility text, and the assembly script for the untracked manuscript-only composite. |
+| [`figures/Figure_1/`](figures/Figure_1/) | Figure 1 experimental-design source, AI-generated documentation workflow and specification, accessibility text, assembly script, and retained manuscript-preparation composite. |
 | [`results/`](results/) | Alpha-diversity and taxon-abundance tables, functional-prediction exports, and legacy summary tables. |
 | [`scripts/`](scripts/) | Maintained preprocessing and functional-analysis workflows plus documented historical provenance. |
-| [`scripts/legacy_scripts/`](scripts/legacy_scripts/) | Unchanged legacy references already mapped to portable figure and PICRUSt2 workflows. |
+| [`scripts/legacy_scripts/`](scripts/legacy_scripts/) | Privacy-sanitized legacy references already mapped to portable figure and PICRUSt2 workflows. |
 | [`supplementary_figures/`](supplementary_figures/) | Supplementary-figure workflows, retained composites, and generated panel outputs. |
 | [`bibliography.bib`](bibliography.bib) | Shared bibliography for software, databases, and analysis methods cited throughout the documentation. |
 
@@ -104,11 +104,13 @@ and resolved rather than hidden by renaming an artifact.
 
 ## License
 
-The repository is distributed under the [`LICENSE`](LICENSE) file.
+Source code and documentation are distributed under the [MIT License](LICENSE). Original data, metadata, and figures contained in this repository are licensed under the [Creative Commons Attribution 4.0 International License](LICENSE-DATA-FIGURES.md), except where a file or directory identifies different terms. Third-party content remains subject to its original license, and the CC BY 4.0 grant applies only to material the repository authors are entitled to license.
 
 ## Quick start
 
 Start R from the repository root and try one of these three representative examples:
+
+To restore the recorded R environment first, install `renv` if necessary and run `renv::restore()` from the repository root. The lockfile covers maintained R workflows; archival scripts under `scripts/legacy_scripts/` are intentionally excluded.
 
 1. Generate Figure 3 panels A–C (taxonomic ecology):
 
@@ -136,6 +138,8 @@ Package requirements, preprocessing instructions, and the complete set of genera
 ## AI use disclosure
 
 Generative AI tools were used to assist with repository documentation, code review and refactoring, and reproducibility checks. All AI-assisted content and code were reviewed and validated by the authors, who retain full responsibility for the repository and its scientific conclusions. Generative AI was not used to generate the experimental data.
+
+For a Springer Nature submission, substantive generative-AI use should be declared in the manuscript's Methods, Introduction, or Acknowledgements as required by the target journal. Its [current AI guidance](https://group.springernature.com/gp/group/ai/ai-guidance-for-our-researchers-and-communities) generally restricts AI-generated images but excludes text-based flowcharts without images; journal-specific instructions and any editor guidance should be checked at submission. Springer Nature's [research-data release guidance](https://support.springernature.com/en/support/solutions/articles/6000237623-release-of-research-data-ahead-of-manuscript-publication) says that public release of research data is generally not treated as prior publication, but the selected journal's Instructions for Authors remain controlling.
 
 ## References
 

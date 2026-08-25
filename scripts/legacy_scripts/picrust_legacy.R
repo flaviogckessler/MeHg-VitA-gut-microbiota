@@ -25,8 +25,8 @@ library(ALDEx2)
 #BiocManager::install("Maaslin2")
 library(Maaslin2)
 
-load(file = "C://Users//flavi//AppData//Local//R//win-library//4.2//ggpicrust2//extdata//kegg_reference.RData")
-load(file = "C://Users//flavi//AppData//Local//R//win-library//4.2//ggpicrust2//extdata//KO_mest_reference.RData")
+load(file = system.file("extdata", "kegg_reference.RData", package = "ggpicrust2"))
+load(file = system.file("extdata", "KO_mest_reference.RData", package = "ggpicrust2"))
 
 rownames(KO_mest_to_kegg_reference) <- KO_mest_to_kegg_reference$X1
 l<-KO_mest_to_kegg_reference["KO_mest00010",]
@@ -601,7 +601,7 @@ write_KOs_ZScore <- function(z_list,
 ######################################################################################################
 # ************************************* Load Picrust files ***************************************** #
 ######## KOs ##############
-path <- "C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Alberto_Hg/Data_metadata/picrust/"
+path <- paste0(file.path("results", "legacy", "functional_prediction"), .Platform$file.sep)
 # Mestrado: Dams e F1-PND21
 KO_mest <- read_delim(paste(path,"Results_mestrado/KO2_PND21_Dams.tsv",sep = ""), delim = "\t")
 KO_mest_ID <- KO_mest$ID
@@ -620,7 +620,7 @@ row.names(EC)<-EC_ID
 
 #########################################################################################################
 # **************************************** Load metadata file ***************************************** #
-path <- "C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Alberto_Hg/Data_metadata/"
+path <- paste0(file.path("data", "metadata", "legacy"), .Platform$file.sep)
 # Mestrado: Dams e F1-PND21
 metadata_mest <- read_delim(paste(path,"Metadata_mehg.csv",sep = ""), delim = ";")
 rownames(metadata_mest) <- metadata_mest$sampleID
@@ -747,7 +747,7 @@ rm(pcdat)
 # ******************************************** Picrust ************************************************ #
 
 ######## KOs ##############
-path <- "C:/Users/flavi/OneDrive/Documentos/R_Microbiota/Alberto_Hg/Data_metadata/picrust/"
+path <- paste0(file.path("results", "legacy", "functional_prediction"), .Platform$file.sep)
 # Mestrado: Dams e F1-PND21
 KO_mest <- read_delim(paste(path,"Results_mestrado/KO2_PND21_Dams.tsv",sep = ""), delim = "\t")
 KO_mest_ID <- KO_mest$ID
