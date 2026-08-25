@@ -168,7 +168,7 @@
         "rerun_status": "not_applicable",
         "status": "complete",
         "visual_class": "manual",
-        "manual_boundary": "The study design and cohort definitions were predetermined by the research project and supplied by the author as authoritative contextual information; they are not reconstructed analysis outputs."
+        "manual_boundary": "The study design and cohort definitions were predetermined by the research project and supplied by the author as authoritative contextual information; they are not restructured analysis outputs."
       },
       "evidence": {
         "status": "manual_authoritative",
@@ -184,20 +184,20 @@
       "id": "sequencing",
       "lane_id": "core_processing",
       "node_type": "data_generation",
-      "display_label": "16S rRNA gene amplicon sequencing",
+      "display_label": "Sample preparation and 16S rRNA gene amplicon sequencing",
       "short_lines": [
-        "16S rRNA gene",
+        "Sample preparation",
         "Ion Torrent",
         "Illumina MiSeq"
       ],
       "inputs": ["intestinal_microbiota_samples"],
       "outputs": ["demultiplexed_fastq_reads"],
       "execution": {
-        "automation_level": "external",
-        "rerun_status": "not_rerun",
-        "status": "conditional",
-        "visual_class": "validated_reconstructed",
-        "manual_boundary": "Raw sequencing was performed outside the maintained analysis-code workflow."
+        "automation_level": "manual",
+        "rerun_status": "not_applicable",
+        "status": "complete",
+        "visual_class": "manual",
+        "manual_boundary": "Sample preparation and sequencing were performed manually outside the maintained analysis-code workflow."
       },
       "evidence": {
         "status": "documented",
@@ -411,8 +411,8 @@
         "automation_level": "scripted_with_manual_steps",
         "rerun_status": "validated_against_archived",
         "status": "conditional",
-        "visual_class": "validated_reconstructed",
-        "manual_boundary": "The terminal workflow is reconstructed; retained predicted profiles are the authoritative numerical products."
+        "visual_class": "validated_restructured",
+        "manual_boundary": "The terminal workflow is restructured; retained predicted profiles are the authoritative numerical products."
       },
       "evidence": {
         "status": "verified",
@@ -571,9 +571,9 @@
       "id": "manual_taxonomic_synthesis",
       "lane_id": "taxonomic_ecology",
       "node_type": "manual_taxonomic_derivative",
-      "display_label": "Manual taxonomic synthesis",
+      "display_label": "Manual qualitative analysis",
       "short_lines": [
-        "Visual synthesis",
+        "Qualitative review",
         "No new statistics",
         "Figure S6"
       ],
@@ -715,7 +715,7 @@
     },
     "execution_styles": [
       {"id": "fully_scripted", "display_label": "Fully scripted", "card_label": "SCRIPTED", "stroke_dasharray": null, "stroke_width": 3},
-      {"id": "validated_reconstructed", "display_label": "Validated archive / reconstruction", "card_label": "RECONSTRUCTED", "stroke_dasharray": "12 7", "stroke_width": 3},
+      {"id": "validated_restructured", "display_label": "Validated archive / restructuring", "card_label": "RESTRUCTURED", "stroke_dasharray": "12 7", "stroke_width": 3},
       {"id": "hybrid", "display_label": "Hybrid scripted + curated/manual", "card_label": "HYBRID", "stroke_dasharray": "14 5 3 5", "stroke_width": 3},
       {"id": "manual", "display_label": "Manual derivative", "card_label": "MANUAL", "stroke_dasharray": "3 7", "stroke_width": 4}
     ],
@@ -953,7 +953,7 @@
     "accessibility": {
       "title_id": "workflow_title",
       "desc_id": "workflow_description",
-      "alt_text": "Workflow for a 2 × 2 vitamin A and methylmercury study. Sequential 16S rRNA gene sequencing, DADA2 processing, SILVA taxonomy, and data curation lead to two parallel lanes: taxonomic ecology and PICRUSt2 predicted functional profiles. PICRUSt2 feeds four independent analyses, including KO PCA, predicted KEGG pathway testing, scripted KO heatmaps with manual map coloring and composites, and predicted mercury-related orthologs. Border patterns identify scripted, reconstructed, hybrid, and manual steps.",
+      "alt_text": "Workflow for a 2 × 2 vitamin A and methylmercury study. Sequential sample preparation, 16S rRNA gene sequencing, DADA2 processing, SILVA taxonomy, and data curation lead to two parallel lanes: taxonomic ecology and PICRUSt2 predicted functional profiles. PICRUSt2 feeds four independent analyses, including KO PCA, predicted KEGG pathway testing, scripted KO heatmaps with manual map coloring and composites, and predicted mercury-related orthologs. Border patterns identify scripted, restructured, hybrid, and manual steps.",
       "do_not_use_color_alone": true,
       "minimum_body_text_pt": 8.5,
       "minimum_contrast_ratio": 4.5,
@@ -968,11 +968,11 @@
       "id": "figure6_dependency_versions",
       "status": "resolved",
       "decision_date": "2026-08-20",
-      "decision": "Use ggpicrust2 2.0.0 and ALDEx2 1.28.1 as the reconstructed historical Figure 6 dependencies; record R 4.2.x, likely R 4.2.1, as contextual runtime evidence.",
+      "decision": "Use ggpicrust2 2.0.0 and ALDEx2 1.28.1 as the restructured historical Figure 6 dependencies; record R 4.2.x, likely R 4.2.1, as contextual runtime evidence.",
       "rationale": "The unchanged legacy script loads ggpicrust2 resources from the same user's R 4.2 library. The surviving package DESCRIPTION metadata identify ggpicrust2 2.0.0 and ALDEx2 1.28.1, and both installations predate the retained final Figure 6. The repository-local KEGG reference independently matches ggpicrust2 2.0.0.",
       "implementation": [
         "Document ggpicrust2 2.0.0 and ALDEx2 1.28.1 in the Figure 6 and functional-prediction provenance documentation.",
-        "Use these versions for future exact-environment reconstruction of the Figure 6 pathway analysis.",
+        "Use these versions for future exact-environment restructuring of the Figure 6 pathway analysis.",
         "Retain the raw, package-adjusted, and author-sixfold p-value fields defined by the maintained workflow.",
         "Record that no historical sessionInfo(), lockfile, or GitHub commit SHA survives, so the versions are inferred from the surviving local environment rather than cryptographically locked.",
         "Leave the legacy script and statistical analysis code unchanged."
@@ -1015,12 +1015,25 @@
       "id": "study_design_author_provided_context",
       "status": "resolved",
       "decision_date": "2026-08-20",
-      "decision": "Classify the study design and cohort definitions as manual, author-provided contextual information rather than a reconstructed workflow step.",
-      "rationale": "The exposure design and cohort structure were predetermined by the research project and supplied by the author for repository documentation; they were not inferred or reconstructed from downstream analysis artifacts.",
+      "decision": "Classify the study design and cohort definitions as manual, author-provided contextual information rather than a restructured workflow step.",
+      "rationale": "The exposure design and cohort structure were predetermined by the research project and supplied by the author for repository documentation; they were not inferred or restructured from downstream analysis artifacts.",
       "implementation": [
         "Set the study-design node automation level and visual class to manual.",
         "Record its evidence as an authoritative manual author record supported by the repository metadata and experimental-procedures figure.",
         "Render the study-design card with the manual label and border pattern."
+      ],
+      "expected_numerical_effect": "None. This is a provenance and visual-classification correction only."
+    },
+    {
+      "id": "sample_preparation_and_sequencing_manual_classification",
+      "status": "resolved",
+      "decision_date": "2026-08-25",
+      "decision": "Classify sample preparation and 16S rRNA gene amplicon sequencing as a manual workflow step.",
+      "rationale": "Sample preparation and sequencing were performed as experimental procedures outside the maintained bioinformatics code workflow; the card therefore represents an authoritative manual step rather than a restructured analysis step.",
+      "implementation": [
+        "Expand the sequencing card title to include sample preparation.",
+        "Set the node automation level and visual class to manual.",
+        "Render the card with the manual label and border pattern."
       ],
       "expected_numerical_effect": "None. This is a provenance and visual-classification correction only."
     }

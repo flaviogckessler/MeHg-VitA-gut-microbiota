@@ -1,8 +1,8 @@
 # DADA2 preprocessing for the two 16S rRNA sequencing batches.
 #
 # The raw/source sequencing reads are deposited in the NCBI Sequence Read
-# Archive (SRA), BioProject PRJNA1489663. They are not distributed here and
-# are currently on hold pending public release with the manuscript.
+# Archive (SRA), BioProject PRJNA1489663. They are publicly available but are
+# not distributed in this repository.
 #
 # Run this script from the repository root with Rscript. Set:
 #   DADA2_BATCH_ID   one batch identifier listed below
@@ -135,8 +135,8 @@ if (!nzchar(raw_fastq_dir) || !dir.exists(raw_fastq_dir)) {
   stop(
     "Raw FASTQ files are not distributed in this repository. The source ",
     "sequencing reads are deposited in NCBI SRA under BioProject ",
-    sra_bioproject, ". After public release, set RAW_FASTQ_DIR to the ",
-    "directory containing the demultiplexed FASTQ files.",
+    sra_bioproject, ". Download and demultiplex the public reads, verify their ",
+    "sample assignments, and set RAW_FASTQ_DIR to the resulting directory.",
     call. = FALSE
   )
 }

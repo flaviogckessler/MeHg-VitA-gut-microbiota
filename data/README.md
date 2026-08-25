@@ -24,11 +24,11 @@ The batch 02 processed count table contains `t3`, although `t3` is absent from t
 
 ## Raw-sequence availability
 
-Raw sequencing data generated during this study have been deposited in the NCBI Sequence Read Archive under [BioProject PRJNA1489663](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1489663). BioSample accessions are `SAMN61406324`–`SAMN61406377` for Dams_F0 and F1-PND21 and `SAMN61407672`–`SAMN61407719` for F1-PND365 and F2-PND365. The records are currently on hold and will be released publicly upon publication of the manuscript.
+Raw sequencing data generated during this study are publicly available in the NCBI Sequence Read Archive under [BioProject PRJNA1489663](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1489663). BioSample accessions are `SAMN61406324`–`SAMN61406377` for Dams_F0 and F1-PND21 and `SAMN61407672`–`SAMN61407719` for F1-PND365 and F2-PND365.
 
 The accession ranges are also recorded in `metadata/sra_data_availability.csv`. No one-to-one sample-to-BioSample mapping is asserted because that mapping was not supplied.
 
-For sequence reprocessing after public release, download the FASTQ files outside the repository and follow the [`scripts/01_sequence_processing/` guide](../scripts/01_sequence_processing/README.md). Set `DADA2_BATCH_ID` and `RAW_FASTQ_DIR` before running `scripts/01_sequence_processing/preprocess_16s.R`. The script does not assume or create a repository-local raw-data directory, and it writes reviewed reruns below the selected processed batch without overwriting archived canonical products.
+For sequence reprocessing, download the public FASTQ files outside the repository, verify the accession-to-`sample_id` mapping against the public NCBI metadata, and follow the [`scripts/01_sequence_processing/` guide](../scripts/01_sequence_processing/README.md). Set `DADA2_BATCH_ID` and `RAW_FASTQ_DIR` before running `scripts/01_sequence_processing/preprocess_16s.R`. The script does not assume or create a repository-local raw-data directory, and it writes reviewed reruns below the selected processed batch without overwriting archived canonical products.
 
 The historical [`scripts/00_setup/organize_data.ps1`](../scripts/00_setup/organize_data.ps1) utility documents the initial curation process. Portable analyses should use the canonical files already organized under `data/` and `results/` rather than rebuilding them through the historical import workflow.
 

@@ -12,7 +12,7 @@
 
 | Figure | Software or required R packages | Analysis N |
 |---|---|---|
-| 1 | Panel A: Microsoft PowerPoint; panel B: R with `jsonlite` and Node.js with `sharp` (plus `jsonvalidate` when available); final composite: Adobe Photoshop [@microsoft-powerpoint; @r-core; @adobe-photoshop] | Not applicable: this is an experimental-design and bioinformatics-workflow schematic, and its source files do not encode per-group N. |
+| 1 | Panel A: Microsoft PowerPoint; panel B: R with `jsonlite` and Node.js with `sharp` (plus `jsonvalidate` when available); final-composite assembly: Node.js with `sharp` [@microsoft-powerpoint; @r-core] | Not applicable: this is an experimental-design and bioinformatics-workflow schematic, and its source files do not encode per-group N. |
 | 2 | GraphPad Prism [@graphpad-prism]; no R packages | Endpoint-specific N is transcribed below from the non-empty, non-excluded Prism values. |
 | 3 | `tidyverse`, `scales`, `rstatix`, and `ggpubr` [@tidyverse; @ggplot2; @scales; @rstatix; @ggpubr; @rlang; @r-core] | A: 52; B: 24; C: 24; D/H: 18; E/I: 34; F/J: 24; G/K: 24. |
 | 4 | Base-R `graphics`, `grDevices`, and `stats` [@r-core] | A: 18; B: 34 (18 female, 16 male); C: 24 (12/sex); D: 24 (12/sex). |
@@ -28,8 +28,9 @@
 
 - Panel A is sourced from [`Figure_1/Experimental_Procedures.pptx`](Figure_1/Experimental_Procedures.pptx) and exported as [`Experimental_Procedures.png`](Figure_1/Experimental_Procedures.png).
 - Panel B is generated from the machine-readable [`workflow_spec.json`](Figure_1/Workflow/workflow_spec.json) by [`generate_analysis_workflow.R`](Figure_1/Workflow/generate_analysis_workflow.R). Its canonical standalone outputs are an accessible [`SVG`](Figure_1/Workflow/output/Analysis_Workflow_generated.svg) and matching [`PNG`](Figure_1/Workflow/output/Analysis_Workflow_generated.png); the text alternative is retained in [`Analysis_Workflow_alt_text.md`](Figure_1/Workflow/output/Analysis_Workflow_alt_text.md).
-- [`Figure_1_FinalFigure.png`](Figure_1/Workflow/output/Figure_1_FinalFigure.png) is the current final figure, assembled manually in Adobe Photoshop from panels A and B. The generator does not overwrite or recreate this composite.
-- Standalone validation helpers for the workflow panel remain local-only as described in the output policy; the specification, schema, generator, rasterizer, canonical panel outputs, and final composite remain with Figure 1.
+- [`assemble_final_figure.js`](Figure_1/assemble_final_figure.js) reproducibly assembles panel A above panel B, adds the panel labels, and writes the manuscript-only `Figure_1_FinalFigure.png`. From the repository root, run `node figures/Figure_1/assemble_final_figure.js`; the optional first argument sets another output path, and the optional second argument supplies the `sharp` module path.
+- The generated final composite is intentionally ignored and not retained in the repository. The standalone workflow is the only Figure 1 image embedded in the main documentation.
+- Standalone validation helpers for the workflow panel remain local-only as described in the output policy; the specification, schema, generator, rasterizer, canonical panel outputs, and final-figure assembly script remain with Figure 1.
 
 ### Figure 2
 

@@ -221,7 +221,7 @@
           "enum": ["ready", "conditional", "complete", "blocked", "not_applicable"]
         },
         "visual_class": {
-          "enum": ["fully_scripted", "validated_reconstructed", "hybrid", "manual"]
+          "enum": ["fully_scripted", "validated_restructured", "hybrid", "manual"]
         },
         "manual_boundary": {
           "type": ["string", "null"],
@@ -384,7 +384,7 @@
             "additionalProperties": false,
             "required": ["id", "display_label", "card_label", "stroke_dasharray", "stroke_width"],
             "properties": {
-              "id": { "enum": ["fully_scripted", "validated_reconstructed", "hybrid", "manual"] },
+              "id": { "enum": ["fully_scripted", "validated_restructured", "hybrid", "manual"] },
               "display_label": { "$ref": "#/$defs/nonEmptyString" },
               "card_label": { "$ref": "#/$defs/nonEmptyString" },
               "stroke_dasharray": { "type": ["string", "null"] },

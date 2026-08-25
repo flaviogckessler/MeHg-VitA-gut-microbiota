@@ -22,9 +22,11 @@ Sex, generation, treatment, sequencing batch, analysis inclusion, and data-depos
 
 ## Analysis workflow
 
-[![Figure 1: experimental design and bioinformatics analysis workflow](figures/Figure_1/Workflow/output/Figure_1_FinalFigure.png)](figures/Figure_1/Workflow/output/Figure_1_FinalFigure.png)
+[![Bioinformatics analyses workflow](figures/Figure_1/Workflow/output/Analysis_Workflow_generated.png)](figures/Figure_1/Workflow/output/Analysis_Workflow_generated.png)
 
-Figure 1 combines the experimental design and sampling timeline (panel A) with the repository-wide bioinformatics workflow (panel B). The final two-panel figure was assembled manually in Adobe Photoshop from the PowerPoint experimental-procedures export and the generated workflow PNG [@microsoft-powerpoint; @adobe-photoshop].
+The documentation displays only the repository-wide bioinformatics analyses workflow. The final two-panel Figure 1 composite, which also includes the experimental design and sampling timeline, is reserved for use in the manuscript. It can be regenerated with [`assemble_final_figure.js`](figures/Figure_1/assemble_final_figure.js) and is intentionally not retained in the repository.
+
+**AI-generated figure disclosure:** The bioinformatics analyses workflow figure shown above was generated using generative AI and reviewed by the authors for scientific accuracy.
 
 The workflow begins with the manually defined 2 × 2 exposure design and F0–F2 cohorts. Two external 16S rRNA gene amplicon-sequencing batches are processed with DADA2, assigned SILVA 138.1 taxonomy, and combined with curated metadata to create analysis-ready ASV counts, taxonomy, and representative sequences.
 
@@ -33,13 +35,13 @@ From the analysis-ready data, the repository separates the analyses into two par
 - **Taxonomic ecology:** community composition, alpha diversity, differential-taxon testing, and the *Dorea*–mercury association produce Figures 3–4, 5D, and S1–S5. Figure S6 is a manual qualitative derivative of these taxonomic results.
 - **Predicted functional profiles:** PICRUSt2 predicted KO/EC/MetaCyc profiles support parallel KO PCA, differential testing of predicted KEGG pathway profiles, KO heatmap and KEGG-map interpretation, and targeted predicted mercury-related ortholog analyses. These outputs map to Figures 6–8, S7–S16, and S18. Behavioral Figure S17 is outside this workflow.
 
-Card labels and border patterns distinguish scripted, reconstructed, hybrid, and manual steps. The scientific DAG, wording, evidence status, execution status, visual mapping, and figure-output mappings are available in the machine-readable [`workflow_spec.json`](figures/Figure_1/Workflow/workflow_spec.json); an accessible text description is provided in [`Analysis_Workflow_alt_text.md`](figures/Figure_1/Workflow/output/Analysis_Workflow_alt_text.md). The rendering entry point and rasterizer are retained as implementation references, while the standalone validator and shared validation-helper source files are intentionally retained only in local working copies for now and excluded from version control. Consequently, end-to-end regeneration currently requires those local companion files.
+Card labels and border patterns distinguish scripted, restructured, hybrid, and manual steps. The scientific DAG, wording, evidence status, execution status, visual mapping, and figure-output mappings are available in the machine-readable [`workflow_spec.json`](figures/Figure_1/Workflow/workflow_spec.json); an accessible text description is provided in [`Analysis_Workflow_alt_text.md`](figures/Figure_1/Workflow/output/Analysis_Workflow_alt_text.md). The rendering entry point and rasterizer are retained as implementation references, while the standalone validator and shared validation-helper source files are intentionally retained only in local working copies for now and excluded from version control. Consequently, end-to-end regeneration currently requires those local companion files.
 
 ## Repository status
 
 This repository is under active reproducibility curation.
 
-- The two batch-specific FASTQ workflows have been consolidated into a portable, linear [`DADA2 preprocessing script`](scripts/01_sequence_processing/preprocess_16s.R). Its configuration, versioned SILVA 138.1 Zenodo references, archived-data contracts, and batch-specific output serializers have been validated without raw reads. A full rerun and automatic comparison with the archived products remain pending public SRA release and an accession-to-sample mapping.
+- The two batch-specific FASTQ workflows have been consolidated into a portable, linear [`DADA2 preprocessing script`](scripts/01_sequence_processing/preprocess_16s.R). Its configuration, versioned SILVA 138.1 Zenodo references, archived-data contracts, and batch-specific output serializers have been validated without raw reads. The raw reads are now publicly available; a full rerun and automatic comparison with the archived products remain pending download and verification of the accession-to-`sample_id` mapping.
 - Figure 3 panels A-K, Figure 4 panels A-D, Figure 5 panel D, Figure 6 panels A-C, Figure S1 panels A-H, all 75 taxon-abundance panels in Figures S2-S5, panels E of Figures 7 and 8, and all ten KO z-score heatmaps in Figures S8-S16 have portable, tested workflows. The 19 KO-level source tables shared by Figures 7, 8, and S8-S16 also have a portable, regression-tested generator. Their KEGG pathway panels remain retained manual exports prepared with the generated z-score tables as the coloring reference; supplied final composites are retained for visual validation.
 - Figure S3 generated panels and final composite use the same authoritative treatment order and colors as the other abundance panels: `CN` (`#98F5FF`), `VitA` (`#B3EE3A`), `MeHg` (`#CD2626`), and `VitA+MeHg` (`#4D4D4D`).
 - Figure S6 is a manual, qualitative synthesis made by visually reviewing the current Figure 5 and Figures S2-S5 composites. Its interpretive construction and reproducibility boundary are documented in the [`supplementary-figure guide`](supplementary_figures/README.md#figure-s6); it is not presented as the output of a statistical or scripted workflow.
@@ -56,7 +58,7 @@ This repository is under active reproducibility curation.
 | [`data/reference/`](data/reference/) | Small, versioned reference objects required by portable analysis workflows. |
 | [`data/external/`](data/external/) | Download and checksum documentation plus the ignored local location for the SILVA 138.1 DADA2 reference FASTAs. |
 | [`figures/`](figures/) | Main-figure workflows and lightweight generated outputs. |
-| [`figures/Figure_1/`](figures/Figure_1/) | Figure 1 experimental-design source, generated workflow panel and specification, accessibility text, and manually assembled final composite. |
+| [`figures/Figure_1/`](figures/Figure_1/) | Figure 1 experimental-design source, AI-generated documentation workflow and specification, accessibility text, and the assembly script for the untracked manuscript-only composite. |
 | [`results/`](results/) | Alpha-diversity and taxon-abundance tables, functional-prediction exports, and legacy summary tables. |
 | [`scripts/`](scripts/) | Maintained preprocessing and functional-analysis workflows plus documented historical provenance. |
 | [`scripts/legacy_scripts/`](scripts/legacy_scripts/) | Unchanged legacy references already mapped to portable figure and PICRUSt2 workflows. |
@@ -64,58 +66,6 @@ This repository is under active reproducibility curation.
 | [`bibliography.bib`](bibliography.bib) | Shared bibliography for software, databases, and analysis methods cited throughout the documentation. |
 
 Canonical data and metadata are stored once under `data/`. Figure scripts should read these files directly rather than duplicate them within figure directories.
-
-## Quick start
-
-Sequence preprocessing is documented in the [`16S preprocessing guide`](scripts/01_sequence_processing/README.md). Raw source sequencing data are deposited in the SRA and are not distributed here; after downloading the DOI-pinned SILVA references and after SRA release, each batch is processed by setting `DADA2_BATCH_ID` and `RAW_FASTQ_DIR` and running `Rscript scripts/01_sequence_processing/preprocess_16s.R`. With the retained local validator companion present, validation-only mode checks the script, canonical manifests, archived processed-data contracts, reference configuration, and any downloaded reference checksums without FASTQ data. A full run automatically compares the generated batch-specific products with `data/processed/` and fails if their scientific contents differ.
-
-The validated Figure 3 workflows use `tidyverse`, `scales`, `rstatix`, `ggpubr`, and `rlang`; Figures S1-S5 use `dplyr`, `ggplot2`, `rstatix`, and `ggpubr` [@tidyverse; @dplyr; @ggplot2; @scales; @rstatix; @ggpubr; @rlang]. The Figure 4 workflows use only packages distributed with R. Start R from the repository root and run:
-
-```r
-source("figures/Figure_3/generate_figure_3_abc.R")
-generate_figure_3_abc()
-source("figures/Figure_3/generate_figure_3_dg.R")
-generate_figure_3_dg()
-source("supplementary_figures/Figure_S1/generate_figure_s1_ah.R")
-generate_figure_s1_ah()
-source("supplementary_figures/Figure_S2/generate_figure_s2_abc.R")
-generate_figure_s2_abc()
-source("supplementary_figures/Figure_S3/generate_figure_s3_aq.R")
-generate_figure_s3_aq()
-source("supplementary_figures/Figure_S4/generate_figure_s4_a_an.R")
-generate_figure_s4_a_an()
-source("supplementary_figures/Figure_S5/generate_figure_s5_ao.R")
-generate_figure_s5_ao()
-source("figures/Figure_3/generate_figure_3_hk.R")
-generate_figure_3_hk()
-source("figures/Figure_4/generate_figure_4_a.R")
-generate_figure_4_a()
-source("figures/Figure_4/generate_figure_4_b.R")
-generate_figure_4_b()
-source("figures/Figure_4/generate_figure_4_c.R")
-generate_figure_4_c()
-source("figures/Figure_4/generate_figure_4_d.R")
-generate_figure_4_d()
-source("figures/Figure_6/generate_figure_6_a.R")
-generate_figure_6_a()
-source("figures/Figure_6/generate_figure_6_b.R")
-generate_figure_6_b()
-source("figures/Figure_6/generate_figure_6_c.R")
-generate_figure_6_c()
-source("scripts/04_functional_prediction/generate_kegg_pathway_ko_z_scores.R")
-generate_kegg_pathway_ko_z_scores()
-```
-
-Standalone validator files used during repository curation are intentionally local-only and therefore are not included in the public quick-start commands.
-
-The reconstructed historical Figure 6 environment uses `ggpicrust2` 2.0.0 and `ALDEx2` 1.28.1, with R 4.2.x (likely R 4.2.1) retained as contextual evidence; see the [main-figure guide](figures/README.md) for the provenance and its session-snapshot limitation. The generators additionally require `ggplot2`, `patchwork`, and `scales` [@ggpicrust2; @aldex2; @ggplot2; @patchwork; @scales], and the seeded ALDEx2 step can take several minutes per panel. The KO z-score source-data workflow uses base R plus the versioned KEGG reference stored under `data/reference/` [@kegg]; it does not require an installed `ggpicrust2` package. Generated figure outputs are written to each figure's `output/` directory; Figures S3-S5 further separate individual panels into `output/females/` and `output/male/`. Generated source tables stay with their batch under `results/functional_prediction/`.
-
-See the [supplementary-figure guide](supplementary_figures/README.md) for its
-figure sources and generation details. The supplied Figures S1-S5 final composites
-were assembled manually in Adobe Photoshop and are retained as visual
-references rather than R-generated outputs.
-
-The reconstructed Linux-terminal PICRUSt2 workflow is documented in [`scripts/04_functional_prediction/picrust2_workflow.md`](scripts/04_functional_prediction/picrust2_workflow.md). A full rerun is optional and time-consuming; the retained EC, KO, and MetaCyc matrices were validated line-by-line against the supplied original pipeline outputs.
 
 ## Data organization and analysis rules
 
@@ -136,7 +86,7 @@ Raw FASTQ files are not stored in this repository. They have been deposited in t
 - Dams F0 and F1-PND21: `SAMN61406324`–`SAMN61406377`;
 - F1-PND365 and F2-PND365: `SAMN61407672`–`SAMN61407719`.
 
-The records are currently on hold and are intended for public release with the manuscript. The repository does not infer individual sample-to-BioSample assignments where these were not supplied.
+The records are publicly available through the BioProject landing page. The repository does not infer individual sample-to-BioSample or SRA-run assignments where these were not supplied; verify those assignments against the public NCBI metadata before renaming downloaded FASTQ files.
 
 The deposited material is the source sequencing data (raw reads), not the analysis source code. The versioned preprocessing source code is [`scripts/01_sequence_processing/preprocess_16s.R`](scripts/01_sequence_processing/preprocess_16s.R). A full raw-read rerun also requires the accession-to-`sample_id` mapping that was not included in the supplied deposition metadata.
 
@@ -155,6 +105,37 @@ and resolved rather than hidden by renaming an artifact.
 ## License
 
 The repository is distributed under the [`LICENSE`](LICENSE) file.
+
+## Quick start
+
+Start R from the repository root and try one of these three representative examples:
+
+1. Generate Figure 3 panels A–C (taxonomic ecology):
+
+   ```r
+   source("figures/Figure_3/generate_figure_3_abc.R")
+   generate_figure_3_abc()
+   ```
+
+2. Generate Figure 6 panel A (predicted functional profiles):
+
+   ```r
+   source("figures/Figure_6/generate_figure_6_a.R")
+   generate_figure_6_a()
+   ```
+
+3. Generate the KEGG pathway KO z-score source tables:
+
+   ```r
+   source("scripts/04_functional_prediction/generate_kegg_pathway_ko_z_scores.R")
+   generate_kegg_pathway_ko_z_scores()
+   ```
+
+Package requirements, preprocessing instructions, and the complete set of generation commands are documented in the [`16S preprocessing guide`](scripts/01_sequence_processing/README.md), [main-figure guide](figures/README.md), [supplementary-figure guide](supplementary_figures/README.md), and [PICRUSt2 workflow](scripts/04_functional_prediction/picrust2_workflow.md). Generated figures are written to their figure-specific `output/` directories, and generated functional source tables are written under `results/functional_prediction/`.
+
+## AI use disclosure
+
+Generative AI tools were used to assist with repository documentation, code review and refactoring, and reproducibility checks. All AI-assisted content and code were reviewed and validated by the authors, who retain full responsibility for the repository and its scientific conclusions. Generative AI was not used to generate the experimental data.
 
 ## References
 

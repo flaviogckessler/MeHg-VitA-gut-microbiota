@@ -4,9 +4,9 @@
 
 ## Raw/source sequencing data
 
-The source sequencing data (raw FASTQ reads) have been deposited in the NCBI Sequence Read Archive (SRA) under [BioProject PRJNA1489663](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1489663). They are not stored in this repository. The records are currently on hold and are intended for public release with the manuscript.
+The source sequencing data (raw FASTQ reads) are publicly available in the NCBI Sequence Read Archive (SRA) under [BioProject PRJNA1489663](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1489663). They are not stored in this repository.
 
-The supplied deposition metadata do not include a one-to-one mapping from repository `sample_id` values to BioSample or SRA run accessions. After public release, obtain that mapping before renaming or processing downloaded files. The script requires FASTQ-derived identifiers to match the canonical batch manifest so an accession cannot silently be assigned to the wrong sample.
+The deposition metadata supplied with this repository do not include a one-to-one mapping from repository `sample_id` values to BioSample or SRA run accessions. Obtain and verify that mapping from the public NCBI metadata before renaming or processing downloaded files. The script requires FASTQ-derived identifiers to match the canonical batch manifest so an accession cannot silently be assigned to the wrong sample.
 
 ## Provenance and decisions
 
@@ -74,7 +74,7 @@ unset DADA2_VALIDATE_ONLY
 
 Repeat with `batch02_illumina-miseq_f1-f2_pnd365` to validate the second manifest.
 
-## Full run after SRA release
+## Full run with public SRA data
 
 ```bash
 export DADA2_BATCH_ID="batch01_iontorrent_dams-f0_f1-pnd21"
@@ -101,7 +101,7 @@ At the end of a full run, the preprocessing workflow uses a local-only validator
 
 The script and local-only validator have been syntax-checked in R, and validation-only mode has passed for both manifests, the archived processed-data contracts, and the Zenodo reference configuration. The batch-specific TSV serializers were also tested using the archived count/taxonomy matrices as stand-ins for the unavailable DADA2 objects; every generated canonical TSV/CSV matched its archived counterpart line-for-line. This tests file schemas, filtering, identifiers, ordering, taxonomy serialization, lineage formatting, and relative-abundance calculations without claiming that denoising itself was rerun.
 
-The denoising and taxonomy run cannot be tested until the raw source sequencing data deposited in the SRA and the accession-to-sample mapping are publicly available. At that time, review quality profiles, read retention, paired-read overlap, and the automatic archived-output comparison before replacing any archived product. Change trimming values only if the released reads demonstrate that the deposited data differ from the historical inputs.
+The raw source sequencing data are now public, but the denoising and taxonomy workflow has not yet been rerun from those deposited reads. Before a full rerun, obtain and verify the accession-to-`sample_id` mapping, then review quality profiles, read retention, paired-read overlap, and the automatic archived-output comparison before replacing any archived product. Change trimming values only if the public reads demonstrate that the deposited data differ from the historical inputs.
 
 This workflow uses R, DADA2, the `biomformat` interface, the BIOM format, the SILVA database, the versioned SILVA 138.1 DADA2 training dataset, and the Sequence Read Archive [@r-core; @dada2; @biomformat; @biom; @silva; @silva-dada2-138-1; @sra].
 
