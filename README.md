@@ -139,8 +139,6 @@ Package requirements, preprocessing instructions, and the complete set of genera
 
 Generative AI tools were used to assist with repository documentation, code review and refactoring, and reproducibility checks. All AI-assisted content and code were reviewed and validated by the authors, who retain full responsibility for the repository and its scientific conclusions. Generative AI was not used to generate the experimental data.
 
-For a Springer Nature submission, substantive generative-AI use should be declared in the manuscript's Methods, Introduction, or Acknowledgements as required by the target journal. Its [current AI guidance](https://group.springernature.com/gp/group/ai/ai-guidance-for-our-researchers-and-communities) generally restricts AI-generated images but excludes text-based flowcharts without images; journal-specific instructions and any editor guidance should be checked at submission. Springer Nature's [research-data release guidance](https://support.springernature.com/en/support/solutions/articles/6000237623-release-of-research-data-ahead-of-manuscript-publication) says that public release of research data is generally not treated as prior publication, but the selected journal's Instructions for Authors remain controlling.
-
 ## References
 
 - <a id="ref-aldex2"></a>Fernandes, A. D., Reid, J. N. S., Macklaim, J. M., McMurrough, T. A., Edgell, D. R., & Gloor, G. B. (2014). Unifying the analysis of high-throughput sequencing datasets: Characterizing RNA-seq, 16S rRNA gene sequencing and selective growth experiments by compositional data analysis. *Microbiome, 2*, 15. [https://doi.org/10.1186/2049-2618-2-15](https://doi.org/10.1186/2049-2618-2-15)
