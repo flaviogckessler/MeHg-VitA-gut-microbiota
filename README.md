@@ -104,7 +104,7 @@ and resolved rather than hidden by renaming an artifact.
 
 ## License
 
-Source code and documentation are distributed under the [MIT License](LICENSE). Original data, metadata, and figures contained in this repository are licensed under the [Creative Commons Attribution 4.0 International License](LICENSE-DATA-FIGURES.md), except where a file or directory identifies different terms. Third-party content remains subject to its original license, and the CC BY 4.0 grant applies only to material the repository authors are entitled to license.
+The repository's original content—including source code, documentation, data, metadata, and figures—is distributed solely under the [Creative Commons Attribution 4.0 International License (CC BY 4.0)](LICENSE). This repository-wide license is consistent with the open-access terms of [Portaria CAPES nº 120, de 26 de abril de 2024](https://cad.capes.gov.br/ato-administrativo-detalhar?idAtoAdmElastic=14902). Third-party material remains subject to its original terms, and the CC BY 4.0 grant applies only to material the repository authors are entitled to license.
 
 ## Quick start
 
